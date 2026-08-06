@@ -1,0 +1,2125 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Castrol Service Témara — Garage Auto, Vidange & Entretien</title>
+<meta name="description" content="Entretien, vidange, diagnostic et réparation auto à Témara. Centre Castrol Service certifié. Qualité et rapidité garanties.">
+<link rel="icon" href="images/icon-officiel-castrol-service-temara.webp" type="image/webp">
+<meta name="theme-color" content="#0a0a0a">
+
+<!-- Social preview -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_MA">
+<meta property="og:site_name" content="Castrol Service Témara">
+<meta property="og:title" content="Castrol Service Témara — Garage Auto, Vidange & Entretien">
+<meta property="og:description" content="Le seul centre Castrol Service certifié au Maroc. Vidange, diagnostic, freinage, climatisation à Témara.">
+<meta property="og:image" content="images/hero-poster.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- Fonts: Inter as BMW Type Next substitute -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
+
+<!-- LCP: the hero poster paints before the video is decoded -->
+<link rel="preload" as="image" href="images/hero-poster.jpg" fetchpriority="high">
+
+<!-- Local search: only facts stated on the page. Add "geo" and precise
+     "openingHoursSpecification" once the owner confirms them. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AutoRepair",
+  "name": "Castrol Service Témara",
+  "description": "Garage automobile à Témara : vidange, diagnostic électronique, freinage, climatisation, boîte automatique et vente de pneus. Centre Castrol Service certifié.",
+  "image": "images/hero-poster.jpg",
+  "logo": "images/logo-png-castrol.png",
+  "telephone": "+212663850560",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Résidence Khayzourane, Avenue Tarik Ibn Ziad",
+    "addressLocality": "Témara",
+    "addressCountry": "MA"
+  },
+  "areaServed": [
+    { "@type": "City", "name": "Témara" },
+    { "@type": "City", "name": "Rabat" }
+  ],
+  "makesOffer": [
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Vidange moteur" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Diagnostic électronique" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Freinage" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Climatisation" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Boîte automatique" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Vente et montage de pneus" } }
+  ]
+}
+</script>
+
+<style>
+/* ============================================
+   DESIGN TOKENS — Castrol Service Témara
+   BMW M design language adapted with Castrol brand colors
+   ============================================ */
+:root {
+  /* Brand */
+  --castrol-green: #009737;
+  --castrol-green-dark: #007a2c;
+  --castrol-green-light: #00b04a;
+  --castrol-red: #e2001a;
+  --castrol-red-bright: #ff0005;
+  --castrol-white: #ffffff;
+
+  /* Surface */
+  --canvas: #0a0a0a;
+  --surface-soft: #0d0d0d;
+  --surface-card: #1a1a1a;
+  --surface-elevated: #262626;
+  --carbon-gray: #2b2b2b;
+
+  /* Text */
+  --ink: #ffffff;
+  --body: #bbbbbb;
+  --body-strong: #e6e6e6;
+  --muted: #7e7e7e;
+
+  /* Lines */
+  --hairline: #3c3c3c;
+  --hairline-strong: #262626;
+
+  /* Semantic */
+  --warning: #f4b400;
+  --oil-amber: #d4a017;
+
+  /* Typography */
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Spacing */
+  --sp-xxs: 4px;
+  --sp-xs: 8px;
+  --sp-sm: 12px;
+  --sp-md: 16px;
+  --sp-lg: 24px;
+  --sp-xl: 40px;
+  --sp-xxl: 64px;
+  --sp-section: 96px;
+
+  /* Radius */
+  --r-none: 0px;
+  --r-full: 9999px;
+
+  /* === Easing curves (Kowalski: custom, never default 'ease') === */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* === Shadows (Impeccable: offset + soft blur, never zero-offset halo) === */
+  --shadow-card: 0 2px 8px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.2);
+  --shadow-elevated: 0 4px 12px rgba(0,0,0,0.35), 0 16px 48px rgba(0,0,0,0.25);
+  /* Neutral elevation — a green button does not also need a green halo */
+  --shadow-cta: 0 4px 16px rgba(0,0,0,0.5), 0 1px 3px rgba(0,0,0,0.4);
+}
+
+/* ============================================
+   RESET
+   ============================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+/* The nav is fixed at 64px — anchors must not land underneath it */
+:target, section[id], footer[id] { scroll-margin-top: 88px; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+body {
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font);
+  font-weight: 300;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+/* === Selection color (Castrol green) === */
+::selection { background: var(--castrol-green); color: var(--ink); }
+::-moz-selection { background: var(--castrol-green); color: var(--ink); }
+
+/* === Custom scrollbar === */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--canvas); }
+::-webkit-scrollbar-thumb { background: var(--surface-elevated); }
+::-webkit-scrollbar-thumb:hover { background: var(--hairline); }
+
+/* === Focus-visible: keyboard navigation a11y (Impeccable) === */
+:focus-visible {
+  outline: 2px solid var(--castrol-green-light);
+  outline-offset: 3px;
+}
+button:focus-visible, a:focus-visible {
+  outline: 2px solid var(--castrol-green-light);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ============================================
+   TYPOGRAPHY SCALE
+   ============================================ */
+.display-xl { font-size: clamp(40px, 7vw, 72px); font-weight: 800; line-height: 1; letter-spacing: -0.03em; text-transform: uppercase; }
+.display-lg { font-size: clamp(32px, 5vw, 52px); font-weight: 800; line-height: 1.05; letter-spacing: -0.03em; text-transform: uppercase; }
+.display-md { font-size: clamp(26px, 4vw, 38px); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; }
+.display-sm { font-size: clamp(22px, 3vw, 28px); font-weight: 700; line-height: 1.15; }
+.title-lg { font-size: 22px; font-weight: 700; line-height: 1.3; }
+.title-md { font-size: 18px; font-weight: 400; line-height: 1.4; }
+.label-uppercase { font-size: 13px; font-weight: 700; line-height: 1.3; letter-spacing: 1.5px; text-transform: uppercase; }
+.body-md { font-size: 16px; font-weight: 300; line-height: 1.6; max-width: 65ch; }
+.body-sm { font-size: 14px; font-weight: 300; line-height: 1.5; }
+.caption { font-size: 12px; font-weight: 400; line-height: 1.4; letter-spacing: 0.5px; }
+
+/* ============================================
+   LAYOUT PRIMITIVES
+   ============================================ */
+.container { max-width: 1440px; margin: 0 auto; padding: 0 var(--sp-xl); }
+.section { padding: var(--sp-section) 0; }
+
+/* ============================================
+   SCROLL PROGRESS BAR (Castrol green)
+   ============================================ */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  width: 100%;
+  background: var(--castrol-green);
+  z-index: 200;
+  /* Composited on the GPU — this repaints on every scroll frame */
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  will-change: transform;
+}
+
+/* ============================================
+   BRAND STRIPE — Castrol tricolor
+   ============================================ */
+.brand-stripe {
+  height: 3px;
+  width: 100%;
+  background: linear-gradient(
+    to right,
+    var(--castrol-green) 0%,
+    var(--castrol-green) 33.33%,
+    var(--castrol-red) 33.33%,
+    var(--castrol-red) 66.66%,
+    var(--castrol-white) 66.66%,
+    var(--castrol-white) 100%
+  );
+}
+
+/* ============================================
+   BUTTONS — Kowalski principles
+   - scale(0.97) on :active (not translateY)
+   - exact transition properties (not 'all')
+   - custom easing curves
+   - hover gated behind pointer:fine
+   ============================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-sm);
+  padding: 16px 32px;
+  height: 48px;
+  border-radius: var(--r-none);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  transition: background-color 200ms var(--ease-out),
+              border-color 200ms var(--ease-out),
+              transform 160ms var(--ease-out),
+              box-shadow 200ms var(--ease-out);
+  white-space: nowrap;
+  will-change: transform;
+}
+
+/* Kowalski: scale(0.97) for tactile press feedback */
+.btn:active { transform: scale(0.97); }
+
+.btn-primary {
+  background: var(--castrol-green-dark);
+  color: var(--ink);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover {
+    background: var(--castrol-green);
+    box-shadow: var(--shadow-cta);
+  }
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--hairline);
+}
+@media (hover: hover) and (pointer: fine) {
+  .btn-outline:hover {
+    border-color: var(--ink);
+    background: rgba(255,255,255,0.04);
+  }
+}
+
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--r-full);
+  background: var(--surface-card);
+  color: var(--ink);
+  transition: background-color 200ms var(--ease-out),
+              transform 160ms var(--ease-out);
+  flex-shrink: 0;
+}
+.btn-icon:active { transform: scale(0.95); }
+@media (hover: hover) and (pointer: fine) {
+  .btn-icon:hover { background: var(--surface-elevated); }
+}
+
+/* ============================================
+   TOP NAVIGATION
+   ============================================ */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 64px;
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid transparent;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  transition: border-color 300ms var(--ease-out),
+              background-color 300ms var(--ease-out),
+              box-shadow 300ms var(--ease-out);
+}
+.nav.scrolled {
+  border-bottom-color: var(--hairline-strong);
+  background: rgba(10, 10, 10, 0.95);
+  box-shadow: 0 1px 12px rgba(0,0,0,0.3);
+}
+.nav-inner {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 var(--sp-xl);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-lg);
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  transition: opacity 200ms var(--ease-out);
+}
+.nav-logo img { height: 32px; width: auto; }
+@media (hover: hover) and (pointer: fine) {
+  .nav-logo:hover { opacity: 0.85; }
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-lg);
+}
+.nav-links a {
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  color: var(--body);
+  transition: color 200ms var(--ease-out);
+  position: relative;
+}
+/* Kowalski: underline reveal from left */
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--castrol-green-light);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 250ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+}
+.nav-cta {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-md);
+  flex-shrink: 0;
+}
+/* Compact tap-to-call — the primary action on a phone, shown only below 1024 */
+.nav-call {
+  display: none;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--hairline);
+  color: var(--ink);
+  transition: border-color 200ms var(--ease-out),
+              background-color 200ms var(--ease-out),
+              transform 160ms var(--ease-out);
+}
+.nav-call:active { transform: scale(0.94); }
+.nav-call svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; }
+@media (hover: hover) and (pointer: fine) {
+  .nav-call:hover { border-color: var(--castrol-green); background: rgba(0,151,55,0.08); }
+}
+.nav-phone {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--ink);
+  transition: color 200ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .nav-phone:hover { color: var(--castrol-green-light); }
+}
+.nav-burger {
+  display: none;
+  width: 48px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  transition: transform 160ms var(--ease-out);
+}
+.nav-burger:active { transform: scale(0.92); }
+.nav-burger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--ink);
+  transition: transform 250ms var(--ease-out), opacity 200ms var(--ease-out);
+}
+
+@media (max-width: 1024px) {
+  .nav-links { display: none; }
+  .nav-phone { display: none; }
+  /* The full-width "Rendez-vous" button crushed the logo and burger on phones */
+  .nav-cta .btn { display: none; }
+  .nav-call { display: inline-flex; }
+  .nav-burger { display: flex; }
+  /* Keep call + burger as one right-hand cluster instead of stranding the
+     call button mid-bar once the links are gone */
+  .nav-cta { margin-left: auto; }
+  .nav-inner { gap: var(--sp-sm); padding: 0 var(--sp-md); }
+}
+
+/* ============================================
+   HERO — Full-bleed VIDEO with blur overlay
+   ============================================ */
+.hero {
+  position: relative;
+  min-height: 100dvh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+/* Video background */
+.hero-bg video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+/* Gradient overlay — clean cinematic scrim, no blur */
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgba(10,10,10,0.98) 0%, rgba(10,10,10,0.7) 30%, rgba(10,10,10,0.15) 60%, transparent 100%),
+    linear-gradient(to right, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.3) 45%, transparent 70%);
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 0 var(--sp-xl) var(--sp-xxl);
+  max-width: 1440px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  /* The horizontal scrim does nothing at phone widths — protect the copy from below instead */
+  .hero-bg::after {
+    background: linear-gradient(to top,
+      rgba(10,10,10,0.98) 0%,
+      rgba(10,10,10,0.92) 34%,
+      rgba(10,10,10,0.55) 62%,
+      rgba(10,10,10,0.15) 100%);
+  }
+  /* Clear the floating WhatsApp button (56px + 24px offset) */
+  .hero-content { padding: 0 var(--sp-md) 104px; }
+  .hero-cta-row { display: grid; gap: var(--sp-sm); }
+  .hero-cta-row .btn { width: 100%; }
+}
+@media (max-width: 480px) {
+  /* Break on the accent so the last line isn't a lone orphan word */
+  .hero h1 .accent { display: block; }
+}
+
+/* === Kowalski: choreographed hero entrance with stagger === */
+.hero-tag,
+.hero h1,
+.hero-sub,
+.hero-cta-row {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: heroEntrance 700ms var(--ease-out) forwards;
+}
+.hero-tag { animation-delay: 200ms; }
+.hero h1 { animation-delay: 350ms; }
+.hero-sub { animation-delay: 500ms; }
+.hero-cta-row { animation-delay: 650ms; }
+
+@keyframes heroEntrance {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  margin-bottom: var(--sp-lg);
+}
+.hero-tag-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--r-full);
+  background: var(--castrol-green);
+  animation: pulse 2.5s var(--ease-in-out) infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.3); }
+}
+.hero h1 {
+  font-size: clamp(40px, 7vw, 72px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  margin-bottom: var(--sp-lg);
+  max-width: 900px;
+}
+.hero h1 .accent { color: var(--castrol-green-light); }
+.hero-sub {
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--body-strong);
+  max-width: 480px;
+  margin-bottom: var(--sp-xl);
+}
+.hero-cta-row {
+  display: flex;
+  gap: var(--sp-md);
+  flex-wrap: wrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-tag, .hero h1, .hero-sub, .hero-cta-row {
+    animation: none; opacity: 1; transform: none;
+  }
+  .hero-tag-dot { animation: none; }
+}
+
+/* ============================================
+   SERVICES — clean hero vehicle + 4-col grid
+   Dark canvas, neon-green hover, zero overlap
+   ============================================ */
+.services-header {
+  margin-bottom: var(--sp-xxl);
+  text-align: center;
+}
+.services-header h2 { margin-bottom: var(--sp-md); }
+.services-header p { max-width: 560px; margin-inline: auto; }
+
+/* === 4-column grid === */
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp-lg);
+}
+
+/* === Service card === */
+.svc-card {
+  background: #141414;
+  border: 1px solid #262626;
+  border-radius: var(--r-none);
+  padding: 32px;
+  position: relative;
+  transition: border-color 300ms var(--ease-out),
+              box-shadow 300ms var(--ease-out),
+              transform 300ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .svc-card:hover {
+    border-color: var(--castrol-green);
+    /* Lift with real elevation; the green border already carries the accent */
+    box-shadow: var(--shadow-card);
+    transform: translateY(-3px);
+  }
+}
+
+/* Icon */
+.svc-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0d0d0d;
+  border: 1px solid #262626;
+  border-radius: var(--r-none);
+  margin-bottom: var(--sp-lg);
+  transition: border-color 300ms var(--ease-out),
+              background-color 300ms var(--ease-out);
+}
+.svc-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: var(--castrol-green-light);
+  stroke-width: 1.5;
+  fill: none;
+  transition: stroke 300ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .svc-card:hover .svc-icon {
+    border-color: var(--castrol-green);
+    background: rgba(0,151,55,0.08);
+  }
+}
+
+.svc-tag {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--castrol-green-light);
+  margin-bottom: 6px;
+  display: block;
+}
+.svc-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: var(--sp-sm);
+}
+.svc-card .svc-short {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--body);
+  line-height: 1.5;
+  margin-bottom: var(--sp-lg);
+}
+
+/* Toggle button */
+.svc-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--ink);
+  padding: 10px 20px;
+  border: 1px solid #333333;
+  background: #0d0d0d;
+  transition: border-color 200ms var(--ease-out),
+              background-color 200ms var(--ease-out),
+              color 200ms var(--ease-out);
+}
+.svc-toggle:active { transform: scale(0.97); }
+@media (hover: hover) and (pointer: fine) {
+  .svc-toggle:hover {
+    border-color: var(--castrol-green);
+    color: var(--castrol-green-light);
+    background: rgba(0,151,55,0.05);
+  }
+}
+.svc-card.open .svc-toggle {
+  border-color: var(--castrol-green);
+  color: var(--castrol-green-light);
+  background: rgba(0,151,55,0.08);
+}
+.svc-toggle svg {
+  width: 14px; height: 14px;
+  stroke: currentColor; stroke-width: 2; fill: none;
+  transition: transform 300ms var(--ease-out);
+}
+.svc-card.open .svc-toggle svg { transform: rotate(45deg); }
+
+/* Expandable detail — grid rows animate to the content's real height,
+   so no max-height guess can clip a longer list */
+.svc-detail {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 400ms var(--ease-out);
+}
+.svc-card.open .svc-detail { grid-template-rows: 1fr; }
+.svc-detail-inner {
+  overflow: hidden;
+  min-height: 0;
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--body);
+  line-height: 1.6;
+}
+.svc-detail-inner > ul {
+  margin-top: var(--sp-lg);
+  padding-top: var(--sp-md);
+  border-top: 1px solid #262626;
+}
+.svc-detail-inner ul {
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+.svc-detail-inner li {
+  position: relative;
+  padding-left: 16px;
+}
+.svc-detail-inner li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 9px;
+  width: 8px; height: 1px;
+  background: var(--castrol-green);
+}
+
+/* === Responsive ===
+   Eight full-height cards stacked one per row made the phone page endless.
+   Below 640px the card goes horizontal: icon beside the title, detail underneath. */
+@media (max-width: 1024px) {
+  .service-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .service-grid { grid-template-columns: 1fr; gap: var(--sp-sm); }
+  .svc-card { padding: var(--sp-md); display: grid; grid-template-columns: 44px 1fr; gap: 0 var(--sp-md); align-items: start; }
+  .svc-icon { width: 44px; height: 44px; margin-bottom: 0; grid-row: span 2; }
+  .svc-icon svg { width: 20px; height: 20px; }
+  .svc-tag { grid-column: 2; margin-bottom: 2px; }
+  .svc-card h3 { grid-column: 2; margin-bottom: 6px; }
+  .svc-card .svc-short { grid-column: 2; margin-bottom: var(--sp-sm); }
+  .svc-toggle { grid-column: 2; justify-self: start; padding: 8px 14px; }
+  .svc-detail { grid-column: 2; }
+  .svc-card.open .svc-detail { margin-top: var(--sp-sm); }
+}
+
+/* ============================================
+   ABOUT SPLIT
+   ============================================ */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-xxl);
+  align-items: stretch;
+}
+.about-text h2 { margin-bottom: var(--sp-lg); }
+.about-text p { margin-bottom: var(--sp-md); max-width: 480px; }
+.about-features {
+  display: grid;
+  gap: var(--sp-md);
+  margin-top: var(--sp-xl);
+}
+.about-feature {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-md);
+  padding: var(--sp-md) 0;
+  border-top: 1px solid var(--hairline);
+  transition: border-color 300ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .about-feature:hover { border-top-color: var(--castrol-green); }
+}
+.about-feature-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-card);
+  border-radius: var(--r-full);
+  flex-shrink: 0;
+  transition: background-color 300ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .about-feature:hover .about-feature-icon { background: var(--castrol-green-dark); }
+}
+.about-feature-icon svg { width: 20px; height: 20px; stroke: var(--castrol-green-light); transition: stroke 300ms var(--ease-out); }
+.about-feature h4 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.about-feature p { font-size: 14px; color: var(--body); }
+
+/* === Certification plate ===
+   Replaces a screenshot of the old shop page. Reads as the plaque on the
+   workshop wall: brand stripe, mark, the claim, and where to find it. */
+.about-visual { position: relative; }
+.cert-plate {
+  position: relative;
+  height: 100%;
+  min-height: 440px;
+  background:
+    radial-gradient(120% 80% at 50% 0%, rgba(0,151,55,0.10) 0%, transparent 60%),
+    var(--surface-soft);
+  border: 1px solid var(--hairline-strong);
+  display: flex;
+  flex-direction: column;
+  padding: var(--sp-xl);
+  overflow: hidden;
+}
+.cert-plate .brand-stripe {
+  position: absolute;
+  top: 0; left: 0;
+}
+.cert-plate-mark { margin-bottom: auto; padding-top: var(--sp-md); }
+.cert-plate-mark img { height: 44px; width: auto; }
+.cert-plate-claim {
+  font-size: clamp(28px, 3.2vw, 44px);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  margin-bottom: var(--sp-lg);
+}
+.cert-plate-claim .accent { color: var(--castrol-green-light); display: block; }
+.cert-plate-meta {
+  display: grid;
+  gap: var(--sp-xs);
+  padding-top: var(--sp-lg);
+  border-top: 1px solid var(--hairline);
+}
+.cert-plate-meta dt {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.cert-plate-meta dd { font-size: 15px; font-weight: 400; color: var(--body-strong); }
+.cert-plate-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  margin-top: var(--sp-lg);
+  padding: 10px var(--sp-md);
+  border: 1px solid var(--castrol-green-dark);
+  background: rgba(0,151,55,0.10);
+  align-self: flex-start;
+}
+.cert-plate-status .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--r-full);
+  background: var(--castrol-green-light);
+  animation: pulse 2.5s var(--ease-in-out) infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cert-plate-status .dot { animation: none; }
+}
+
+@media (max-width: 768px) {
+  .about-grid { grid-template-columns: 1fr; gap: var(--sp-xl); }
+  .cert-plate { aspect-ratio: auto; padding: var(--sp-lg); }
+  .cert-plate-mark { padding-top: var(--sp-sm); margin-bottom: var(--sp-xl); }
+}
+
+/* ============================================
+   STATS STRIP
+   ============================================ */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--hairline);
+}
+.stat-cell {
+  background: var(--surface-soft);
+  padding: var(--sp-xl) var(--sp-lg);
+  transition: background-color 300ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .stat-cell:hover { background: var(--surface-card); }
+}
+.stat-value {
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: var(--sp-xs);
+  letter-spacing: -0.03em;
+}
+.stat-label {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--body);
+}
+@media (max-width: 768px) {
+  .stats { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ============================================
+   NOUS TROUVER — practical info + map
+   Replaces a marquee of third-party stock logos that had no relation
+   to this garage. A local workshop is found, not endorsed.
+   ============================================ */
+.find-section {
+  border-top: 1px solid var(--hairline-strong);
+  border-bottom: 1px solid var(--hairline-strong);
+}
+.find-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  align-items: stretch;
+}
+.find-info { padding: var(--sp-xxl) var(--sp-xl); }
+.find-info > h2 { margin-bottom: var(--sp-xl); }
+.find-rows { display: grid; }
+.find-row {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: var(--sp-md);
+  align-items: start;
+  padding: var(--sp-lg) 0;
+  border-top: 1px solid var(--hairline);
+}
+.find-row:last-of-type { border-bottom: 1px solid var(--hairline); }
+.find-row-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--hairline);
+  flex-shrink: 0;
+}
+.find-row-icon svg { width: 18px; height: 18px; fill: none; stroke: var(--castrol-green-light); stroke-width: 1.5; }
+.find-row dt {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.find-row dd { font-size: 16px; font-weight: 400; color: var(--body-strong); line-height: 1.45; }
+.find-row dd a { color: var(--body-strong); border-bottom: 1px solid transparent; transition: color 200ms var(--ease-out), border-color 200ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .find-row dd a:hover { color: var(--castrol-green-light); border-bottom-color: var(--castrol-green); }
+}
+.find-actions { display: flex; gap: var(--sp-sm); flex-wrap: wrap; margin-top: var(--sp-xl); }
+
+/* Map panel */
+.find-map {
+  position: relative;
+  min-height: 420px;
+  border-left: 1px solid var(--hairline-strong);
+  background: var(--surface-soft);
+}
+.find-map iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  /* The default Google tiles are white — settle them into the dark canvas */
+  filter: grayscale(1) invert(0.92) contrast(0.86) brightness(0.92);
+}
+
+@media (max-width: 900px) {
+  .find-grid { grid-template-columns: 1fr; }
+  .find-info { padding: var(--sp-xl) var(--sp-md); }
+  .find-map { min-height: 300px; border-left: 0; border-top: 1px solid var(--hairline-strong); }
+  .find-actions .btn { flex: 1 1 100%; }
+}
+
+/* ============================================
+   CTA BAND — video backdrop
+   ============================================ */
+.cta-band {
+  position: relative;
+  padding: var(--sp-section) 0;
+  overflow: hidden;
+}
+.cta-band-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.cta-band-bg video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.cta-band-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.6) 40%, rgba(10,10,10,0.95) 100%),
+    linear-gradient(to right, rgba(10,10,10,0.7) 0%, rgba(10,10,10,0.3) 50%, rgba(10,10,10,0.7) 100%);
+}
+.cta-band-content {
+  position: relative;
+  z-index: 1;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--sp-xl);
+  text-align: center;
+}
+.cta-band h2 { margin-bottom: var(--sp-lg); }
+.cta-band p {
+  max-width: 480px;
+  margin: 0 auto var(--sp-xl);
+  color: var(--body-strong);
+}
+.cta-band-actions { display: flex; gap: var(--sp-md); justify-content: center; flex-wrap: wrap; }
+@media (max-width: 640px) {
+  .cta-band-actions { display: grid; gap: var(--sp-sm); }
+  .cta-band-actions .btn { width: 100%; }
+}
+
+/* ============================================
+   PROMO SECTION
+   ============================================ */
+.promo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-xxl);
+  align-items: center;
+}
+/* Offer panel — the price of entry, stated plainly */
+.promo-visual {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.offer-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--surface-soft);
+  border: 1px solid var(--hairline-strong);
+  padding: var(--sp-xl);
+  position: relative;
+  overflow: hidden;
+}
+.offer-card .brand-stripe { position: absolute; top: 0; left: 0; }
+.offer-card-lede {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--castrol-green-light);
+  margin: var(--sp-md) 0 var(--sp-lg);
+}
+.offer-card-price {
+  font-size: clamp(46px, 6vw, 68px);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  margin-bottom: var(--sp-sm);
+}
+.offer-card-price .unit { display: block; font-size: 0.34em; letter-spacing: 1.5px; color: var(--body); margin-top: var(--sp-sm); }
+.offer-card-note {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--body);
+  line-height: 1.5;
+  padding-top: var(--sp-lg);
+  margin-top: var(--sp-lg);
+  border-top: 1px solid var(--hairline);
+}
+.promo-text h2 { margin-bottom: var(--sp-lg); }
+.promo-steps {
+  display: grid;
+  gap: var(--sp-md);
+  margin: var(--sp-xl) 0;
+}
+.promo-step {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-md);
+  padding: var(--sp-md) 0;
+  border-top: 1px solid var(--hairline);
+  transition: border-color 300ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .promo-step:hover { border-top-color: var(--castrol-green); }
+}
+.promo-step-num {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--castrol-green);
+  min-width: 32px;
+}
+.promo-step p { font-size: 15px; color: var(--body-strong); }
+@media (max-width: 768px) {
+  .promo-grid { grid-template-columns: 1fr; gap: var(--sp-xl); }
+}
+
+/* ============================================
+   FAQ ACCORDION
+   Kowalski: smooth transitions, not keyframes
+   ============================================ */
+.faq-list { max-width: 800px; margin: 0 auto; }
+.faq-item { border-top: 1px solid var(--hairline); }
+.faq-item:last-child { border-bottom: 1px solid var(--hairline); }
+.faq-question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp-lg) 0;
+  text-align: left;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--ink);
+  transition: color 200ms var(--ease-out);
+  gap: var(--sp-md);
+}
+@media (hover: hover) and (pointer: fine) {
+  .faq-question:hover { color: var(--castrol-green-light); }
+}
+.faq-toggle {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 300ms var(--ease-out);
+}
+.faq-item.open .faq-toggle { transform: rotate(45deg); }
+.faq-toggle svg { width: 18px; height: 18px; stroke: var(--body); transition: stroke 200ms var(--ease-out); }
+.faq-item.open .faq-toggle svg { stroke: var(--castrol-green-light); }
+/* Kowalski: CSS transitions for interruptible dynamic UI.
+   Grid rows instead of max-height — a long answer can never be clipped. */
+.faq-answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 400ms var(--ease-out);
+}
+.faq-item.open .faq-answer { grid-template-rows: 1fr; }
+.faq-answer-inner {
+  overflow: hidden;
+  min-height: 0;
+  padding-bottom: var(--sp-lg);
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--body);
+  line-height: 1.7;
+}
+.faq-answer-inner ul { margin-top: var(--sp-sm); padding-left: var(--sp-lg); list-style: none; }
+.faq-answer-inner li { margin-bottom: 6px; position: relative; padding-left: var(--sp-sm); }
+.faq-answer-inner li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 6px;
+  height: 1px;
+  background: var(--castrol-green);
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.footer {
+  background: var(--canvas);
+  border-top: 1px solid var(--hairline);
+  padding: var(--sp-xxl) 0 var(--sp-xl);
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: var(--sp-xl);
+  margin-bottom: var(--sp-xxl);
+}
+.footer-brand { max-width: 320px; }
+.footer-brand img { height: 36px; margin-bottom: var(--sp-md); }
+.footer-brand p { font-size: 14px; color: var(--body); line-height: 1.5; }
+.footer-col h5 {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: var(--sp-md);
+}
+.footer-col ul { list-style: none; display: grid; gap: var(--sp-sm); }
+.footer-col a {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--body);
+  transition: color 200ms var(--ease-out), transform 200ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .footer-col a:hover { color: var(--ink); transform: translateX(4px); }
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--sp-lg);
+  border-top: 1px solid var(--hairline);
+  flex-wrap: wrap;
+  gap: var(--sp-md);
+}
+.footer-bottom p { font-size: 12px; color: var(--muted); letter-spacing: 0.5px; }
+.footer-social { display: flex; gap: var(--sp-sm); }
+
+@media (max-width: 768px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  /* The floating WhatsApp button sat on top of the social row */
+  .footer { padding-bottom: 104px; }
+  .footer-bottom { justify-content: flex-start; }
+}
+@media (max-width: 480px) {
+  .footer-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================
+   SCROLL REVEAL — Kowalski staggered cascade
+   ============================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out);
+}
+.reveal-stagger.visible > * { opacity: 1; transform: translateY(0); }
+/* Stagger: 60ms between children */
+.reveal-stagger.visible > *:nth-child(1) { transition-delay: 0ms; }
+.reveal-stagger.visible > *:nth-child(2) { transition-delay: 60ms; }
+.reveal-stagger.visible > *:nth-child(3) { transition-delay: 120ms; }
+.reveal-stagger.visible > *:nth-child(4) { transition-delay: 180ms; }
+.reveal-stagger.visible > *:nth-child(5) { transition-delay: 240ms; }
+.reveal-stagger.visible > *:nth-child(6) { transition-delay: 300ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-stagger > * {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ============================================
+   WHATSAPP FLOAT
+   ============================================ */
+.whatsapp-float {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--r-full);
+  background: var(--castrol-green-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 90;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.55), 0 2px 6px rgba(0,0,0,0.4);
+  transition: transform 200ms var(--ease-spring), background-color 200ms var(--ease-out);
+}
+.whatsapp-float:active { transform: scale(0.92); }
+@media (hover: hover) and (pointer: fine) {
+  .whatsapp-float:hover {
+    transform: scale(1.08);
+    background: var(--castrol-green);
+  }
+}
+.whatsapp-float svg { width: 28px; height: 28px; fill: var(--ink); }
+
+/* ============================================
+   MOBILE MENU — Kowalski drawer easing
+   ============================================ */
+.mobile-menu-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 199;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 300ms var(--ease-out);
+}
+.mobile-menu-backdrop.open { opacity: 1; pointer-events: auto; }
+.mobile-menu {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  width: 100%;
+  max-width: 400px;
+  background: var(--canvas);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  padding: 80px var(--sp-xl) var(--sp-xl);
+  transform: translateX(100%);
+  transition: transform 400ms var(--ease-drawer);
+}
+.mobile-menu.open { transform: translateX(0); }
+.mobile-menu a {
+  font-size: 20px;
+  font-weight: 700;
+  padding: var(--sp-md) 0;
+  border-bottom: 1px solid var(--hairline);
+  transition: color 200ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .mobile-menu a:hover { color: var(--castrol-green-light); }
+}
+.mobile-menu-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 160ms var(--ease-out);
+}
+.mobile-menu-close:active { transform: scale(0.90); }
+.mobile-menu-close span {
+  position: relative;
+  width: 24px;
+  height: 2px;
+  background: var(--ink);
+  transform: rotate(45deg);
+}
+.mobile-menu-close span::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  transform: rotate(90deg);
+}
+
+@media (max-width: 1024px) {
+  .mobile-menu { display: flex; }
+  .mobile-menu-backdrop { display: block; }
+}
+@media (min-width: 1025px) {
+  .mobile-menu, .mobile-menu-backdrop { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Brand Stripe -->
+<div class="brand-stripe"></div>
+
+<!-- ============================================
+     TOP NAV
+     ============================================ -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#top" class="nav-logo">
+      <img src="images/logo-png-castrol.png" alt="Castrol Service Témara">
+    </a>
+    <div class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#about">À propos</a>
+      <a href="#infos">Nous trouver</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="nav-cta">
+      <a href="tel:0663850560" class="nav-phone">06 63 85 05 60</a>
+      <a href="tel:0663850560" class="nav-call" aria-label="Appeler le 06 63 85 05 60">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      </a>
+      <a href="#rdv" class="btn btn-primary">Rendez-vous</a>
+    </div>
+    <button class="nav-burger" id="navBurger" aria-label="Ouvrir le menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Menu Backdrop -->
+<div class="mobile-menu-backdrop" id="mobileBackdrop"></div>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Menu de navigation">
+  <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Fermer le menu">
+    <span></span>
+  </button>
+  <div class="brand-stripe" style="margin-bottom: 32px;"></div>
+  <a href="#services" class="mobile-menu-link">Services</a>
+  <a href="#about" class="mobile-menu-link">À propos</a>
+  <a href="#infos" class="mobile-menu-link">Nous trouver</a>
+  <a href="#faq" class="mobile-menu-link">FAQ</a>
+  <a href="#contact" class="mobile-menu-link">Contact</a>
+  <a href="#rdv" class="btn btn-primary mobile-menu-link" style="margin-top: 24px;">Rendez-vous</a>
+</div>
+
+<!-- ============================================
+     HERO
+     ============================================ -->
+<section class="hero" id="top">
+  <div class="hero-bg">
+    <video autoplay muted loop playsinline preload="metadata" poster="images/hero-poster.jpg" aria-hidden="true">
+      <source src="images/hero-video.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero-content">
+    <div class="hero-tag">
+      <span class="hero-tag-dot"></span>
+      <span class="label-uppercase" style="color: var(--castrol-green-light);">Centre certifié Castrol</span>
+    </div>
+    <h1>Votre voiture<br>entre de <span class="accent">bonnes mains</span></h1>
+    <p class="hero-sub">Entretien, vidange, diagnostic et réparation auto à Témara. Produits Castrol authentiques, équipe certifiée, service rapide.</p>
+    <div class="hero-cta-row">
+      <a href="#rdv" class="btn btn-primary">Prendre rendez-vous</a>
+      <a href="#services" class="btn btn-outline">Nos services</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     SERVICES — vehicle hero + 4-column grid
+     ============================================ -->
+<section class="section" id="services">
+  <div class="container">
+    <div class="services-header reveal">
+      <h2 class="display-lg">Services</h2>
+      <p class="body-md" style="color: var(--body);">Une gamme complète pour votre véhicule. Ouvrez un service pour en voir le détail.</p>
+    </div>
+
+    <!-- 4-column grid -->
+    <div class="service-grid">
+
+      <!-- Vidange -->
+      <div class="svc-card reveal" data-svc>
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2l2 4h-4l2-4zM5 22h14l-2-12H7L5 22zM9 10h6M10 14h4M11 18h2"/></svg>
+        </div>
+        <span class="svc-tag">Moteur</span>
+        <h3>Vidange d'huile</h3>
+        <p class="svc-short">Huiles Castrol 100% originales avec remplacement de filtre.</p>
+        <button class="svc-toggle" data-svc-trigger aria-expanded="false">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span>Détails</span>
+        </button>
+        <div class="svc-detail">
+          <div class="svc-detail-inner">
+            <ul>
+              <li>Vidange moteur complète</li>
+              <li>Remplacement filtre à huile et air</li>
+              <li>Contrôle des niveaux</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Freinage -->
+      <div class="svc-card reveal" data-svc>
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/></svg>
+        </div>
+        <span class="svc-tag">Sécurité</span>
+        <h3>Freinage</h3>
+        <p class="svc-short">Plaquettes, disques et purge du liquide de frein.</p>
+        <button class="svc-toggle" data-svc-trigger aria-expanded="false">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span>Détails</span>
+        </button>
+        <div class="svc-detail">
+          <div class="svc-detail-inner">
+            <ul>
+              <li>Plaquettes et disques</li>
+              <li>Purge du liquide de frein</li>
+              <li>Contrôle ABS</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Diagnostic -->
+      <div class="svc-card reveal" data-svc>
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14"/><path d="M2 20h20M8 10l2 2 4-4"/></svg>
+        </div>
+        <span class="svc-tag">Électronique</span>
+        <h3>Diagnostic</h3>
+        <p class="svc-short">Scanner OBD professionnel et programmation toutes marques.</p>
+        <button class="svc-toggle" data-svc-trigger aria-expanded="false">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span>Détails</span>
+        </button>
+        <div class="svc-detail">
+          <div class="svc-detail-inner">
+            <ul>
+              <li>Lecture codes défauts</li>
+              <li>Programmation et reprogrammation</li>
+              <li>Calibration capteurs</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Climatisation -->
+      <div class="svc-card reveal" data-svc>
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20M5 5l14 14M19 5L5 19"/></svg>
+        </div>
+        <span class="svc-tag">Confort</span>
+        <h3>Climatisation</h3>
+        <p class="svc-short">Recharge de gaz et entretien complet du système.</p>
+        <button class="svc-toggle" data-svc-trigger aria-expanded="false">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span>Détails</span>
+        </button>
+        <div class="svc-detail">
+          <div class="svc-detail-inner">
+            <ul>
+              <li>Recharge gaz réfrigérant</li>
+              <li>Nettoyage circuit</li>
+              <li>Remplacement filtre habitacle</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Boîte auto -->
+      <div class="svc-card reveal" data-svc>
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/></svg>
+        </div>
+        <span class="svc-tag">Expertise</span>
+        <h3>Boîte automatique</h3>
+        <p class="svc-short">Diagnostic, entretien et réparation toutes marques.</p>
+        <button class="svc-toggle" data-svc-trigger aria-expanded="false">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span>Détails</span>
+        </button>
+        <div class="svc-detail">
+          <div class="svc-detail-inner">
+            <ul>
+              <li>Vidange boîte automatique</li>
+              <li>Remplacement liquide et filtre</li>
+              <li>Réparation mécanique</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pneus -->
+      <div class="svc-card reveal" data-svc>
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>
+        </div>
+        <span class="svc-tag">Boutique</span>
+        <h3>Vente de pneus</h3>
+        <p class="svc-short">Meilleures marques, montage et équilibrage inclus.</p>
+        <button class="svc-toggle" data-svc-trigger aria-expanded="false">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span>Détails</span>
+        </button>
+        <div class="svc-detail">
+          <div class="svc-detail-inner">
+            <ul>
+              <li>Montage et équilibrage</li>
+              <li>Vente toutes dimensions</li>
+              <li>Contrôle pression et géométrie</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Embrayage -->
+      <div class="svc-card reveal" data-svc>
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="12" r="3"/><path d="M9 12h6"/></svg>
+        </div>
+        <span class="svc-tag">Mécanique</span>
+        <h3>Embrayage</h3>
+        <p class="svc-short">Changement d'embrayage et amortisseurs.</p>
+        <button class="svc-toggle" data-svc-trigger aria-expanded="false">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span>Détails</span>
+        </button>
+        <div class="svc-detail">
+          <div class="svc-detail-inner">
+            <ul>
+              <li>Changement embrayage</li>
+              <li>Remplacement amortisseurs</li>
+              <li>Contrôle suspension</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filtres -->
+      <div class="svc-card reveal" data-svc>
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 4h18l-7 8v8l-4-2v-6L3 4z"/></svg>
+        </div>
+        <span class="svc-tag">Entretien</span>
+        <h3>Filtres</h3>
+        <p class="svc-short">Remplacement tous filtres : huile, air, carburant, habitacle.</p>
+        <button class="svc-toggle" data-svc-trigger aria-expanded="false">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span>Détails</span>
+        </button>
+        <div class="svc-detail">
+          <div class="svc-detail-inner">
+            <ul>
+              <li>Filtre à huile</li>
+              <li>Filtre à air moteur</li>
+              <li>Filtre à carburant</li>
+              <li>Filtre d'habitacle</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     ABOUT SPLIT
+     ============================================ -->
+<div class="brand-stripe"></div>
+<section class="section" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <h2 class="display-lg">Le seul centre<br>Castrol certifié<br>au Maroc</h2>
+        <p class="body-md" style="color: var(--body-strong);">Situé à Résidence Khayzourane, Avenue Tarik Ibn Ziad à Témara, Castrol Service est le seul centre certifié au Maroc. Nous garantissons des produits authentiques et traçables, une équipe formée selon les standards internationaux, et un service professionnel et transparent.</p>
+
+        <div class="about-features reveal-stagger">
+          <div class="about-feature">
+            <div class="about-feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M9 12l2 2 4-4M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"/></svg>
+            </div>
+            <div>
+              <h4>Produits Castrol authentiques</h4>
+              <p>Huiles et filtres 100% originaux, traçables et certifiés.</p>
+            </div>
+          </div>
+          <div class="about-feature">
+            <div class="about-feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/></svg>
+            </div>
+            <div>
+              <h4>Équipe certifiée</h4>
+              <p>Techniciens formés selon les standards internationaux Castrol.</p>
+            </div>
+          </div>
+          <div class="about-feature">
+            <div class="about-feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            </div>
+            <div>
+              <h4>Service rapide</h4>
+              <p>Délais courts, transparence totale, propreté et équipements de haut niveau.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-visual reveal">
+        <div class="cert-plate">
+          <div class="brand-stripe"></div>
+          <div class="cert-plate-mark">
+            <img src="images/logo-png-castrol.png" alt="Castrol Auto Service" loading="lazy" width="400" height="200">
+          </div>
+          <p class="cert-plate-claim">Centre agréé<span class="accent">Castrol Service</span></p>
+          <dl class="cert-plate-meta">
+            <dt>Adresse</dt>
+            <dd>Résidence Khayzourane, Avenue Tarik Ibn Ziad — Témara</dd>
+          </dl>
+          <div class="cert-plate-status">
+            <span class="dot"></span>
+            <span class="label-uppercase">Produits authentiques &amp; traçables</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     STATS STRIP
+     ============================================ -->
+<section class="stats reveal-stagger">
+  <div class="stat-cell">
+    <div class="stat-value">100%</div>
+    <div class="stat-label">Huiles originales</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-value">8</div>
+    <div class="stat-label">Services spécialisés</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-value">N°1</div>
+    <div class="stat-label">Centre certifié Maroc</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-value">6j/7</div>
+    <div class="stat-label">Ouvert toute la semaine</div>
+  </div>
+</section>
+
+<!-- ============================================
+     NOUS TROUVER
+     ============================================ -->
+<section class="find-section" id="infos">
+  <div class="find-grid">
+    <div class="find-info reveal">
+      <h2 class="display-md">Nous trouver</h2>
+      <dl class="find-rows">
+        <div class="find-row">
+          <span class="find-row-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </span>
+          <div>
+            <dt>Adresse</dt>
+            <dd>Résidence Khayzourane, Avenue Tarik Ibn Ziad<br>Témara, Maroc</dd>
+          </div>
+        </div>
+        <div class="find-row">
+          <span class="find-row-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          </span>
+          <div>
+            <dt>Horaires</dt>
+            <!-- TODO propriétaire : remplacer par les horaires exacts (ex. « Lun–Sam 8h30–19h ») -->
+            <dd>Ouvert 6 jours sur 7</dd>
+          </div>
+        </div>
+        <div class="find-row">
+          <span class="find-row-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </span>
+          <div>
+            <dt>Téléphone</dt>
+            <dd><a href="tel:0663850560">06 63 85 05 60</a> · <a href="https://wa.me/212663850560" target="_blank" rel="noopener">WhatsApp</a></dd>
+          </div>
+        </div>
+      </dl>
+      <div class="find-actions">
+        <a class="btn btn-primary"
+           href="https://www.google.com/maps/dir/?api=1&destination=Castrol+Service+T%C3%A9mara%2C+Avenue+Tarik+Ibn+Ziad%2C+T%C3%A9mara"
+           target="_blank" rel="noopener">Itinéraire</a>
+        <a class="btn btn-outline" href="tel:0663850560">Appeler le garage</a>
+      </div>
+    </div>
+    <div class="find-map">
+      <iframe
+        src="https://www.google.com/maps?q=Castrol+Service+T%C3%A9mara%2C+Avenue+Tarik+Ibn+Ziad%2C+T%C3%A9mara&output=embed"
+        title="Carte — Castrol Service Témara, Avenue Tarik Ibn Ziad"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     CTA BAND
+     ============================================ -->
+<section class="cta-band" id="rdv">
+  <div class="cta-band-bg">
+    <video autoplay muted loop playsinline preload="none" poster="images/service-poster.jpg" aria-hidden="true">
+      <source src="images/service-video.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="cta-band-content">
+    <h2 class="display-md">Prenez rendez-vous<br>dès aujourd'hui</h2>
+    <p class="body-md">Appelez-nous ou passez directement au garage. Diagnostic gratuit, devis transparent, service rapide.</p>
+    <div class="cta-band-actions">
+      <a href="tel:0663850560" class="btn btn-primary">Appeler le 06 63 85 05 60</a>
+      <a href="https://wa.me/212663850560" class="btn btn-outline" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     PROMO
+     ============================================ -->
+<section class="section" id="promo">
+  <div class="container">
+    <div class="promo-grid">
+      <div class="promo-visual reveal">
+        <!-- Pour une promo chiffrée, remplacer le prix par ex. « -10% » et la mention par « sur votre 1ère vidange ». -->
+        <div class="offer-card">
+          <div class="brand-stripe"></div>
+          <p class="offer-card-lede">Avant toute intervention</p>
+          <p class="offer-card-price">Gratuit<span class="unit">Diagnostic &amp; devis</span></p>
+          <p class="offer-card-note">Vous repartez avec le détail écrit des travaux et leur prix. Rien n'est engagé sans votre accord.</p>
+        </div>
+      </div>
+      <div class="promo-text reveal">
+        <h2 class="display-lg">Le devis<br>avant la clé</h2>
+        <p class="body-md" style="color: var(--body-strong);">On regarde, on chiffre, on vous explique. Vous décidez ensuite — sans surprise sur la facture.</p>
+
+        <div class="promo-steps">
+          <div class="promo-step">
+            <span class="promo-step-num">01</span>
+            <p>Appelez ou passez au garage, sans rendez-vous</p>
+          </div>
+          <div class="promo-step">
+            <span class="promo-step-num">02</span>
+            <p>Diagnostic au scanner OBD et contrôle visuel</p>
+          </div>
+          <div class="promo-step">
+            <span class="promo-step-num">03</span>
+            <p>Devis détaillé — l'intervention ne démarre qu'après votre feu vert</p>
+          </div>
+        </div>
+
+        <a href="tel:0663850560" class="btn btn-primary">Appeler le 06 63 85 05 60</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     FAQ
+     ============================================ -->
+<section class="section" id="faq" style="padding-top: 0;">
+  <div class="container">
+    <div style="text-align: center; margin-bottom: 64px;" class="reveal">
+      <h2 class="display-lg">Questions fréquentes</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item reveal">
+        <button class="faq-question" aria-expanded="false">
+          <span>Quels types de services propose Castrol Service ?</span>
+          <span class="faq-toggle">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Castrol Service Témara propose un large éventail de services :
+            <ul>
+              <li>Vidange moteur et boîte automatique</li>
+              <li>Remplacement de filtres (huile, air, carburant, habitacle)</li>
+              <li>Diagnostic électronique et programmation</li>
+              <li>Entretien du système de freinage et de climatisation</li>
+              <li>Changement d'embrayage et d'amortisseurs</li>
+              <li>Entretien boîte de vitesses et service rapide</li>
+              <li>Vente de pneus des meilleures marques</li>
+            </ul>
+            Nous assurons également la vente d'huiles Castrol 100% originales.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-question" aria-expanded="false">
+          <span>Pourquoi choisir Castrol Service plutôt qu'un autre garage ?</span>
+          <span class="faq-toggle">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Parce que nous sommes le seul centre Castrol Service certifié au Maroc, situé à Résidence Khayzourane, Avenue Tarik Ibn Ziad à Témara. Nous garantissons :
+            <ul>
+              <li>Des produits Castrol authentiques et traçables</li>
+              <li>Une équipe formée selon les standards internationaux</li>
+              <li>Un service professionnel, transparent et rapide</li>
+              <li>Une propreté et un équipement de haut niveau</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-question" aria-expanded="false">
+          <span>Utilisez-vous des pièces d'origine ?</span>
+          <span class="faq-toggle">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Oui, absolument. Toutes les huiles, filtres et pièces utilisées sont des produits Castrol authentiques, traçables et certifiés. Nous sommes un centre officiel Castrol Service, pas un garage générique.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-question" aria-expanded="false">
+          <span>Faut-il prendre rendez-vous ?</span>
+          <span class="faq-toggle">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Ce n'est pas obligatoire : vous pouvez passer directement au garage. Un appel au 06 63 85 05 60 avant de venir nous permet toutefois de préparer l'intervention et de réduire votre attente. Le diagnostic et le devis sont établis avant toute intervention, sans engagement.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-question" aria-expanded="false">
+          <span>Où se trouve le garage et quand êtes-vous ouverts ?</span>
+          <span class="faq-toggle">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Nous sommes à Résidence Khayzourane, Avenue Tarik Ibn Ziad, à Témara, et ouverts 6 jours sur 7. L'itinéraire et la carte sont disponibles dans la section <a href="#infos" style="color: var(--castrol-green-light);">Nous trouver</a>.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     FOOTER
+     ============================================ -->
+<footer class="footer" id="contact">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="images/logo-png-castrol.png" alt="Castrol Service Témara">
+        <p>Garage automobile, vidange et entretien complet. Le seul centre Castrol Service certifié au Maroc, situé à Témara.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Services</h5>
+        <ul>
+          <li><a href="#services">Vidange moteur</a></li>
+          <li><a href="#services">Boîte automatique</a></li>
+          <li><a href="#services">Diagnostic</a></li>
+          <li><a href="#services">Climatisation</a></li>
+          <li><a href="#services">Vente de pneus</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Navigation</h5>
+        <ul>
+          <li><a href="#about">À propos</a></li>
+          <li><a href="#infos">Nous trouver</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#promo">Diagnostic gratuit</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <ul>
+          <li><a href="tel:0663850560">06 63 85 05 60</a></li>
+          <li><a href="https://wa.me/212663850560" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=Castrol+Service+T%C3%A9mara%2C+Avenue+Tarik+Ibn+Ziad%2C+T%C3%A9mara"
+               target="_blank" rel="noopener">Résidence Khayzourane<br>Avenue Tarik Ibn Ziad<br>Témara, Maroc</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 Castrol Service Témara. Tous droits réservés.</p>
+      <!-- Instagram / TikTok icons removed: both pointed at href="#". Re-add with real URLs. -->
+      <div class="footer-social">
+        <a href="https://wa.me/212663850560" class="btn-icon" aria-label="Écrire sur WhatsApp" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.77.46 3.43 1.27 4.88L2 22l5.25-1.27C8.66 21.54 10.28 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.07 14.12c-.21.59-1.23 1.13-1.69 1.16-.43.03-.98.21-3.14-.66-2.65-1.05-4.32-3.75-4.45-3.93-.13-.18-1.06-1.41-1.06-2.69s.67-1.91.91-2.17c.24-.26.52-.33.69-.33.17 0 .35.01.5.01.16 0 .38-.06.59.45.21.52.71 1.8.78 1.93.07.13.11.28.02.46-.09.18-.13.29-.26.45-.13.15-.27.35-.39.46-.13.13-.26.27-.11.52.15.26.66 1.09 1.41 1.77.97.87 1.79 1.13 2.04 1.26.26.13.41.11.56-.07.15-.18.65-.76.82-1.02.17-.26.35-.21.59-.13.24.09 1.51.71 1.77.85.26.13.43.19.49.29.07.11.07.59-.14 1.18z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/212663850560" class="whatsapp-float" aria-label="Contacter sur WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.77.46 3.43 1.27 4.88L2 22l5.25-1.27C8.66 21.54 10.28 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.07 14.12c-.21.59-1.23 1.13-1.69 1.16-.43.03-.98.21-3.14-.66-2.65-1.05-4.32-3.75-4.45-3.93-.13-.18-1.06-1.41-1.06-2.69s.67-1.91.91-2.17c.24-.26.52-.33.69-.33.17 0 .35.01.5.01.16 0 .38-.06.59.45.21.52.71 1.8.78 1.93.07.13.11.28.02.46-.09.18-.13.29-.26.45-.13.15-.27.35-.39.46-.13.13-.26.27-.11.52.15.26.66 1.09 1.41 1.77.97.87 1.79 1.13 2.04 1.26.26.13.41.11.56-.07.15-.18.65-.76.82-1.02.17-.26.35-.21.59-.13.24.09 1.51.71 1.77.85.26.13.43.19.49.29.07.11.07.59-.14 1.18z"/></svg>
+</a>
+
+<!-- ============================================
+     SCRIPTS — Kowalski principles:
+     - IntersectionObserver (never window.scroll)
+     - CSS transitions for dynamic UI
+     - prefers-reduced-motion respected
+     ============================================ -->
+<script>
+// === Service cards toggle ===
+// Kowalski: CSS transitions for interruptible expand
+const svcTriggers = document.querySelectorAll('[data-svc-trigger]');
+
+// Wire each button to the panel it controls so screen readers announce the state
+svcTriggers.forEach((trigger, i) => {
+  const panel = trigger.closest('[data-svc]').querySelector('.svc-detail');
+  panel.id = `svc-detail-${i + 1}`;
+  trigger.setAttribute('aria-controls', panel.id);
+});
+
+function closeAllServices() {
+  document.querySelectorAll('[data-svc]').forEach(c => c.classList.remove('open'));
+  svcTriggers.forEach(t => {
+    t.setAttribute('aria-expanded', 'false');
+    t.querySelector('span:last-child').textContent = 'Détails';
+  });
+}
+
+svcTriggers.forEach(trigger => {
+  trigger.addEventListener('click', () => {
+    const card = trigger.closest('[data-svc]');
+    const wasOpen = card.classList.contains('open');
+    closeAllServices();
+    if (!wasOpen) {
+      card.classList.add('open');
+      trigger.setAttribute('aria-expanded', 'true');
+      trigger.querySelector('span:last-child').textContent = 'Fermer';
+    }
+  });
+});
+
+// === FAQ Toggle ===
+// Kowalski: CSS transitions (not keyframes) for interruptible UI
+document.querySelectorAll('.faq-question').forEach((btn, i) => {
+  const panel = btn.closest('.faq-item').querySelector('.faq-answer');
+  panel.id = `faq-answer-${i + 1}`;
+  btn.setAttribute('aria-controls', panel.id);
+
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.faq-item');
+    const wasOpen = item.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.faq-item').forEach(f => {
+      f.classList.remove('open');
+      f.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+    });
+    // Open clicked if it was closed
+    if (!wasOpen) {
+      item.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+  });
+});
+
+// === Scroll Reveal (IntersectionObserver) ===
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      // Kowalski: trigger clip-path image reveal on bento cells
+      if (entry.target.classList.contains('svc-card')) {
+        entry.target.classList.add('revealed');
+      }
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => revealObserver.observe(el));
+
+// === Nav scroll state (IntersectionObserver, no window.scroll) ===
+const nav = document.getElementById('nav');
+const navObserver = new IntersectionObserver(([entry]) => {
+  nav.classList.toggle('scrolled', !entry.isIntersecting);
+}, { threshold: 0 });
+navObserver.observe(document.querySelector('.hero'));
+
+// === Scroll progress bar ===
+const scrollProgress = document.getElementById('scrollProgress');
+// Use scroll event but throttle with rAF for the progress bar only
+let progressTicking = false;
+window.addEventListener('scroll', () => {
+  if (!progressTicking) {
+    requestAnimationFrame(() => {
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollHeight > 0 ? window.scrollY / scrollHeight : 0;
+      scrollProgress.style.transform = `scaleX(${Math.min(progress, 1)})`;
+      progressTicking = false;
+    });
+    progressTicking = true;
+  }
+}, { passive: true });
+
+// === Mobile Menu ===
+const navBurger = document.getElementById('navBurger');
+const mobileMenu = document.getElementById('mobileMenu');
+const mobileBackdrop = document.getElementById('mobileBackdrop');
+const mobileMenuClose = document.getElementById('mobileMenuClose');
+
+function openMobileMenu() {
+  mobileMenu.classList.add('open');
+  mobileBackdrop.classList.add('open');
+  navBurger.setAttribute('aria-expanded', 'true');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeMobileMenu() {
+  mobileMenu.classList.remove('open');
+  mobileBackdrop.classList.remove('open');
+  navBurger.setAttribute('aria-expanded', 'false');
+  document.body.style.overflow = '';
+}
+
+navBurger.addEventListener('click', openMobileMenu);
+mobileMenuClose.addEventListener('click', closeMobileMenu);
+mobileBackdrop.addEventListener('click', closeMobileMenu);
+// Close on link click
+document.querySelectorAll('.mobile-menu-link').forEach(link => {
+  link.addEventListener('click', closeMobileMenu);
+});
+// Close on Escape
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
+    closeMobileMenu();
+  }
+});
+</script>
+
+</body>
+</html>
