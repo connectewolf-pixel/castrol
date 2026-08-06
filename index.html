@@ -208,7 +208,6 @@
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
-  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
   /* === Shadows (Impeccable: offset + soft blur, never zero-offset halo) === */
   --shadow-card: 0 2px 8px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.2);
@@ -660,179 +659,6 @@ button:focus-visible, a:focus-visible {
 .services-header h2 { margin-bottom: var(--sp-md); }
 .services-header p { max-width: 560px; margin-inline: auto; }
 
-/* === 4-column grid === */
-.service-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--sp-lg);
-}
-
-/* === Service card === */
-.svc-card {
-  background: #141414;
-  border: 1px solid #262626;
-  border-radius: var(--r-none);
-  padding: 32px;
-  position: relative;
-  transition: border-color 300ms var(--ease-out),
-              box-shadow 300ms var(--ease-out),
-              transform 300ms var(--ease-out);
-}
-@media (hover: hover) and (pointer: fine) {
-  .svc-card:hover {
-    border-color: var(--castrol-green);
-    /* Lift with real elevation; the green border already carries the accent */
-    box-shadow: var(--shadow-card);
-    transform: translateY(-3px);
-  }
-}
-
-/* Icon */
-.svc-icon {
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #0d0d0d;
-  border: 1px solid #262626;
-  border-radius: var(--r-none);
-  margin-bottom: var(--sp-lg);
-  transition: border-color 300ms var(--ease-out),
-              background-color 300ms var(--ease-out);
-}
-.svc-icon svg {
-  width: 24px;
-  height: 24px;
-  stroke: var(--castrol-green-light);
-  stroke-width: 1.5;
-  fill: none;
-  transition: stroke 300ms var(--ease-out);
-}
-@media (hover: hover) and (pointer: fine) {
-  .svc-card:hover .svc-icon {
-    border-color: var(--castrol-green);
-    background: rgba(0,151,55,0.08);
-  }
-}
-
-.svc-tag {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--castrol-green-light);
-  margin-bottom: 6px;
-  display: block;
-}
-.svc-card h3 {
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 1.3;
-  margin-bottom: var(--sp-sm);
-}
-.svc-card .svc-short {
-  font-size: 13px;
-  font-weight: 300;
-  color: var(--body);
-  line-height: 1.5;
-  margin-bottom: var(--sp-lg);
-}
-
-/* Toggle button */
-.svc-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--ink);
-  padding: 10px 20px;
-  border: 1px solid #333333;
-  background: #0d0d0d;
-  transition: border-color 200ms var(--ease-out),
-              background-color 200ms var(--ease-out),
-              color 200ms var(--ease-out);
-}
-.svc-toggle:active { transform: scale(0.97); }
-@media (hover: hover) and (pointer: fine) {
-  .svc-toggle:hover {
-    border-color: var(--castrol-green);
-    color: var(--castrol-green-light);
-    background: rgba(0,151,55,0.05);
-  }
-}
-.svc-card.open .svc-toggle {
-  border-color: var(--castrol-green);
-  color: var(--castrol-green-light);
-  background: rgba(0,151,55,0.08);
-}
-.svc-toggle svg {
-  width: 14px; height: 14px;
-  stroke: currentColor; stroke-width: 2; fill: none;
-  transition: transform 300ms var(--ease-out);
-}
-.svc-card.open .svc-toggle svg { transform: rotate(45deg); }
-
-/* Expandable detail — grid rows animate to the content's real height,
-   so no max-height guess can clip a longer list */
-.svc-detail {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 400ms var(--ease-out);
-}
-.svc-card.open .svc-detail { grid-template-rows: 1fr; }
-.svc-detail-inner {
-  overflow: hidden;
-  min-height: 0;
-  font-size: 13px;
-  font-weight: 300;
-  color: var(--body);
-  line-height: 1.6;
-}
-.svc-detail-inner > ul {
-  margin-top: var(--sp-lg);
-  padding-top: var(--sp-md);
-  border-top: 1px solid #262626;
-}
-.svc-detail-inner ul {
-  list-style: none;
-  display: grid;
-  gap: 8px;
-}
-.svc-detail-inner li {
-  position: relative;
-  padding-left: 16px;
-}
-.svc-detail-inner li::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 9px;
-  width: 8px; height: 1px;
-  background: var(--castrol-green);
-}
-
-/* === Responsive ===
-   Eight full-height cards stacked one per row made the phone page endless.
-   Below 640px the card goes horizontal: icon beside the title, detail underneath. */
-@media (max-width: 1024px) {
-  .service-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 640px) {
-  .service-grid { grid-template-columns: 1fr; gap: var(--sp-sm); }
-  .svc-card { padding: var(--sp-md); display: grid; grid-template-columns: 44px 1fr; gap: 0 var(--sp-md); align-items: start; }
-  .svc-icon { width: 44px; height: 44px; margin-bottom: 0; grid-row: span 2; }
-  .svc-icon svg { width: 20px; height: 20px; }
-  .svc-tag { grid-column: 2; margin-bottom: 2px; }
-  .svc-card h3 { grid-column: 2; margin-bottom: 6px; }
-  .svc-card .svc-short { grid-column: 2; margin-bottom: var(--sp-sm); }
-  .svc-toggle { grid-column: 2; justify-self: start; padding: 8px 14px; }
-  .svc-detail { grid-column: 2; }
-  .svc-card.open .svc-detail { margin-top: var(--sp-sm); }
-}
-
 /* ============================================
    ABOUT SPLIT
    ============================================ */
@@ -1233,12 +1059,12 @@ button:focus-visible, a:focus-visible {
 .faq-item.open .faq-answer-inner { padding-bottom: var(--sp-lg); }
 /* Le padding échappe à la compression de `grid-template-rows: 0fr` : gardé en
    dur, il laissait 24px de vide sous chaque question fermée. On ne l'applique
-   donc qu'à l'ouverture, en l'animant sur la même durée. */
+   donc qu'à l'ouverture — sans transition, la hauteur étant déjà animée par
+   grid-template-rows et le contenu clippé pendant le trajet. */
 .faq-answer-inner {
   overflow: hidden;
   min-height: 0;
   padding-bottom: 0;
-  transition: padding-bottom 400ms var(--ease-out);
   font-size: 15px;
   font-weight: 300;
   color: var(--body);
@@ -1365,7 +1191,7 @@ button:focus-visible, a:focus-visible {
   justify-content: center;
   z-index: 90;
   box-shadow: 0 6px 20px rgba(0,0,0,0.55), 0 2px 6px rgba(0,0,0,0.4);
-  transition: transform 200ms var(--ease-spring), background-color 200ms var(--ease-out);
+  transition: transform 200ms var(--ease-out), background-color 200ms var(--ease-out);
 }
 .whatsapp-float:active { transform: scale(0.92); }
 @media (hover: hover) and (pointer: fine) {
@@ -1449,6 +1275,351 @@ button:focus-visible, a:focus-visible {
 @media (min-width: 1025px) {
   .mobile-menu, .mobile-menu-backdrop { display: none; }
 }
+/* ============================================
+   SERVICES — sélecteur à panneaux
+   Les 8 services vivent côte à côte ; celui qu'on choisit s'ouvre et
+   repousse les autres. Un seul geste, une seule chose lisible à la fois.
+   Faute de photos du garage, chaque panneau porte sa propre composition :
+   dégradé carbone, icône du service en filigrane, voile vert à l'ouverture.
+   Le jour où les photos existent, poser background-image sur .svc-panel-art
+   suffit — la structure ne bouge pas.
+   ============================================ */
+.svc-strip {
+  display: flex;
+  height: 480px;
+  gap: 1px;
+  background: var(--hairline-strong); /* le filet entre panneaux, vu par le gap */
+  border: 1px solid var(--hairline-strong);
+  overflow: hidden;
+}
+/* La bande n'a pas d'entrée propre : ce sont ses panneaux qui se déroulent.
+   `.reveal` ne sert ici qu'à la faire observer par l'IntersectionObserver. */
+.svc-strip.reveal { opacity: 1; transform: none; }
+
+.svc-panel {
+  position: relative;
+  flex: 1 1 0%;
+  min-width: 64px;
+  background: linear-gradient(180deg, #141414 0%, #0b0b0b 100%);
+  overflow: hidden;
+  isolation: isolate;
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: flex-grow 700ms var(--ease-drawer);
+}
+/* L'entrée en cascade ne se joue qu'une fois, au premier passage à l'écran */
+.svc-strip.revealed .svc-panel {
+  opacity: 1;
+  transform: none;
+  transition: flex-grow 700ms var(--ease-drawer),
+              opacity 600ms var(--ease-out) calc(var(--i) * 80ms),
+              transform 700ms var(--ease-out) calc(var(--i) * 80ms);
+}
+.svc-panel.is-active { flex-grow: 7; }
+
+/* Voile de profondeur : vert qui monte du bas, noir qui assoit le texte */
+.svc-panel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(130% 75% at 50% 100%, rgba(0, 151, 55, 0.26), transparent 62%),
+    linear-gradient(180deg, transparent 35%, rgba(0, 0, 0, 0.88) 100%);
+  opacity: 0;
+  transition: opacity 700ms var(--ease-out);
+  pointer-events: none;
+  z-index: 1;
+}
+.svc-panel.is-active::after { opacity: 1; }
+
+/* Filet de marque sur la tranche du panneau ouvert */
+.svc-panel::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--castrol-green) 0 55%, var(--castrol-red) 55% 100%);
+  transform: scaleY(0);
+  transform-origin: 50% 0;
+  transition: transform 600ms var(--ease-out);
+  z-index: 2;
+}
+.svc-panel.is-active::before { transform: scaleY(1); }
+
+.svc-panel-art {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  background-size: cover;
+  background-position: center;
+}
+/* Fermé, le filigrane est plus large que la bande : il n'en resterait que
+   des fragments de traits. On le garde comme simple grain, et on ne lui
+   donne sa pleine échelle qu'une fois le panneau ouvert. */
+.svc-panel-art svg {
+  width: 240px;
+  height: 240px;
+  stroke: var(--castrol-green-light);
+  fill: none;
+  stroke-width: 0.9;
+  opacity: 0.035;
+  transform: scale(0.6);
+  transition: opacity 700ms var(--ease-out), transform 900ms var(--ease-out);
+}
+.svc-panel.is-active .svc-panel-art svg {
+  opacity: 0.15;
+  transform: scale(1) translateY(-8%);
+}
+
+/* Le bouton couvre le panneau : on clique n'importe où sur la bande */
+.svc-panel-hit {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  z-index: 4;
+}
+.svc-panel-hit:focus-visible {
+  outline: 2px solid var(--castrol-green-light);
+  outline-offset: -5px;
+}
+.svc-panel.is-active .svc-panel-hit { cursor: default; }
+
+.svc-sr {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.svc-panel-head {
+  position: absolute;
+  left: var(--sp-lg);
+  bottom: var(--sp-lg);
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: var(--sp-md);
+  z-index: 3;
+  pointer-events: none;
+}
+.svc-panel-icon {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--hairline);
+  background: rgba(18, 18, 18, 0.82);
+  backdrop-filter: blur(10px);
+  transition: border-color 500ms var(--ease-out), background-color 500ms var(--ease-out);
+}
+.svc-panel.is-active .svc-panel-icon {
+  border-color: var(--castrol-green);
+  background: rgba(0, 151, 55, 0.2);
+}
+.svc-panel-icon svg {
+  width: 22px; height: 22px;
+  stroke: var(--ink);
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+/* Fermé, le nom se lit sur la tranche : 8 bandes d'icônes seules ne se
+   distinguent pas assez pour qu'on sache où l'on clique. */
+.svc-panel-label {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--body);
+  transition: opacity 350ms var(--ease-out), color 500ms var(--ease-out);
+}
+.svc-panel.is-active .svc-panel-label { opacity: 0; }
+
+.svc-panel-body {
+  position: absolute;
+  left: calc(var(--sp-lg) + 44px + var(--sp-lg));
+  right: var(--sp-lg);
+  bottom: var(--sp-lg);
+  max-width: 62ch;
+  z-index: 3;
+  opacity: 0;
+  transform: translateX(28px);
+  transition: opacity 450ms var(--ease-out), transform 600ms var(--ease-out);
+  pointer-events: none;
+}
+.svc-panel.is-active .svc-panel-body {
+  opacity: 1;
+  transform: none;
+  transition-delay: 200ms;
+}
+.svc-panel-cat {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--castrol-green-light);
+  margin-bottom: var(--sp-xs);
+}
+.svc-panel-body h3 {
+  font-size: clamp(24px, 2.6vw, 34px);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: var(--sp-sm);
+}
+.svc-panel-desc {
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--body-strong);
+  max-width: 46ch;
+}
+.svc-panel-body ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-xs) var(--sp-lg);
+  margin-top: var(--sp-md);
+  padding: 0;
+  list-style: none;
+}
+.svc-panel-body li {
+  position: relative;
+  padding-left: var(--sp-sm);
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--body);
+  white-space: nowrap;
+}
+.svc-panel-body li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 5px;
+  height: 1px;
+  background: var(--castrol-green);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .svc-panel:not(.is-active):hover { background: linear-gradient(180deg, #1b1b1b 0%, #0f0f0f 100%); }
+  .svc-panel:not(.is-active):hover .svc-panel-label { color: var(--ink); }
+  .svc-panel:not(.is-active):hover .svc-panel-art svg { opacity: 0.12; }
+}
+
+@media (max-width: 1180px) {
+  .svc-strip { height: 420px; }
+  .svc-panel { min-width: 56px; }
+  .svc-panel-art svg { width: 180px; height: 180px; }
+}
+
+/* Sous 900px la bande bascule à la verticale : les panneaux s'empilent et
+   s'ouvrent en hauteur. Le corps passe en flux normal et la rangée est
+   pilotée en grid-template-rows — une hauteur fixe finirait par tronquer. */
+@media (max-width: 900px) {
+  .svc-strip {
+    flex-direction: column;
+    height: auto;
+    gap: 1px;
+  }
+  .svc-panel {
+    display: grid;
+    grid-template-rows: 76px 0fr;
+    min-width: 0;
+    flex: 0 0 auto;
+    transform: translateY(-20px);
+    transition: grid-template-rows 550ms var(--ease-drawer);
+  }
+  .svc-strip.revealed .svc-panel {
+    transform: none;
+    transition: grid-template-rows 550ms var(--ease-drawer),
+                opacity 500ms var(--ease-out) calc(var(--i) * 60ms),
+                transform 600ms var(--ease-out) calc(var(--i) * 60ms);
+  }
+  .svc-panel.is-active { flex-grow: 0; grid-template-rows: 76px 1fr; }
+  .svc-panel::before {
+    width: 100%;
+    height: 3px;
+    bottom: auto;
+    background: linear-gradient(90deg, var(--castrol-green) 0 55%, var(--castrol-red) 55% 100%);
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+  }
+  .svc-panel.is-active::before { transform: scaleX(1); }
+  .svc-panel::after {
+    background: linear-gradient(90deg, rgba(0, 151, 55, 0.16), transparent 55%);
+  }
+  .svc-panel-art { place-items: start end; padding: var(--sp-md); }
+  .svc-panel-art svg { width: 120px; height: 120px; opacity: 0.04; transform: none; }
+  .svc-panel.is-active .svc-panel-art svg { opacity: 0.12; transform: none; }
+
+  .svc-panel-head {
+    position: static;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--sp-md);
+    padding: 0 var(--sp-lg);
+    height: 76px;
+  }
+  .svc-panel-label {
+    writing-mode: horizontal-tb;
+    transform: none;
+    font-size: 14px;
+    letter-spacing: 1px;
+    color: var(--ink);
+    white-space: normal;
+  }
+  .svc-panel.is-active .svc-panel-label { opacity: 1; color: var(--castrol-green-light); }
+
+  .svc-panel-body {
+    position: static;
+    max-width: none;
+    opacity: 1;
+    transform: none;
+    overflow: hidden;
+    min-height: 0;
+    padding: 0 var(--sp-lg);
+    transition: none;
+  }
+  .svc-panel.is-active .svc-panel-body { transition-delay: 0ms; padding-bottom: var(--sp-lg); }
+  .svc-panel-body h3 { display: none; } /* le nom est déjà dans la tête de ligne */
+  .svc-panel-body ul { flex-direction: column; gap: var(--sp-xs); }
+  .svc-panel-body li { white-space: normal; }
+}
+
+/* Le sélecteur s'ouvre toujours, mais sans course de panneaux */
+@media (prefers-reduced-motion: reduce) {
+  .svc-panel,
+  .svc-strip.revealed .svc-panel,
+  .svc-panel-art svg,
+  .svc-panel-body,
+  .svc-panel::after,
+  .svc-panel::before {
+    transition-duration: 1ms !important;
+    transition-delay: 0ms !important;
+  }
+}
+
 /* ============================================
    AVIS (preuve sociale Google)
    ============================================ */
@@ -1703,7 +1874,6 @@ button:focus-visible, a:focus-visible {
 /* Au doigt, une cible sous 44px se rate. Ne s'applique qu'aux pointeurs
    grossiers pour ne pas gonfler l'interface à la souris. */
 @media (pointer: coarse) {
-  .svc-toggle { min-height: 44px; }
   .footer-col ul a,
   .find-rows dd a { display: inline-block; padding: 11px 0; }
 }
@@ -1787,203 +1957,218 @@ button:focus-visible, a:focus-visible {
 </section>
 
 <!-- ============================================
-     SERVICES — vehicle hero + 4-column grid
+     SERVICES — sélecteur à panneaux
+     Un panneau par service : on en ouvre un, il repousse les autres.
+     Remplace la grille de 8 cartes identiques et son accordéon.
      ============================================ -->
 <section class="section" id="services">
   <div class="container">
     <div class="services-header reveal">
       <h2 class="display-lg">Services</h2>
-      <p class="body-md" style="color: var(--body);">Une gamme complète pour votre véhicule. Ouvrez un service pour en voir le détail.</p>
+      <p class="body-md" style="color: var(--body);">Une gamme complète pour votre véhicule. Choisissez un service pour en voir le détail.</p>
     </div>
 
-    <!-- 4-column grid -->
-    <div class="service-grid">
-
-      <!-- Vidange -->
-      <div class="svc-card reveal" data-svc>
-        <div class="svc-icon">
+    <div class="svc-strip reveal" id="svcStrip">
+      <div class="svc-panel is-active" data-svc-panel style="--i: 0">
+        <button class="svc-panel-hit" id="svc-tab-1" aria-expanded="true" aria-controls="svc-body-1">
+          <span class="svc-sr">Voir le détail : Vidange d'huile</span>
+        </button>
+        <div class="svc-panel-art" aria-hidden="true">
           <svg viewBox="0 0 24 24"><path d="M12 2l2 4h-4l2-4zM5 22h14l-2-12H7L5 22zM9 10h6M10 14h4M11 18h2"/></svg>
         </div>
-        <span class="svc-tag">Moteur</span>
-        <h3>Vidange d'huile</h3>
-        <p class="svc-short">Huiles Castrol 100% originales avec remplacement de filtre.</p>
-        <button class="svc-toggle" data-svc-trigger aria-expanded="false">
-          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          <span>Détails</span>
-        </button>
-        <div class="svc-detail">
-          <div class="svc-detail-inner">
-            <ul>
-              <li>Vidange moteur complète</li>
-              <li>Remplacement filtre à huile et air</li>
-              <li>Contrôle des niveaux</li>
-            </ul>
-          </div>
+        <div class="svc-panel-head">
+          <span class="svc-panel-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 2l2 4h-4l2-4zM5 22h14l-2-12H7L5 22zM9 10h6M10 14h4M11 18h2"/></svg>
+          </span>
+          <span class="svc-panel-label">Vidange d'huile</span>
+        </div>
+        <div class="svc-panel-body" id="svc-body-1" role="region" aria-labelledby="svc-tab-1">
+          <p class="svc-panel-cat">Moteur</p>
+          <h3>Vidange d'huile</h3>
+          <p class="svc-panel-desc">Huiles Castrol 100% originales avec remplacement de filtre.</p>
+          <ul>
+            <li>Vidange moteur complète</li>
+            <li>Remplacement filtre à huile et air</li>
+            <li>Contrôle des niveaux</li>
+          </ul>
         </div>
       </div>
 
-      <!-- Freinage -->
-      <div class="svc-card reveal" data-svc>
-        <div class="svc-icon">
+      <div class="svc-panel" data-svc-panel style="--i: 1">
+        <button class="svc-panel-hit" id="svc-tab-2" aria-expanded="false" aria-controls="svc-body-2">
+          <span class="svc-sr">Voir le détail : Freinage</span>
+        </button>
+        <div class="svc-panel-art" aria-hidden="true">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/></svg>
         </div>
-        <span class="svc-tag">Sécurité</span>
-        <h3>Freinage</h3>
-        <p class="svc-short">Plaquettes, disques et purge du liquide de frein.</p>
-        <button class="svc-toggle" data-svc-trigger aria-expanded="false">
-          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          <span>Détails</span>
-        </button>
-        <div class="svc-detail">
-          <div class="svc-detail-inner">
-            <ul>
-              <li>Plaquettes et disques</li>
-              <li>Purge du liquide de frein</li>
-              <li>Contrôle ABS</li>
-            </ul>
-          </div>
+        <div class="svc-panel-head">
+          <span class="svc-panel-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/></svg>
+          </span>
+          <span class="svc-panel-label">Freinage</span>
+        </div>
+        <div class="svc-panel-body" id="svc-body-2" role="region" aria-labelledby="svc-tab-2">
+          <p class="svc-panel-cat">Sécurité</p>
+          <h3>Freinage</h3>
+          <p class="svc-panel-desc">Plaquettes, disques et purge du liquide de frein.</p>
+          <ul>
+            <li>Plaquettes et disques</li>
+            <li>Purge du liquide de frein</li>
+            <li>Contrôle ABS</li>
+          </ul>
         </div>
       </div>
 
-      <!-- Diagnostic -->
-      <div class="svc-card reveal" data-svc>
-        <div class="svc-icon">
+      <div class="svc-panel" data-svc-panel style="--i: 2">
+        <button class="svc-panel-hit" id="svc-tab-3" aria-expanded="false" aria-controls="svc-body-3">
+          <span class="svc-sr">Voir le détail : Diagnostic</span>
+        </button>
+        <div class="svc-panel-art" aria-hidden="true">
           <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14"/><path d="M2 20h20M8 10l2 2 4-4"/></svg>
         </div>
-        <span class="svc-tag">Électronique</span>
-        <h3>Diagnostic</h3>
-        <p class="svc-short">Scanner OBD professionnel et programmation toutes marques.</p>
-        <button class="svc-toggle" data-svc-trigger aria-expanded="false">
-          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          <span>Détails</span>
-        </button>
-        <div class="svc-detail">
-          <div class="svc-detail-inner">
-            <ul>
-              <li>Lecture codes défauts</li>
-              <li>Programmation et reprogrammation</li>
-              <li>Calibration capteurs</li>
-            </ul>
-          </div>
+        <div class="svc-panel-head">
+          <span class="svc-panel-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14"/><path d="M2 20h20M8 10l2 2 4-4"/></svg>
+          </span>
+          <span class="svc-panel-label">Diagnostic</span>
+        </div>
+        <div class="svc-panel-body" id="svc-body-3" role="region" aria-labelledby="svc-tab-3">
+          <p class="svc-panel-cat">Électronique</p>
+          <h3>Diagnostic</h3>
+          <p class="svc-panel-desc">Scanner OBD professionnel et programmation toutes marques.</p>
+          <ul>
+            <li>Lecture codes défauts</li>
+            <li>Programmation et reprogrammation</li>
+            <li>Calibration capteurs</li>
+          </ul>
         </div>
       </div>
 
-      <!-- Climatisation -->
-      <div class="svc-card reveal" data-svc>
-        <div class="svc-icon">
+      <div class="svc-panel" data-svc-panel style="--i: 3">
+        <button class="svc-panel-hit" id="svc-tab-4" aria-expanded="false" aria-controls="svc-body-4">
+          <span class="svc-sr">Voir le détail : Climatisation</span>
+        </button>
+        <div class="svc-panel-art" aria-hidden="true">
           <svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20M5 5l14 14M19 5L5 19"/></svg>
         </div>
-        <span class="svc-tag">Confort</span>
-        <h3>Climatisation</h3>
-        <p class="svc-short">Recharge de gaz et entretien complet du système.</p>
-        <button class="svc-toggle" data-svc-trigger aria-expanded="false">
-          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          <span>Détails</span>
-        </button>
-        <div class="svc-detail">
-          <div class="svc-detail-inner">
-            <ul>
-              <li>Recharge gaz réfrigérant</li>
-              <li>Nettoyage circuit</li>
-              <li>Remplacement filtre habitacle</li>
-            </ul>
-          </div>
+        <div class="svc-panel-head">
+          <span class="svc-panel-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20M5 5l14 14M19 5L5 19"/></svg>
+          </span>
+          <span class="svc-panel-label">Climatisation</span>
+        </div>
+        <div class="svc-panel-body" id="svc-body-4" role="region" aria-labelledby="svc-tab-4">
+          <p class="svc-panel-cat">Confort</p>
+          <h3>Climatisation</h3>
+          <p class="svc-panel-desc">Recharge de gaz et entretien complet du système.</p>
+          <ul>
+            <li>Recharge gaz réfrigérant</li>
+            <li>Nettoyage circuit</li>
+            <li>Remplacement filtre habitacle</li>
+          </ul>
         </div>
       </div>
 
-      <!-- Boîte auto -->
-      <div class="svc-card reveal" data-svc>
-        <div class="svc-icon">
+      <div class="svc-panel" data-svc-panel style="--i: 4">
+        <button class="svc-panel-hit" id="svc-tab-5" aria-expanded="false" aria-controls="svc-body-5">
+          <span class="svc-sr">Voir le détail : Boîte automatique</span>
+        </button>
+        <div class="svc-panel-art" aria-hidden="true">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/></svg>
         </div>
-        <span class="svc-tag">Expertise</span>
-        <h3>Boîte automatique</h3>
-        <p class="svc-short">Diagnostic, entretien et réparation toutes marques.</p>
-        <button class="svc-toggle" data-svc-trigger aria-expanded="false">
-          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          <span>Détails</span>
-        </button>
-        <div class="svc-detail">
-          <div class="svc-detail-inner">
-            <ul>
-              <li>Vidange boîte automatique</li>
-              <li>Remplacement liquide et filtre</li>
-              <li>Réparation mécanique</li>
-            </ul>
-          </div>
+        <div class="svc-panel-head">
+          <span class="svc-panel-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/></svg>
+          </span>
+          <span class="svc-panel-label">Boîte automatique</span>
+        </div>
+        <div class="svc-panel-body" id="svc-body-5" role="region" aria-labelledby="svc-tab-5">
+          <p class="svc-panel-cat">Expertise</p>
+          <h3>Boîte automatique</h3>
+          <p class="svc-panel-desc">Diagnostic, entretien et réparation toutes marques.</p>
+          <ul>
+            <li>Vidange boîte automatique</li>
+            <li>Remplacement liquide et filtre</li>
+            <li>Réparation mécanique</li>
+          </ul>
         </div>
       </div>
 
-      <!-- Pneus -->
-      <div class="svc-card reveal" data-svc>
-        <div class="svc-icon">
+      <div class="svc-panel" data-svc-panel style="--i: 5">
+        <button class="svc-panel-hit" id="svc-tab-6" aria-expanded="false" aria-controls="svc-body-6">
+          <span class="svc-sr">Voir le détail : Vente de pneus</span>
+        </button>
+        <div class="svc-panel-art" aria-hidden="true">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>
         </div>
-        <span class="svc-tag">Boutique</span>
-        <h3>Vente de pneus</h3>
-        <p class="svc-short">Meilleures marques, montage et équilibrage inclus.</p>
-        <button class="svc-toggle" data-svc-trigger aria-expanded="false">
-          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          <span>Détails</span>
-        </button>
-        <div class="svc-detail">
-          <div class="svc-detail-inner">
-            <ul>
-              <li>Montage et équilibrage</li>
-              <li>Vente toutes dimensions</li>
-              <li>Contrôle pression et géométrie</li>
-            </ul>
-          </div>
+        <div class="svc-panel-head">
+          <span class="svc-panel-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>
+          </span>
+          <span class="svc-panel-label">Vente de pneus</span>
+        </div>
+        <div class="svc-panel-body" id="svc-body-6" role="region" aria-labelledby="svc-tab-6">
+          <p class="svc-panel-cat">Boutique</p>
+          <h3>Vente de pneus</h3>
+          <p class="svc-panel-desc">Meilleures marques, montage et équilibrage inclus.</p>
+          <ul>
+            <li>Montage et équilibrage</li>
+            <li>Vente toutes dimensions</li>
+            <li>Contrôle pression et géométrie</li>
+          </ul>
         </div>
       </div>
 
-      <!-- Embrayage -->
-      <div class="svc-card reveal" data-svc>
-        <div class="svc-icon">
+      <div class="svc-panel" data-svc-panel style="--i: 6">
+        <button class="svc-panel-hit" id="svc-tab-7" aria-expanded="false" aria-controls="svc-body-7">
+          <span class="svc-sr">Voir le détail : Embrayage</span>
+        </button>
+        <div class="svc-panel-art" aria-hidden="true">
           <svg viewBox="0 0 24 24"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="12" r="3"/><path d="M9 12h6"/></svg>
         </div>
-        <span class="svc-tag">Mécanique</span>
-        <h3>Embrayage</h3>
-        <p class="svc-short">Changement d'embrayage et amortisseurs.</p>
-        <button class="svc-toggle" data-svc-trigger aria-expanded="false">
-          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          <span>Détails</span>
-        </button>
-        <div class="svc-detail">
-          <div class="svc-detail-inner">
-            <ul>
-              <li>Changement embrayage</li>
-              <li>Remplacement amortisseurs</li>
-              <li>Contrôle suspension</li>
-            </ul>
-          </div>
+        <div class="svc-panel-head">
+          <span class="svc-panel-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="12" r="3"/><path d="M9 12h6"/></svg>
+          </span>
+          <span class="svc-panel-label">Embrayage</span>
+        </div>
+        <div class="svc-panel-body" id="svc-body-7" role="region" aria-labelledby="svc-tab-7">
+          <p class="svc-panel-cat">Mécanique</p>
+          <h3>Embrayage</h3>
+          <p class="svc-panel-desc">Changement d'embrayage et amortisseurs.</p>
+          <ul>
+            <li>Changement embrayage</li>
+            <li>Remplacement amortisseurs</li>
+            <li>Contrôle suspension</li>
+          </ul>
         </div>
       </div>
 
-      <!-- Filtres -->
-      <div class="svc-card reveal" data-svc>
-        <div class="svc-icon">
+      <div class="svc-panel" data-svc-panel style="--i: 7">
+        <button class="svc-panel-hit" id="svc-tab-8" aria-expanded="false" aria-controls="svc-body-8">
+          <span class="svc-sr">Voir le détail : Filtres</span>
+        </button>
+        <div class="svc-panel-art" aria-hidden="true">
           <svg viewBox="0 0 24 24"><path d="M3 4h18l-7 8v8l-4-2v-6L3 4z"/></svg>
         </div>
-        <span class="svc-tag">Entretien</span>
-        <h3>Filtres</h3>
-        <p class="svc-short">Remplacement tous filtres : huile, air, carburant, habitacle.</p>
-        <button class="svc-toggle" data-svc-trigger aria-expanded="false">
-          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          <span>Détails</span>
-        </button>
-        <div class="svc-detail">
-          <div class="svc-detail-inner">
-            <ul>
-              <li>Filtre à huile</li>
-              <li>Filtre à air moteur</li>
-              <li>Filtre à carburant</li>
-              <li>Filtre d'habitacle</li>
-            </ul>
-          </div>
+        <div class="svc-panel-head">
+          <span class="svc-panel-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M3 4h18l-7 8v8l-4-2v-6L3 4z"/></svg>
+          </span>
+          <span class="svc-panel-label">Filtres</span>
+        </div>
+        <div class="svc-panel-body" id="svc-body-8" role="region" aria-labelledby="svc-tab-8">
+          <p class="svc-panel-cat">Entretien</p>
+          <h3>Filtres</h3>
+          <p class="svc-panel-desc">Remplacement tous filtres : huile, air, carburant, habitacle.</p>
+          <ul>
+            <li>Filtre à huile</li>
+            <li>Filtre à air moteur</li>
+            <li>Filtre à carburant</li>
+            <li>Filtre d'habitacle</li>
+          </ul>
         </div>
       </div>
-
     </div>
   </div>
 </section>
@@ -2518,35 +2703,33 @@ button:focus-visible, a:focus-visible {
      - prefers-reduced-motion respected
      ============================================ -->
 <script>
-// === Service cards toggle ===
-// Kowalski: CSS transitions for interruptible expand
-const svcTriggers = document.querySelectorAll('[data-svc-trigger]');
+// === Services : sélecteur à panneaux ===
+// Un seul service ouvert à la fois — l'ouverture reste pilotée par CSS pour
+// rester interruptible. Les flèches parcourent la bande au clavier.
+const svcPanels = Array.from(document.querySelectorAll('[data-svc-panel]'));
 
-// Wire each button to the panel it controls so screen readers announce the state
-svcTriggers.forEach((trigger, i) => {
-  const panel = trigger.closest('[data-svc]').querySelector('.svc-detail');
-  panel.id = `svc-detail-${i + 1}`;
-  trigger.setAttribute('aria-controls', panel.id);
-});
-
-function closeAllServices() {
-  document.querySelectorAll('[data-svc]').forEach(c => c.classList.remove('open'));
-  svcTriggers.forEach(t => {
-    t.setAttribute('aria-expanded', 'false');
-    t.querySelector('span:last-child').textContent = 'Détails';
+function openService(index) {
+  svcPanels.forEach((panel, i) => {
+    const on = i === index;
+    panel.classList.toggle('is-active', on);
+    panel.querySelector('.svc-panel-hit').setAttribute('aria-expanded', String(on));
   });
 }
 
-svcTriggers.forEach(trigger => {
-  trigger.addEventListener('click', () => {
-    const card = trigger.closest('[data-svc]');
-    const wasOpen = card.classList.contains('open');
-    closeAllServices();
-    if (!wasOpen) {
-      card.classList.add('open');
-      trigger.setAttribute('aria-expanded', 'true');
-      trigger.querySelector('span:last-child').textContent = 'Fermer';
-    }
+svcPanels.forEach((panel, i) => {
+  const hit = panel.querySelector('.svc-panel-hit');
+
+  hit.addEventListener('click', () => openService(i));
+
+  hit.addEventListener('keydown', (e) => {
+    const step = (e.key === 'ArrowRight' || e.key === 'ArrowDown') ? 1
+               : (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   ? -1
+               : 0;
+    if (!step) return;
+    e.preventDefault();
+    const next = (i + step + svcPanels.length) % svcPanels.length;
+    openService(next);
+    svcPanels[next].querySelector('.svc-panel-hit').focus();
   });
 });
 
@@ -2578,8 +2761,8 @@ const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add('visible');
-      // Kowalski: trigger clip-path image reveal on bento cells
-      if (entry.target.classList.contains('svc-card')) {
+      // La bande de services déroule ses panneaux en cascade à son entrée
+      if (entry.target.classList.contains('svc-strip')) {
         entry.target.classList.add('revealed');
       }
       revealObserver.unobserve(entry.target);
