@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Une seule URL pour l'instant : la démo est une page unique.
+  Si les pages locales de l'ancien site sont reconstruites (vidange-rabat,
+  entretien-rabat, climatisation-recharge-gaz-temara…), les ajouter ici.
+  Voir la section « Le trou SEO » du README.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://castrol-service-temara.com/</loc>
+    <lastmod>2026-08-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>

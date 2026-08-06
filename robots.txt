@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://castrol-service-temara.com/sitemap.xml

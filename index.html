@@ -8,13 +8,23 @@
 <link rel="icon" href="images/icon-officiel-castrol-service-temara.webp" type="image/webp">
 <meta name="theme-color" content="#0a0a0a">
 
-<!-- Social preview -->
+<!-- Domaine de destination. Si la démo est déployée ailleurs (Railway, Netlify),
+     changer cette base ici, dans og:url et dans sitemap.xml. -->
+<link rel="canonical" href="https://castrol-service-temara.com/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+
+<!-- Social preview. og:image reste en JPG et en URL absolue : les crawlers
+     WhatsApp / Facebook ignorent le WebP et les chemins relatifs. -->
 <meta property="og:type" content="website">
 <meta property="og:locale" content="fr_MA">
 <meta property="og:site_name" content="Castrol Service Témara">
+<meta property="og:url" content="https://castrol-service-temara.com/">
 <meta property="og:title" content="Castrol Service Témara — Garage Auto, Vidange & Entretien">
-<meta property="og:description" content="Le seul centre Castrol Service certifié au Maroc. Vidange, diagnostic, freinage, climatisation à Témara.">
-<meta property="og:image" content="images/hero-poster.jpg">
+<meta property="og:description" content="Le seul centre Castrol Service certifié au Maroc. Vidange, diagnostic, freinage, climatisation à Témara. 4,8/5 sur Google.">
+<meta property="og:image" content="https://castrol-service-temara.com/images/hero-poster.jpg">
+<meta property="og:image:width" content="1920">
+<meta property="og:image:height" content="1080">
+<meta property="og:image:alt" content="Atelier Castrol Service Témara">
 <meta name="twitter:card" content="summary_large_image">
 
 <!-- Fonts: Inter as BMW Type Next substitute -->
@@ -23,20 +33,38 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
 
 <!-- LCP: the hero poster paints before the video is decoded -->
-<link rel="preload" as="image" href="images/hero-poster.jpg" fetchpriority="high">
+<link rel="preload" as="image" href="images/hero-poster.webp" fetchpriority="high">
 
-<!-- Local search: only facts stated on the page. Add "geo" and precise
-     "openingHoursSpecification" once the owner confirms them. -->
+<!-- Local search: only facts stated on the page.
+     RESTE À FOURNIR PAR LE PROPRIÉTAIRE (voir README.md) :
+       - "geo" : latitude/longitude exactes. Volontairement absent — de fausses
+         coordonnées enverraient les clients au mauvais endroit.
+       - "openingHoursSpecification" : bloc prêt à décommenter plus bas.
+     À VÉRIFIER AVANT MISE EN LIGNE : la note et le nombre d'avis ci-dessous
+     doivent correspondre à ce qu'affiche la fiche Google le jour du déploiement.
+     Google exige que ces valeurs soient aussi visibles sur la page (section Avis). -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "AutoRepair",
   "name": "Castrol Service Témara",
   "description": "Garage automobile à Témara : vidange, diagnostic électronique, freinage, climatisation, boîte automatique et vente de pneus. Centre Castrol Service certifié.",
-  "image": "images/hero-poster.jpg",
-  "logo": "images/logo-png-castrol.png",
+  "image": "https://castrol-service-temara.com/images/hero-poster.jpg",
+  "logo": "https://castrol-service-temara.com/images/logo-png-castrol.png",
+  "url": "https://castrol-service-temara.com/",
   "telephone": "+212663850560",
   "priceRange": "$$",
+  "currenciesAccepted": "MAD",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "reviewCount": "817",
+    "bestRating": "5"
+  },
+  "hasMap": "https://www.google.com/maps/search/?api=1&query=Castrol+Service+T%C3%A9mara%2C+Avenue+Tarik+Ibn+Ziad%2C+T%C3%A9mara",
+  "sameAs": [
+    "https://www.google.com/maps/search/?api=1&query=Castrol+Service+T%C3%A9mara%2C+Avenue+Tarik+Ibn+Ziad%2C+T%C3%A9mara"
+  ],
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "Résidence Khayzourane, Avenue Tarik Ibn Ziad",
@@ -54,6 +82,72 @@
     { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Climatisation" } },
     { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Boîte automatique" } },
     { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Vente et montage de pneus" } }
+  ]
+}
+</script>
+
+<!-- HORAIRES — à coller dans le bloc AutoRepair ci-dessus (avant "areaServed")
+     dès que le propriétaire confirme, en corrigeant jours et heures :
+
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+      "opens": "08:30",
+      "closes": "19:00"
+    }
+  ],
+
+     Puis mettre à jour les 3 endroits qui affichent l'horaire dans la page :
+     la bande de stats, la ligne « Horaires » de « Nous trouver », et la FAQ. -->
+
+<!-- FAQ enrichie : reprend mot pour mot les questions affichées plus bas.
+     Si une réponse change dans la page, la changer ici aussi. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Quels types de services propose Castrol Service ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Castrol Service Témara propose la vidange moteur et boîte automatique, le remplacement de filtres (huile, air, carburant, habitacle), le diagnostic électronique et la programmation, l'entretien du système de freinage et de climatisation, le changement d'embrayage et d'amortisseurs, l'entretien de boîte de vitesses, ainsi que la vente de pneus des meilleures marques. Nous assurons également la vente d'huiles Castrol 100% originales."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Pourquoi choisir Castrol Service plutôt qu'un autre garage ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Parce que nous sommes le seul centre Castrol Service certifié au Maroc, situé à Résidence Khayzourane, Avenue Tarik Ibn Ziad à Témara. Nous garantissons des produits Castrol authentiques et traçables, une équipe formée selon les standards internationaux, un service professionnel, transparent et rapide, ainsi qu'une propreté et un équipement de haut niveau."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Utilisez-vous des pièces d'origine ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oui. Toutes les huiles, filtres et pièces utilisées sont des produits Castrol authentiques, traçables et certifiés. Nous sommes un centre officiel Castrol Service, pas un garage générique."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Faut-il prendre rendez-vous ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ce n'est pas obligatoire : vous pouvez passer directement au garage. Un appel au 06 63 85 05 60 avant de venir nous permet toutefois de préparer l'intervention et de réduire votre attente. Le diagnostic et le devis sont établis avant toute intervention, sans engagement."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Où se trouve le garage et quand êtes-vous ouverts ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nous sommes à Résidence Khayzourane, Avenue Tarik Ibn Ziad, à Témara, et ouverts 6 jours sur 7. L'itinéraire et la carte sont disponibles dans la section « Nous trouver » de la page."
+      }
+    }
   ]
 }
 </script>
@@ -1136,10 +1230,15 @@ button:focus-visible, a:focus-visible {
   transition: grid-template-rows 400ms var(--ease-out);
 }
 .faq-item.open .faq-answer { grid-template-rows: 1fr; }
+.faq-item.open .faq-answer-inner { padding-bottom: var(--sp-lg); }
+/* Le padding échappe à la compression de `grid-template-rows: 0fr` : gardé en
+   dur, il laissait 24px de vide sous chaque question fermée. On ne l'applique
+   donc qu'à l'ouverture, en l'animant sur la même durée. */
 .faq-answer-inner {
   overflow: hidden;
   min-height: 0;
-  padding-bottom: var(--sp-lg);
+  padding-bottom: 0;
+  transition: padding-bottom 400ms var(--ease-out);
   font-size: 15px;
   font-weight: 300;
   color: var(--body);
@@ -1350,6 +1449,265 @@ button:focus-visible, a:focus-visible {
 @media (min-width: 1025px) {
   .mobile-menu, .mobile-menu-backdrop { display: none; }
 }
+/* ============================================
+   AVIS (preuve sociale Google)
+   ============================================ */
+.reviews {
+  padding: var(--sp-section) 0;
+  background: var(--surface-soft);
+  border-top: 1px solid var(--hairline-strong);
+  border-bottom: 1px solid var(--hairline-strong);
+}
+.reviews-inner {
+  display: grid;
+  grid-template-columns: minmax(240px, 320px) 1fr;
+  gap: var(--sp-xxl);
+  align-items: center;
+}
+.reviews-score {
+  border-right: 1px solid var(--hairline-strong);
+  padding-right: var(--sp-xl);
+}
+.reviews-score-value {
+  font-size: clamp(56px, 9vw, 88px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+}
+.reviews-score-value span {
+  font-size: 0.3em;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 0;
+  margin-left: 4px;
+}
+.reviews-stars {
+  display: flex;
+  gap: 4px;
+  margin: var(--sp-sm) 0;
+}
+.reviews-stars svg {
+  width: 22px;
+  height: 22px;
+  fill: var(--castrol-green-light);
+  flex: none;
+}
+.reviews-count {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--body);
+}
+.reviews-count strong { font-weight: 700; color: var(--body-strong); }
+.reviews-text h2 { margin-bottom: var(--sp-md); }
+.reviews-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-sm);
+  margin-top: var(--sp-lg);
+}
+
+/* Gabarit d'avis — styles prêts, le markup est encore en commentaire */
+.reviews-quotes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--sp-lg);
+  margin-top: var(--sp-xxl);
+}
+.review-quote {
+  background: var(--surface-card);
+  border: 1px solid var(--hairline-strong);
+  padding: var(--sp-lg);
+}
+.review-quote-stars { color: var(--castrol-green-light); letter-spacing: 2px; }
+.review-quote blockquote {
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--body-strong);
+  margin: var(--sp-sm) 0;
+}
+.review-quote figcaption { font-size: 13px; color: var(--muted); }
+.review-quote figcaption span { color: var(--muted); }
+
+@media (max-width: 900px) {
+  .reviews-inner { grid-template-columns: 1fr; gap: var(--sp-xl); }
+  .reviews-score {
+    border-right: none;
+    border-bottom: 1px solid var(--hairline-strong);
+    padding-right: 0;
+    padding-bottom: var(--sp-lg);
+  }
+}
+
+/* Sans ceci, une colonne de grille garde `min-width: auto` et refuse de
+   descendre sous la largeur de son contenu le plus long — ce qui pousse
+   la page en débordement horizontal sur petit écran. Vaut pour toutes les
+   grilles à colonnes de la page, pas seulement les nouvelles. */
+.reviews-inner > *,
+.booking-grid > *,
+.promo-grid > *,
+.promo-steps > *,
+.about-grid > *,
+.find-grid > *,
+.footer-grid > * { min-width: 0; }
+
+/* ============================================
+   FORMULAIRE DE RENDEZ-VOUS
+   ============================================ */
+.booking-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-xxl);
+  align-items: start;
+}
+.booking-intro h2 { margin-bottom: var(--sp-md); }
+.booking-facts {
+  margin-top: var(--sp-xl);
+  display: grid;
+  gap: var(--sp-md);
+}
+.booking-facts > div {
+  border-top: 1px solid var(--hairline-strong);
+  padding-top: var(--sp-md);
+}
+.booking-facts dt {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: var(--sp-xxs);
+}
+.booking-facts dd { font-size: 15px; font-weight: 300; color: var(--body-strong); }
+.booking-facts dd a { color: var(--castrol-green-light); }
+
+.booking-form {
+  background: var(--surface-soft);
+  border: 1px solid var(--hairline-strong);
+  padding: var(--sp-xl);
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  gap: var(--sp-md);
+}
+/* Même raison que pour .booking-grid : sans min-width 0, un select ou un
+   label long impose sa largeur intrinsèque et le champ déborde du cadre
+   (masqué par l'overflow du formulaire, donc coupé à l'écran). */
+.booking-form > *,
+.field > * { min-width: 0; }
+.field { display: grid; gap: var(--sp-xs); }
+.field label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--body-strong);
+}
+.field label span { color: var(--castrol-green-light); }
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  min-height: 48px; /* cible tactile confortable */
+  padding: 12px 14px;
+  background: var(--canvas);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-none);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 16px; /* 16px : empêche le zoom automatique sur iOS */
+  font-weight: 300;
+  transition: border-color 160ms var(--ease-out), background-color 160ms var(--ease-out);
+}
+.field textarea { min-height: 96px; resize: vertical; line-height: 1.5; }
+.field select { appearance: none; cursor: pointer;
+  background-image: linear-gradient(45deg, transparent 50%, var(--body) 50%),
+                    linear-gradient(135deg, var(--body) 50%, transparent 50%);
+  background-position: calc(100% - 20px) 21px, calc(100% - 14px) 21px;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 40px;
+}
+.field input::placeholder,
+.field textarea::placeholder { color: var(--muted); }
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--castrol-green);
+  background: var(--surface-card);
+}
+.field input:focus-visible,
+.field select:focus-visible,
+.field textarea:focus-visible {
+  outline: 2px solid var(--castrol-green-light);
+  outline-offset: 2px;
+}
+/* Champ en erreur : la bordure seule ne suffirait pas, le message texte
+   sous le formulaire porte l'information */
+.field input[aria-invalid="true"],
+.field textarea[aria-invalid="true"] { border-color: var(--castrol-red-bright); }
+
+.form-error {
+  font-size: 14px;
+  font-weight: 400;
+  color: #ff6b6b; /* rouge éclairci : le rouge de marque ne passe pas AA sur fond noir */
+  border-left: 2px solid var(--castrol-red-bright);
+  padding-left: var(--sp-sm);
+}
+.form-note {
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.form-note a { color: var(--castrol-green-light); text-decoration: underline; }
+.booking-submit { width: 100%; margin-top: var(--sp-xs); }
+
+@media (max-width: 900px) {
+  .booking-grid { grid-template-columns: 1fr; gap: var(--sp-xl); }
+}
+@media (max-width: 480px) {
+  .booking-form { padding: var(--sp-lg); }
+}
+
+/* ============================================
+   PETITS ÉCRANS — correctifs de largeur
+   Sur un 320px, 40px de marge de chaque côté mangeaient un quart de la
+   largeur utile. Les <br> des grands titres sont neutralisés pour laisser
+   le texte se recomposer au lieu de forcer une ligne trop large.
+   ============================================ */
+@media (max-width: 480px) {
+  .container { padding: 0 var(--sp-lg); }
+  .display-lg br,
+  .display-md br { display: none; }
+  .display-lg { font-size: clamp(28px, 8vw, 52px); }
+  .btn { padding-left: var(--sp-lg); padding-right: var(--sp-lg); }
+}
+
+/* Sous 360px, un libellé long comme « Appeler le 06 63 85 05 60 » ne tient
+   plus sur une ligne : on autorise le retour à la ligne plutôt que le
+   débordement, en gardant une hauteur tactile confortable. */
+@media (max-width: 360px) {
+  .btn {
+    white-space: normal;
+    height: auto;
+    min-height: 48px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+  }
+}
+
+/* Au doigt, une cible sous 44px se rate. Ne s'applique qu'aux pointeurs
+   grossiers pour ne pas gonfler l'interface à la souris. */
+@media (pointer: coarse) {
+  .svc-toggle { min-height: 44px; }
+  .footer-col ul a,
+  .find-rows dd a { display: inline-block; padding: 11px 0; }
+}
+
 </style>
 </head>
 <body>
@@ -1371,16 +1729,16 @@ button:focus-visible, a:focus-visible {
     <div class="nav-links">
       <a href="#services">Services</a>
       <a href="#about">À propos</a>
+      <a href="#avis">Avis</a>
       <a href="#infos">Nous trouver</a>
       <a href="#faq">FAQ</a>
-      <a href="#contact">Contact</a>
     </div>
     <div class="nav-cta">
       <a href="tel:0663850560" class="nav-phone">06 63 85 05 60</a>
       <a href="tel:0663850560" class="nav-call" aria-label="Appeler le 06 63 85 05 60">
         <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
       </a>
-      <a href="#rdv" class="btn btn-primary">Rendez-vous</a>
+      <a href="#contact" class="btn btn-primary">Rendez-vous</a>
     </div>
     <button class="nav-burger" id="navBurger" aria-label="Ouvrir le menu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -1399,10 +1757,10 @@ button:focus-visible, a:focus-visible {
   <div class="brand-stripe" style="margin-bottom: 32px;"></div>
   <a href="#services" class="mobile-menu-link">Services</a>
   <a href="#about" class="mobile-menu-link">À propos</a>
+  <a href="#avis" class="mobile-menu-link">Avis</a>
   <a href="#infos" class="mobile-menu-link">Nous trouver</a>
   <a href="#faq" class="mobile-menu-link">FAQ</a>
-  <a href="#contact" class="mobile-menu-link">Contact</a>
-  <a href="#rdv" class="btn btn-primary mobile-menu-link" style="margin-top: 24px;">Rendez-vous</a>
+  <a href="#contact" class="btn btn-primary mobile-menu-link" style="margin-top: 24px;">Rendez-vous</a>
 </div>
 
 <!-- ============================================
@@ -1410,7 +1768,7 @@ button:focus-visible, a:focus-visible {
      ============================================ -->
 <section class="hero" id="top">
   <div class="hero-bg">
-    <video autoplay muted loop playsinline preload="metadata" poster="images/hero-poster.jpg" aria-hidden="true">
+    <video autoplay muted loop playsinline preload="metadata" poster="images/hero-poster.webp" aria-hidden="true">
       <source src="images/hero-video.mp4" type="video/mp4">
     </video>
   </div>
@@ -1422,7 +1780,7 @@ button:focus-visible, a:focus-visible {
     <h1>Votre voiture<br>entre de <span class="accent">bonnes mains</span></h1>
     <p class="hero-sub">Entretien, vidange, diagnostic et réparation auto à Témara. Produits Castrol authentiques, équipe certifiée, service rapide.</p>
     <div class="hero-cta-row">
-      <a href="#rdv" class="btn btn-primary">Prendre rendez-vous</a>
+      <a href="#contact" class="btn btn-primary">Prendre rendez-vous</a>
       <a href="#services" class="btn btn-outline">Nos services</a>
     </div>
   </div>
@@ -1638,7 +1996,7 @@ button:focus-visible, a:focus-visible {
   <div class="container">
     <div class="about-grid">
       <div class="about-text reveal">
-        <h2 class="display-lg">Le seul centre<br>Castrol certifié<br>au Maroc</h2>
+        <h2 class="display-lg">Le seul centre <br>Castrol certifié <br>au Maroc</h2>
         <p class="body-md" style="color: var(--body-strong);">Situé à Résidence Khayzourane, Avenue Tarik Ibn Ziad à Témara, Castrol Service est le seul centre certifié au Maroc. Nous garantissons des produits authentiques et traçables, une équipe formée selon les standards internationaux, et un service professionnel et transparent.</p>
 
         <div class="about-features reveal-stagger">
@@ -1716,6 +2074,60 @@ button:focus-visible, a:focus-visible {
 </section>
 
 <!-- ============================================
+     AVIS — preuve sociale réelle, reprise de la fiche Google.
+     Aucun témoignage n'est écrit en dur ici : tant qu'on n'a pas les textes
+     exacts des vrais avis, on affiche la note agrégée (vérifiable en un clic)
+     et on renvoie vers la fiche. Un gabarit d'avis est prêt plus bas.
+     ============================================ -->
+<section class="reviews" id="avis">
+  <div class="container">
+    <div class="reviews-inner reveal">
+
+      <div class="reviews-score">
+        <p class="reviews-score-value">4,8<span>/5</span></p>
+        <div class="reviews-stars" role="img" aria-label="Note de 4,8 sur 5">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p class="reviews-count"><strong>817 avis</strong> sur Google</p>
+      </div>
+
+      <div class="reviews-text">
+        <h2 class="display-md">Ce qu'en disent <br>nos clients</h2>
+        <p class="body-md" style="color: var(--body-strong);">
+          Plus de 800 automobilistes de Témara et de Rabat ont noté le garage.
+          La note est publique et vérifiable — nous n'avons rien à mettre en scène.
+        </p>
+        <div class="reviews-actions">
+          <a class="btn btn-primary"
+             href="https://www.google.com/maps/search/?api=1&query=Castrol+Service+T%C3%A9mara%2C+Avenue+Tarik+Ibn+Ziad%2C+T%C3%A9mara"
+             target="_blank" rel="noopener">Lire les avis sur Google</a>
+          <a class="btn btn-outline" href="#contact">Prendre rendez-vous</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- GABARIT — dès que les vrais textes d'avis sont récupérés sur la fiche
+         Google (nom affiché + texte, tels qu'écrits par le client), dupliquer
+         ce bloc 3 fois juste ici et retirer le commentaire.
+         Ne jamais reformuler un avis : le citer mot pour mot ou pas du tout.
+
+    <div class="reviews-quotes reveal-stagger">
+      <figure class="review-quote">
+        <div class="review-quote-stars" role="img" aria-label="5 sur 5">★★★★★</div>
+        <blockquote>Texte exact de l'avis, copié depuis Google.</blockquote>
+        <figcaption>Prénom N. — <span>avis Google</span></figcaption>
+      </figure>
+    </div>
+    -->
+  </div>
+</section>
+
+<!-- ============================================
      NOUS TROUVER
      ============================================ -->
 <section class="find-section" id="infos">
@@ -1774,12 +2186,12 @@ button:focus-visible, a:focus-visible {
      ============================================ -->
 <section class="cta-band" id="rdv">
   <div class="cta-band-bg">
-    <video autoplay muted loop playsinline preload="none" poster="images/service-poster.jpg" aria-hidden="true">
+    <video autoplay muted loop playsinline preload="none" poster="images/service-poster.webp" aria-hidden="true">
       <source src="images/service-video.mp4" type="video/mp4">
     </video>
   </div>
   <div class="cta-band-content">
-    <h2 class="display-md">Prenez rendez-vous<br>dès aujourd'hui</h2>
+    <h2 class="display-md">Prenez rendez-vous <br>dès aujourd'hui</h2>
     <p class="body-md">Appelez-nous ou passez directement au garage. Diagnostic gratuit, devis transparent, service rapide.</p>
     <div class="cta-band-actions">
       <a href="tel:0663850560" class="btn btn-primary">Appeler le 06 63 85 05 60</a>
@@ -1804,7 +2216,7 @@ button:focus-visible, a:focus-visible {
         </div>
       </div>
       <div class="promo-text reveal">
-        <h2 class="display-lg">Le devis<br>avant la clé</h2>
+        <h2 class="display-lg">Le devis <br>avant la clé</h2>
         <p class="body-md" style="color: var(--body-strong);">On regarde, on chiffre, on vous explique. Vous décidez ensuite — sans surprise sur la facture.</p>
 
         <div class="promo-steps">
@@ -1927,9 +2339,121 @@ button:focus-visible, a:focus-visible {
 </section>
 
 <!-- ============================================
+     DEMANDE DE RENDEZ-VOUS
+     Sans backend : le formulaire ne fait qu'assembler un message WhatsApp
+     pré-rempli. Rien n'est envoyé nulle part, rien n'est stocké. Le jour où
+     le garage veut recevoir les demandes par mail ou dans un outil, il suffit
+     de remplacer le handler `submit` (voir le script en bas de page).
+     ============================================ -->
+<div class="brand-stripe"></div>
+<section class="section booking" id="contact">
+  <div class="container">
+    <div class="booking-grid">
+
+      <div class="booking-intro reveal">
+        <h2 class="display-lg">Demander <br>un rendez-vous</h2>
+        <p class="body-md" style="color: var(--body-strong);">
+          Décrivez votre besoin en 30 secondes. Le message part sur WhatsApp,
+          déjà rédigé — vous n'avez qu'à l'envoyer. Réponse pendant les heures
+          d'ouverture du garage.
+        </p>
+
+        <dl class="booking-facts">
+          <div>
+            <dt>Par téléphone</dt>
+            <dd><a href="tel:0663850560">06 63 85 05 60</a></dd>
+          </div>
+          <div>
+            <dt>Sur place</dt>
+            <dd>Résidence Khayzourane, Avenue Tarik Ibn Ziad — Témara</dd>
+          </div>
+          <div>
+            <dt>Sans rendez-vous</dt>
+            <dd>Possible aussi : le diagnostic et le devis restent gratuits.</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="booking-form-wrap reveal">
+        <form class="booking-form" id="bookingForm" novalidate>
+          <div class="brand-stripe"></div>
+
+          <div class="field">
+            <label for="bk-name">Votre nom <span aria-hidden="true">*</span></label>
+            <input type="text" id="bk-name" name="name" autocomplete="name"
+                   required placeholder="Ex. Youssef El Amrani">
+          </div>
+
+          <div class="field">
+            <label for="bk-phone">Téléphone <span aria-hidden="true">*</span></label>
+            <input type="tel" id="bk-phone" name="phone" autocomplete="tel"
+                   inputmode="tel" required placeholder="06 12 34 56 78">
+          </div>
+
+          <div class="field">
+            <label for="bk-vehicle">Véhicule</label>
+            <input type="text" id="bk-vehicle" name="vehicle"
+                   placeholder="Ex. Dacia Logan 2019 diesel">
+          </div>
+
+          <div class="field">
+            <label for="bk-service">Service souhaité</label>
+            <select id="bk-service" name="service">
+              <option value="">— Je ne sais pas encore —</option>
+              <option>Vidange d'huile</option>
+              <option>Freinage</option>
+              <option>Diagnostic électronique</option>
+              <option>Climatisation</option>
+              <option>Boîte automatique</option>
+              <option>Vente / montage de pneus</option>
+              <option>Embrayage</option>
+              <option>Filtres</option>
+              <option>Autre / plusieurs</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="bk-when">Quand vous arrangerait-il ?</label>
+            <input type="text" id="bk-when" name="when"
+                   placeholder="Ex. samedi matin, ou dès que possible">
+          </div>
+
+          <div class="field">
+            <label for="bk-msg">Précisions</label>
+            <textarea id="bk-msg" name="message" rows="3"
+                      placeholder="Un bruit, un voyant allumé, un devis à comparer…"></textarea>
+          </div>
+
+          <p class="form-error" id="bkError" role="alert" hidden></p>
+
+          <button type="submit" class="btn btn-primary booking-submit">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="18" height="18"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.77.46 3.43 1.27 4.88L2 22l5.25-1.27C8.66 21.54 10.28 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.07 14.12c-.21.59-1.23 1.13-1.69 1.16-.43.03-.98.21-3.14-.66-2.65-1.05-4.32-3.75-4.45-3.93-.13-.18-1.06-1.41-1.06-2.69s.67-1.91.91-2.17c.24-.26.52-.33.69-.33.17 0 .35.01.5.01.16 0 .38-.06.59.45.21.52.71 1.8.78 1.93.07.13.11.28.02.46-.09.18-.13.29-.26.45-.13.15-.27.35-.39.46-.13.13-.26.27-.11.52.15.26.66 1.09 1.41 1.77.97.87 1.79 1.13 2.04 1.26.26.13.41.11.56-.07.15-.18.65-.76.82-1.02.17-.26.35-.21.59-.13.24.09 1.51.71 1.77.85.26.13.43.19.49.29.07.11.07.59-.14 1.18z"/></svg>
+            Envoyer sur WhatsApp
+          </button>
+
+          <p class="form-note">
+            Vous relisez le message avant de l'envoyer. Aucune donnée n'est
+            enregistrée sur ce site.
+          </p>
+
+          <noscript>
+            <p class="form-note" style="color: var(--warning);">
+              Ce formulaire a besoin de JavaScript. Appelez directement le
+              <a href="tel:0663850560">06 63 85 05 60</a> ou écrivez sur
+              <a href="https://wa.me/212663850560" target="_blank" rel="noopener">WhatsApp</a>.
+            </p>
+          </noscript>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
      FOOTER
      ============================================ -->
-<footer class="footer" id="contact">
+<footer class="footer">
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
@@ -1950,9 +2474,11 @@ button:focus-visible, a:focus-visible {
         <h5>Navigation</h5>
         <ul>
           <li><a href="#about">À propos</a></li>
+          <li><a href="#avis">Avis clients</a></li>
           <li><a href="#infos">Nous trouver</a></li>
           <li><a href="#faq">FAQ</a></li>
           <li><a href="#promo">Diagnostic gratuit</a></li>
+          <li><a href="#contact">Demander un rendez-vous</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -2119,6 +2645,85 @@ document.addEventListener('keydown', (e) => {
     closeMobileMenu();
   }
 });
+
+// === Formulaire de rendez-vous → WhatsApp ===
+// Aucun backend : on assemble un message et on ouvre WhatsApp. Le client relit
+// puis envoie lui-même. Pour brancher un vrai envoi plus tard, remplacer le
+// corps de ce handler par un fetch() — le reste de la page ne bouge pas.
+const GARAGE_WHATSAPP = '212663850560';
+
+const bookingForm = document.getElementById('bookingForm');
+
+if (bookingForm) {
+  const errorBox = document.getElementById('bkError');
+
+  // Numéros marocains : 06/07 à 10 chiffres, ou +212 suivi de 9 chiffres.
+  // Les espaces, points et tirets de saisie sont ignorés.
+  const PHONE_RE = /^(?:(?:\+|00)212|0)[5-7]\d{8}$/;
+
+  function showError(message, field) {
+    errorBox.textContent = message;
+    errorBox.hidden = false;
+    if (field) {
+      field.setAttribute('aria-invalid', 'true');
+      field.focus();
+    }
+  }
+
+  function clearError() {
+    errorBox.hidden = true;
+    errorBox.textContent = '';
+    bookingForm.querySelectorAll('[aria-invalid]').forEach(el => {
+      el.removeAttribute('aria-invalid');
+    });
+  }
+
+  // Repartir d'un état neutre dès que l'utilisateur corrige
+  bookingForm.addEventListener('input', clearError);
+
+  bookingForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    clearError();
+
+    const get = (id) => document.getElementById(id).value.trim();
+    const name = get('bk-name');
+    const phoneRaw = get('bk-phone');
+    const phone = phoneRaw.replace(/[\s.\-()]/g, '');
+
+    if (!name) {
+      showError('Merci d’indiquer votre nom.', document.getElementById('bk-name'));
+      return;
+    }
+    if (!PHONE_RE.test(phone)) {
+      showError('Merci d’indiquer un numéro de téléphone valide (ex. 06 12 34 56 78).',
+                document.getElementById('bk-phone'));
+      return;
+    }
+
+    // Seules les lignes réellement remplies apparaissent dans le message
+    const lines = [
+      'Bonjour, je souhaite prendre rendez-vous au garage.',
+      '',
+      `Nom : ${name}`,
+      `Téléphone : ${phoneRaw}`,
+    ];
+    const optional = [
+      ['Véhicule', get('bk-vehicle')],
+      ['Service souhaité', get('bk-service')],
+      ['Disponibilité', get('bk-when')],
+      ['Précisions', get('bk-msg')],
+    ];
+    optional.forEach(([label, value]) => {
+      if (value) lines.push(`${label} : ${value}`);
+    });
+
+    const url = `https://wa.me/${GARAGE_WHATSAPP}?text=${encodeURIComponent(lines.join('\n'))}`;
+    const opened = window.open(url, '_blank', 'noopener');
+
+    // Si le navigateur bloque la nouvelle fenêtre, on navigue dans l'onglet courant
+    if (!opened) window.location.href = url;
+  });
+}
 </script>
 
 </body>
