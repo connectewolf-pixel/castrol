@@ -913,85 +913,6 @@ button:focus-visible, a:focus-visible {
 }
 
 /* ============================================
-   PROMO SECTION
-   ============================================ */
-.promo-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--sp-xxl);
-  align-items: center;
-}
-/* Offer panel — the price of entry, stated plainly */
-.promo-visual {
-  position: relative;
-  display: flex;
-  justify-content: center;
-}
-.offer-card {
-  width: 100%;
-  max-width: 420px;
-  background: var(--surface-soft);
-  border: 1px solid var(--hairline-strong);
-  padding: var(--sp-xl);
-  position: relative;
-  overflow: hidden;
-}
-.offer-card .brand-stripe { position: absolute; top: 0; left: 0; }
-.offer-card-lede {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--castrol-green-light);
-  margin: var(--sp-md) 0 var(--sp-lg);
-}
-.offer-card-price {
-  font-size: clamp(46px, 6vw, 68px);
-  font-weight: 800;
-  line-height: 0.95;
-  letter-spacing: -0.04em;
-  text-transform: uppercase;
-  margin-bottom: var(--sp-sm);
-}
-.offer-card-price .unit { display: block; font-size: 0.34em; letter-spacing: 1.5px; color: var(--body); margin-top: var(--sp-sm); }
-.offer-card-note {
-  font-size: 14px;
-  font-weight: 300;
-  color: var(--body);
-  line-height: 1.5;
-  padding-top: var(--sp-lg);
-  margin-top: var(--sp-lg);
-  border-top: 1px solid var(--hairline);
-}
-.promo-text h2 { margin-bottom: var(--sp-lg); }
-.promo-steps {
-  display: grid;
-  gap: var(--sp-md);
-  margin: var(--sp-xl) 0;
-}
-.promo-step {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-md);
-  padding: var(--sp-md) 0;
-  border-top: 1px solid var(--hairline);
-  transition: border-color 300ms var(--ease-out);
-}
-@media (hover: hover) and (pointer: fine) {
-  .promo-step:hover { border-top-color: var(--castrol-green); }
-}
-.promo-step-num {
-  font-size: 24px;
-  font-weight: 800;
-  color: var(--castrol-green);
-  min-width: 32px;
-}
-.promo-step p { font-size: 15px; color: var(--body-strong); }
-@media (max-width: 768px) {
-  .promo-grid { grid-template-columns: 1fr; gap: var(--sp-xl); }
-}
-
-/* ============================================
    FAQ ACCORDION
    Kowalski: smooth transitions, not keyframes
    ============================================ */
@@ -1741,6 +1662,137 @@ button:focus-visible, a:focus-visible {
   margin-top: var(--sp-lg);
 }
 
+/* ============================================
+   MUR D'AVIS — trois colonnes qui défilent à des vitesses différentes.
+   Le décalage empêche l'ensemble de se lire comme un seul bloc qui glisse.
+   Le fondu haut et bas dit que la liste continue au-delà du cadre.
+   ============================================ */
+.rev-wall {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-lg);
+  margin-top: var(--sp-xxl);
+  max-height: 680px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 84%, transparent);
+          mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 84%, transparent);
+}
+.rev-col { overflow: hidden; }
+.rev-track {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-lg);
+  /* Ce padding vaut exactement le gap : sans lui, la moitié de la piste ne
+     tombe pas sur une frontière de carte et la boucle sauterait d'un demi
+     interstice à chaque tour. */
+  padding-bottom: var(--sp-lg);
+  animation: revScroll var(--rev-speed, 56s) linear infinite;
+  will-change: transform;
+}
+/* La piste contient deux fois la même liste : arrivée à mi-course, elle
+   retrouve exactement son point de départ et la boucle ne se voit pas. */
+@keyframes revScroll {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-50%); }
+}
+.rev-wall.is-paused .rev-track { animation-play-state: paused; }
+
+.rev-card {
+  margin: 0;
+  padding: var(--sp-lg);
+  background: var(--surface-card);
+  border: 1px solid var(--hairline-strong);
+  border-top: 2px solid var(--castrol-green-dark);
+}
+.rev-card blockquote {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--body-strong);
+}
+.rev-card figcaption {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  margin-top: var(--sp-md);
+  padding-top: var(--sp-md);
+  border-top: 1px solid var(--hairline-strong);
+}
+/* Pas de portrait inventé : les initiales, comme Google le fait lui-même
+   pour un compte sans photo. */
+.rev-avatar {
+  width: 38px;
+  height: 38px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-full);
+  background: rgba(0, 151, 55, 0.16);
+  border: 1px solid var(--castrol-green-dark);
+  color: var(--castrol-green-light);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.rev-who { display: flex; flex-direction: column; min-width: 0; }
+.rev-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.3;
+}
+.rev-meta {
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.3;
+}
+
+.rev-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--sp-md);
+  margin-top: var(--sp-lg);
+}
+.rev-note {
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--muted);
+}
+.rev-note a { color: var(--castrol-green-light); text-decoration: underline; }
+
+/* Deux colonnes à partir de la tablette, trois sur grand écran : sur un
+   téléphone, trois colonnes donneraient des lignes de 4 mots. */
+@media (min-width: 700px) {
+  .rev-wall { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1080px) {
+  .rev-wall { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 699px) {
+  .rev-col--md, .rev-col--lg { display: none; }
+  .rev-wall { max-height: 560px; }
+}
+@media (min-width: 700px) and (max-width: 1079px) {
+  .rev-col--lg { display: none; }
+}
+
+/* Sans mouvement : la boucle s'arrête, le mur redevient une simple liste
+   qu'on parcourt au doigt ou à la molette. */
+@media (prefers-reduced-motion: reduce) {
+  .rev-track { animation: none; }
+  .rev-wall {
+    max-height: none;
+    overflow: visible;
+    -webkit-mask-image: none;
+            mask-image: none;
+  }
+  .rev-controls { display: none; }
+}
+
 /* Gabarit d'avis — styles prêts, le markup est encore en commentaire */
 .reviews-quotes {
   display: grid;
@@ -1780,8 +1832,6 @@ button:focus-visible, a:focus-visible {
    grilles à colonnes de la page, pas seulement les nouvelles. */
 .reviews-inner > *,
 .booking-grid > *,
-.promo-grid > *,
-.promo-steps > *,
 .about-grid > *,
 .find-grid > *,
 .footer-grid > * { min-width: 0; }
@@ -2333,60 +2383,6 @@ button:focus-visible, a:focus-visible {
 </section>
 
 <!-- ============================================
-     AVIS — preuve sociale réelle, reprise de la fiche Google.
-     Aucun témoignage n'est écrit en dur ici : tant qu'on n'a pas les textes
-     exacts des vrais avis, on affiche la note agrégée (vérifiable en un clic)
-     et on renvoie vers la fiche. Un gabarit d'avis est prêt plus bas.
-     ============================================ -->
-<section class="reviews" id="avis">
-  <div class="container">
-    <div class="reviews-inner reveal">
-
-      <div class="reviews-score">
-        <p class="reviews-score-value">4,8<span>/5</span></p>
-        <div class="reviews-stars" role="img" aria-label="Note de 4,8 sur 5">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        </div>
-        <p class="reviews-count"><strong>817 avis</strong> sur Google</p>
-      </div>
-
-      <div class="reviews-text">
-        <h2 class="display-md">Ce qu'en disent <br>nos clients</h2>
-        <p class="body-md" style="color: var(--body-strong);">
-          Plus de 800 automobilistes de Témara et de Rabat ont noté le garage.
-          La note est publique et vérifiable — nous n'avons rien à mettre en scène.
-        </p>
-        <div class="reviews-actions">
-          <a class="btn btn-primary"
-             href="https://www.google.com/maps/search/?api=1&query=Castrol+Service+T%C3%A9mara%2C+Avenue+Tarik+Ibn+Ziad%2C+T%C3%A9mara"
-             target="_blank" rel="noopener">Lire les avis sur Google</a>
-          <a class="btn btn-outline" href="#contact">Prendre rendez-vous</a>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- GABARIT — dès que les vrais textes d'avis sont récupérés sur la fiche
-         Google (nom affiché + texte, tels qu'écrits par le client), dupliquer
-         ce bloc 3 fois juste ici et retirer le commentaire.
-         Ne jamais reformuler un avis : le citer mot pour mot ou pas du tout.
-
-    <div class="reviews-quotes reveal-stagger">
-      <figure class="review-quote">
-        <div class="review-quote-stars" role="img" aria-label="5 sur 5">★★★★★</div>
-        <blockquote>Texte exact de l'avis, copié depuis Google.</blockquote>
-        <figcaption>Prénom N. — <span>avis Google</span></figcaption>
-      </figure>
-    </div>
-    -->
-  </div>
-</section>
-
-<!-- ============================================
      NOUS TROUVER
      ============================================ -->
 <section class="find-section" id="infos">
@@ -2460,42 +2456,191 @@ button:focus-visible, a:focus-visible {
 </section>
 
 <!-- ============================================
-     PROMO
+     AVIS — la note publique, puis les voix des clients
+     Les textes viennent de la fiche Google. La plupart ont été écrits en
+     français ; Google les restitue en anglais selon la langue du visiteur,
+     et ils sont rendus ici en français. Rien n'a été ajouté ni embelli :
+     une citation tronquée par Google s'arrête à sa dernière phrase entière.
+     Aucune étoile n'est affichée par avis — la note individuelle n'est pas
+     connue, seule la moyenne l'est, et elle est en tête de section.
      ============================================ -->
-<section class="section" id="promo">
+<section class="section reviews" id="avis">
   <div class="container">
-    <div class="promo-grid">
-      <div class="promo-visual reveal">
-        <!-- Pour une promo chiffrée, remplacer le prix par ex. « -10% » et la mention par « sur votre 1ère vidange ». -->
-        <div class="offer-card">
-          <div class="brand-stripe"></div>
-          <p class="offer-card-lede">Avant toute intervention</p>
-          <p class="offer-card-price">Gratuit<span class="unit">Diagnostic &amp; devis</span></p>
-          <p class="offer-card-note">Vous repartez avec le détail écrit des travaux et leur prix. Rien n'est engagé sans votre accord.</p>
+
+    <div class="reviews-inner reveal">
+      <div class="reviews-score">
+        <p class="reviews-score-value">4,8<span>/5</span></p>
+        <div class="reviews-stars" role="img" aria-label="Note de 4,8 sur 5">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
         </div>
+        <p class="reviews-count"><strong>817 avis</strong> sur Google</p>
       </div>
-      <div class="promo-text reveal">
-        <h2 class="display-lg">Le devis <br>avant la clé</h2>
-        <p class="body-md" style="color: var(--body-strong);">On regarde, on chiffre, on vous explique. Vous décidez ensuite — sans surprise sur la facture.</p>
 
-        <div class="promo-steps">
-          <div class="promo-step">
-            <span class="promo-step-num">01</span>
-            <p>Appelez ou passez au garage, sans rendez-vous</p>
-          </div>
-          <div class="promo-step">
-            <span class="promo-step-num">02</span>
-            <p>Diagnostic au scanner OBD et contrôle visuel</p>
-          </div>
-          <div class="promo-step">
-            <span class="promo-step-num">03</span>
-            <p>Devis détaillé — l'intervention ne démarre qu'après votre feu vert</p>
-          </div>
+      <div class="reviews-text">
+        <h2 class="display-md">Ce qu'en disent <br>nos clients</h2>
+        <p class="body-md" style="color: var(--body-strong);">
+          Plus de 800 automobilistes de Témara et de Rabat ont noté le garage.
+          La note est publique et vérifiable — nous n'avons rien à mettre en scène.
+        </p>
+        <div class="reviews-actions">
+          <a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&query=Castrol+Service+T%C3%A9mara%2C+Avenue+Tarik+Ibn+Ziad%2C+T%C3%A9mara" target="_blank" rel="noopener">Lire les avis sur Google</a>
+          <a class="btn btn-outline" href="#contact">Prendre rendez-vous</a>
         </div>
-
-        <a href="tel:0663850560" class="btn btn-primary">Appeler le 06 63 85 05 60</a>
       </div>
     </div>
+
+    <div class="rev-wall" id="revWall">
+      <div class="rev-col">
+        <div class="rev-track" data-rev-track style="--rev-speed: 52s">
+          <figure class="rev-card">
+            <blockquote>Dans cet atelier, j'ai toujours le sentiment que ces gens font les meilleurs choix pour votre voiture, pas les plus rentables pour eux. Leurs prix sont compétitifs et raisonnables. C'était ma deuxième visite, ce ne sera pas la dernière.</blockquote>
+            <figcaption>
+              <span class="rev-avatar" aria-hidden="true">IB</span>
+              <span class="rev-who">
+                <span class="rev-name">imad belouti</span>
+                <span class="rev-meta">Local Guide · il y a 11 mois</span>
+              </span>
+            </figcaption>
+          </figure>
+          <figure class="rev-card">
+            <blockquote>Service impeccable, merci à Ilyas et à l'équipe technique pour votre professionnalisme et votre gentillesse, je recommande vivement.</blockquote>
+            <figcaption>
+              <span class="rev-avatar" aria-hidden="true">KA</span>
+              <span class="rev-who">
+                <span class="rev-name">Kharmouch Aicha</span>
+                <span class="rev-meta">il y a 2 ans</span>
+              </span>
+            </figcaption>
+          </figure>
+          <figure class="rev-card">
+            <blockquote>Excellente expérience chez Castrol Témara ! L'accueil a été chaleureux dès le départ. L'équipe est professionnelle, explique clairement les spécifications des huiles et donne de très bons conseils. J'ai fait une vidange complète moteur et boîte automatique. Les prix sont très raisonnables, et l'espace d'attente avec café est un vrai plus.</blockquote>
+            <figcaption>
+              <span class="rev-avatar" aria-hidden="true">SM</span>
+              <span class="rev-who">
+                <span class="rev-name">Saad Mabchour</span>
+                <span class="rev-meta">il y a un an</span>
+              </span>
+            </figcaption>
+          </figure>
+          <figure class="rev-card">
+            <blockquote>Service excellent, réparations rapides, fiables et précises. Personnel courtois et agréable. Prix raisonnable. Merci Castrol Auto Service de toujours prendre soin de notre voiture.</blockquote>
+            <figcaption>
+              <span class="rev-avatar" aria-hidden="true">JK</span>
+              <span class="rev-who">
+                <span class="rev-name">Jenny Kouraichi</span>
+                <span class="rev-meta">il y a 3 ans</span>
+              </span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="rev-col rev-col--md">
+        <div class="rev-track" data-rev-track style="--rev-speed: 64s">
+          <figure class="rev-card">
+            <blockquote>Nous voyageons en van, qui demande de l'huile 0W20, et quatre garages ne l'avaient pas. Eux l'ont, avec des rayons entiers d'autres viscosités. Ils ont fait la vidange et nous ont remis sur la route en un rien de temps.</blockquote>
+            <figcaption>
+              <span class="rev-avatar" aria-hidden="true">SO</span>
+              <span class="rev-who">
+                <span class="rev-name">SoLo</span>
+                <span class="rev-meta">il y a 8 mois</span>
+              </span>
+            </figcaption>
+          </figure>
+          <figure class="rev-card">
+            <blockquote>Le meilleur garage de Rabat et Témara ! L'équipe est professionnelle, sympathique et très efficace ! Je recommande totalement.</blockquote>
+            <figcaption>
+              <span class="rev-avatar" aria-hidden="true">SS</span>
+              <span class="rev-who">
+                <span class="rev-name">soufyane sba</span>
+                <span class="rev-meta">Local Guide · il y a 2 ans</span>
+              </span>
+            </figcaption>
+          </figure>
+          <figure class="rev-card">
+            <blockquote>Ma récente vidange au centre Castrol a été une expérience remarquable, portée par le professionnalisme du personnel. Le mécanicien M. Mustapha a réalisé le travail sans le moindre défaut.</blockquote>
+            <figcaption>
+              <span class="rev-avatar" aria-hidden="true">AY</span>
+              <span class="rev-who">
+                <span class="rev-name">asma yassini</span>
+                <span class="rev-meta">il y a 9 mois</span>
+              </span>
+            </figcaption>
+          </figure>
+          <figure class="rev-card">
+            <blockquote>Service excellent et prix raisonnables. Merci beaucoup, je vous ai recommandés à beaucoup de monde et vous ne m'avez pas déçue. Un merci particulier à M. Hassan.</blockquote>
+            <figcaption>
+              <span class="rev-avatar" aria-hidden="true">GA</span>
+              <span class="rev-who">
+                <span class="rev-name">Ghizlane Achouaka</span>
+                <span class="rev-meta">il y a 2 ans</span>
+              </span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="rev-col rev-col--lg">
+        <div class="rev-track" data-rev-track style="--rev-speed: 58s">
+          <figure class="rev-card">
+            <blockquote>J'ai beaucoup apprécié ce garage de réparation et d'entretien automobile : un accueil chaleureux, un service rapide et un professionnalisme sans égal. Je le recommande vivement à tous pour bien entretenir et préserver leur véhicule.</blockquote>
+            <figcaption>
+              <span class="rev-avatar" aria-hidden="true">SJ</span>
+              <span class="rev-who">
+                <span class="rev-name">said jidane</span>
+                <span class="rev-meta">il y a 10 mois</span>
+              </span>
+            </figcaption>
+          </figure>
+          <figure class="rev-card">
+            <blockquote>C'est l'endroit où aller si vous cherchez un professionnel qui prendra soin de votre voiture tranquillement. Du bon travail, le meilleur service à des prix raisonnables.</blockquote>
+            <figcaption>
+              <span class="rev-avatar" aria-hidden="true">AR</span>
+              <span class="rev-who">
+                <span class="rev-name">Aymane REGRAGUI</span>
+                <span class="rev-meta">Local Guide · il y a 2 ans</span>
+              </span>
+            </figcaption>
+          </figure>
+          <figure class="rev-card">
+            <blockquote>Service excellent et rapide. Qualité et prix parfaits. Très satisfaite. Le patron est aussi de très bon conseil sur ce qu'il faut faire ensuite.</blockquote>
+            <figcaption>
+              <span class="rev-avatar" aria-hidden="true">NS</span>
+              <span class="rev-who">
+                <span class="rev-name">nabila semlali</span>
+                <span class="rev-meta">Local Guide · il y a un an</span>
+              </span>
+            </figcaption>
+          </figure>
+          <figure class="rev-card">
+            <blockquote>J'ai fait entretenir ma voiture aujourd'hui chez Castrol Auto Service, et je dois dire que l'expérience m'a vraiment impressionné. Du début à la fin, le service a été exceptionnel. Merci Ilyass.</blockquote>
+            <figcaption>
+              <span class="rev-avatar" aria-hidden="true">AK</span>
+              <span class="rev-who">
+                <span class="rev-name">Abdelaziz K</span>
+                <span class="rev-meta">Local Guide · il y a un an</span>
+              </span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+
+    <div class="rev-controls">
+      <p class="rev-note">
+        Avis publiés sur Google, traduits en français —
+        <a href="https://www.google.com/maps/search/?api=1&query=Castrol+Service+T%C3%A9mara%2C+Avenue+Tarik+Ibn+Ziad%2C+T%C3%A9mara" target="_blank" rel="noopener">lire les originaux</a>.
+      </p>
+      <button type="button" class="svc-auto" id="revAuto"
+              aria-label="Suspendre le défilement des avis" aria-controls="revWall">
+        <svg class="ico-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+        <svg class="ico-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7V5z"/></svg>
+        <span id="revAutoText">Suspendre</span>
+      </button>
+    </div>
+
   </div>
 </section>
 
@@ -2736,7 +2881,6 @@ button:focus-visible, a:focus-visible {
           <li><a href="#avis">Avis clients</a></li>
           <li><a href="#infos">Nous trouver</a></li>
           <li><a href="#faq">FAQ</a></li>
-          <li><a href="#promo">Diagnostic gratuit</a></li>
           <li><a href="#contact">Demander un rendez-vous</a></li>
         </ul>
       </div>
@@ -2901,6 +3045,62 @@ if (svcStrip && svcMotionOK) {
     if (svcSeen) { svcResetGauge(); svcSchedule(); }
     else { clearTimeout(svcTimer); svcProgress.classList.remove('running'); }
   }, { threshold: 0.25 }).observe(svcStrip);
+}
+
+// === Mur d'avis : boucle continue ===
+const revWall = document.getElementById('revWall');
+
+if (revWall) {
+  const revBtn = document.getElementById('revAuto');
+  const revText = document.getElementById('revAutoText');
+  const revMotionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let revHalted = false;
+
+  if (revMotionOK) {
+    // Chaque colonne est doublée : arrivée à -50%, la piste retrouve son
+    // point de départ. La copie est masquée aux lecteurs d'écran, sans quoi
+    // les mêmes avis seraient annoncés deux fois.
+    revWall.querySelectorAll('[data-rev-track]').forEach(track => {
+      Array.from(track.children).forEach(card => {
+        const copy = card.cloneNode(true);
+        copy.setAttribute('aria-hidden', 'true');
+        track.appendChild(copy);
+      });
+    });
+  }
+
+  let revHover = false;
+  let revSeen = true;
+
+  const revApply = () => {
+    revWall.classList.toggle('is-paused', revHalted || revHover || !revSeen);
+  };
+
+  // Survol et focus suspendent le temps de lire un avis
+  revWall.addEventListener('mouseenter', () => { revHover = true;  revApply(); });
+  revWall.addEventListener('mouseleave', () => { revHover = false; revApply(); });
+  revWall.addEventListener('focusin',    () => { revHover = true;  revApply(); });
+  revWall.addEventListener('focusout',   () => { revHover = false; revApply(); });
+
+  if (revBtn) {
+    revBtn.addEventListener('click', () => {
+      revHalted = !revHalted;
+      revBtn.classList.toggle('is-paused', revHalted);
+      revBtn.setAttribute('aria-label',
+        revHalted ? 'Reprendre le défilement des avis' : 'Suspendre le défilement des avis');
+      revText.textContent = revHalted ? 'Reprendre' : 'Suspendre';
+      revApply();
+    });
+  }
+
+  // Rien ne tourne hors du champ de vision : une animation continue qui
+  // travaille dans le vide coûte des images par seconde pour personne.
+  if (revMotionOK && 'IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => {
+      revSeen = entry.isIntersecting;
+      revApply();
+    }, { threshold: 0 }).observe(revWall);
+  }
 }
 
 // === FAQ Toggle ===

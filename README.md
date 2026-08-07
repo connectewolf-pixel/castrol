@@ -68,7 +68,27 @@ lisible par-dessus ; ouverte, elle reprend ses couleurs. Le dégradé sous le
 texte est calé sur les photos les plus claires (freinage, diagnostic) : en
 changer une pour un cliché très lumineux demande de revérifier la lisibilité.
 
-## Le défilement automatique
+## Le mur d'avis
+
+Douze avis répartis en trois colonnes qui défilent en boucle à des vitesses
+différentes (52 s, 64 s, 58 s), pour que l'ensemble ne se lise pas comme un
+seul bloc qui glisse. Le script duplique chaque colonne au chargement : arrivée
+à mi-course, la piste retrouve son point de départ et le raccord ne se voit
+pas. La copie est marquée `aria-hidden` pour ne pas faire lire deux fois les
+mêmes avis. Le `padding-bottom` des pistes vaut exactement leur `gap` — sans
+lui, la boucle sauterait d'un demi-interstice à chaque tour.
+
+Trois colonnes au-delà de 1080 px, deux à partir de 700 px, une seule en
+dessous. Le défilement s'interrompt au survol, au focus, hors du champ de
+vision et sur le bouton « Suspendre » ; en mouvement réduit, le mur devient
+une liste fixe que l'on parcourt normalement.
+
+**Ce qui n'est pas affiché, volontairement** : aucune étoile par avis (la note
+individuelle n'est pas connue, seule la moyenne l'est) et aucun portrait
+(ce sont les initiales, comme Google le fait pour un compte sans photo —
+mettre des visages d'une banque d'images serait un faux).
+
+## Le défilement automatique des services
 
 Le sélecteur avance d'un service toutes les 5 secondes. Le délai est la
 constante `SVC_DELAY` dans le script, à changer aussi dans l'animation CSS
@@ -117,9 +137,11 @@ Le numéro est dans la constante `GARAGE_WHATSAPP` — un seul endroit à change
       au mauvais endroit.
 - [ ] **Comptes Instagram / TikTok**, s'ils existent. Les icônes ont été retirées
       parce qu'elles pointaient dans le vide.
-- [ ] **3 avis clients réels** à copier depuis la fiche Google (nom affiché +
-      texte exact). Le gabarit est prêt en commentaire dans la section Avis.
-      Ne jamais reformuler un avis : on le cite mot pour mot ou on ne le met pas.
+- [ ] **Le texte français d'origine des avis.** Ceux affichés viennent de la
+      version anglaise que produit Google et ont été rendus en français. La
+      plupart ont pourtant été écrits en français : le bouton « Voir l'original »
+      de la fiche donne le texte exact, qui vaut mieux qu'une traduction de
+      traduction. Les avis sont dans le HTML de la section `#avis`.
 
 ## ⚠️ À vérifier le jour du déploiement
 
