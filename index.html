@@ -829,8 +829,8 @@ button:focus-visible, a:focus-visible {
    to this garage. A local workshop is found, not endorsed.
    ============================================ */
 .find-section {
-  border-top: 1px solid var(--hairline-strong);
-  border-bottom: 1px solid var(--hairline-strong);
+  /* Plus de trait gris pleine largeur : la section se détache par son
+     contenu, les séparations visibles de la page sont les coutures. */
 }
 .find-grid {
   display: grid;
@@ -1019,7 +1019,6 @@ button:focus-visible, a:focus-visible {
    ============================================ */
 .footer {
   background: var(--canvas);
-  border-top: 1px solid var(--hairline);
   padding: var(--sp-xxl) 0 var(--sp-xl);
 }
 .footer-grid {
@@ -1221,7 +1220,8 @@ button:focus-visible, a:focus-visible {
   height: 480px;
   gap: 1px;
   background: var(--hairline-strong); /* le filet entre panneaux, vu par le gap */
-  border: 1px solid var(--hairline-strong);
+  /* Pas de cadre : il redoublait les filets internes et posait deux traits
+     gris en travers de la page. Les panneaux se détachent par leur fond. */
   overflow: hidden;
 }
 /* La bande n'a pas d'entrée propre : ce sont ses panneaux qui se déroulent.
@@ -1642,9 +1642,9 @@ button:focus-visible, a:focus-visible {
    ============================================ */
 .reviews {
   padding: var(--sp-section) 0;
+  /* Le fond légèrement plus clair suffit à isoler la section ; le trait
+     gris qui la cernait doublait ce signal en barrant la page. */
   background: var(--surface-soft);
-  border-top: 1px solid var(--hairline-strong);
-  border-bottom: 1px solid var(--hairline-strong);
 }
 .reviews-inner {
   display: grid;
