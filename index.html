@@ -705,76 +705,54 @@ button:focus-visible, a:focus-visible {
 .about-feature p { font-size: 14px; color: var(--body); }
 
 /* === Certification plate ===
-   Replaces a screenshot of the old shop page. Reads as the plaque on the
-   workshop wall: brand stripe, mark, the claim, and where to find it. */
+   La preuve par la photo : le produit Castrol et le filtre, au comptoir. */
 .about-visual { position: relative; }
-.cert-plate {
+.proof-shot {
   position: relative;
-  height: 100%;
-  min-height: 440px;
-  background:
-    radial-gradient(120% 80% at 50% 0%, rgba(0,151,55,0.10) 0%, transparent 60%),
-    var(--surface-soft);
-  border: 1px solid var(--hairline-strong);
-  display: flex;
-  flex-direction: column;
-  padding: var(--sp-xl);
+  margin: 0;
   overflow: hidden;
+  border: 1px solid var(--hairline-strong);
+  background: var(--surface-soft);
 }
-.cert-plate .brand-stripe {
+.proof-shot .brand-stripe {
   position: absolute;
   top: 0; left: 0;
+  z-index: 2;
 }
-.cert-plate-mark { margin-bottom: auto; padding-top: var(--sp-md); }
-.cert-plate-mark img { height: 44px; width: auto; }
-.cert-plate-claim {
-  font-size: clamp(28px, 3.2vw, 44px);
-  font-weight: 800;
-  line-height: 1.02;
-  letter-spacing: -0.03em;
-  text-transform: uppercase;
-  margin-bottom: var(--sp-lg);
+.proof-shot img {
+  display: block;
+  width: 100%;
+  /* La photo est en portrait franc ; recadrée en 4/5 elle garde le bidon et
+     le filtre sans écraser la colonne de texte en vis-à-vis. */
+  aspect-ratio: 4 / 5;
+  height: auto;
+  object-fit: cover;
+  object-position: 55% center;
 }
-.cert-plate-claim .accent { color: var(--castrol-green-light); display: block; }
-.cert-plate-meta {
-  display: grid;
-  gap: var(--sp-xs);
-  padding-top: var(--sp-lg);
-  border-top: 1px solid var(--hairline);
-}
-.cert-plate-meta dt {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.cert-plate-meta dd { font-size: 15px; font-weight: 400; color: var(--body-strong); }
-.cert-plate-status {
-  display: inline-flex;
+.proof-shot figcaption {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  display: flex;
   align-items: center;
   gap: var(--sp-sm);
-  margin-top: var(--sp-lg);
-  padding: 10px var(--sp-md);
-  border: 1px solid var(--castrol-green-dark);
-  background: rgba(0,151,55,0.10);
-  align-self: flex-start;
+  padding: var(--sp-xxl) var(--sp-lg) var(--sp-lg);
+  background: linear-gradient(180deg, transparent 0%, rgba(6, 6, 6, 0.92) 60%);
+  color: var(--ink);
 }
-.cert-plate-status .dot {
+.proof-dot {
   width: 8px;
   height: 8px;
+  flex: none;
   border-radius: var(--r-full);
   background: var(--castrol-green-light);
   animation: pulse 2.5s var(--ease-in-out) infinite;
 }
 @media (prefers-reduced-motion: reduce) {
-  .cert-plate-status .dot { animation: none; }
+  .proof-dot { animation: none; }
 }
 
 @media (max-width: 768px) {
   .about-grid { grid-template-columns: 1fr; gap: var(--sp-xl); }
-  .cert-plate { aspect-ratio: auto; padding: var(--sp-lg); }
-  .cert-plate-mark { padding-top: var(--sp-sm); margin-bottom: var(--sp-xl); }
 }
 
 /* ============================================
@@ -1296,6 +1274,81 @@ button:focus-visible, a:focus-visible {
    `.reveal` ne sert ici qu'à la faire observer par l'IntersectionObserver. */
 .svc-strip.reveal { opacity: 1; transform: none; }
 
+.svc-stage { position: relative; }
+
+/* Jauge du cycle : elle dit combien de temps il reste avant le service
+   suivant, pour que le changement n'arrive pas sans prévenir. */
+.svc-progress {
+  position: relative;
+  height: 2px;
+  background: var(--hairline-strong);
+  overflow: hidden;
+}
+.svc-progress::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--castrol-green);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  will-change: transform;
+}
+.svc-progress.running::after {
+  animation: svcFill 5000ms linear forwards;
+}
+@keyframes svcFill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+.svc-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-md);
+  margin-top: var(--sp-md);
+}
+.svc-hint {
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--muted);
+}
+.svc-auto {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-xs);
+  min-height: 44px;
+  padding: 10px var(--sp-md);
+  background: transparent;
+  border: 1px solid var(--hairline);
+  color: var(--body-strong);
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 200ms var(--ease-out), color 200ms var(--ease-out);
+}
+.svc-auto svg { width: 14px; height: 14px; fill: currentColor; flex: none; }
+.svc-auto .ico-play { display: none; }
+.svc-auto.is-paused .ico-pause { display: none; }
+.svc-auto.is-paused .ico-play { display: block; }
+@media (hover: hover) and (pointer: fine) {
+  .svc-auto:hover { border-color: var(--castrol-green); color: var(--ink); }
+}
+.svc-auto:focus-visible {
+  outline: 2px solid var(--castrol-green-light);
+  outline-offset: 2px;
+}
+
+/* Sans défilement automatique, la jauge et son bouton n'ont plus d'objet */
+@media (prefers-reduced-motion: reduce) {
+  .svc-progress, .svc-controls { display: none; }
+}
+@media (max-width: 560px) {
+  .svc-controls { flex-direction: column; align-items: stretch; }
+  .svc-auto { justify-content: center; }
+  .svc-hint { text-align: center; }
+}
+
 .svc-panel {
   position: relative;
   flex: 1 1 0%;
@@ -1323,8 +1376,8 @@ button:focus-visible, a:focus-visible {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(130% 75% at 50% 100%, rgba(0, 151, 55, 0.26), transparent 62%),
-    linear-gradient(180deg, transparent 35%, rgba(0, 0, 0, 0.88) 100%);
+    radial-gradient(130% 75% at 50% 100%, rgba(0, 151, 55, 0.24), transparent 62%),
+    linear-gradient(180deg, transparent 12%, rgba(0, 0, 0, 0.62) 45%, rgba(0, 0, 0, 0.95) 100%);
   opacity: 0;
   transition: opacity 700ms var(--ease-out);
   pointer-events: none;
@@ -1351,29 +1404,35 @@ button:focus-visible, a:focus-visible {
 .svc-panel-art {
   position: absolute;
   inset: 0;
-  display: grid;
-  place-items: center;
+  overflow: hidden;
   pointer-events: none;
-  background-size: cover;
-  background-position: center;
 }
-/* Fermé, le filigrane est plus large que la bande : il n'en resterait que
-   des fragments de traits. On le garde comme simple grain, et on ne lui
-   donne sa pleine échelle qu'une fois le panneau ouvert. */
-.svc-panel-art svg {
-  width: 240px;
-  height: 240px;
-  stroke: var(--castrol-green-light);
-  fill: none;
-  stroke-width: 0.9;
-  opacity: 0.035;
-  transform: scale(0.6);
-  transition: opacity 700ms var(--ease-out), transform 900ms var(--ease-out);
+/* Fermé, la photo recule : désaturée et assombrie, elle devient une matière
+   sur laquelle le nom vertical se lit encore. Elle retrouve ses couleurs et
+   son cadrage à l'ouverture — le même mouvement que le composant d'origine,
+   qui rendait l'image à son échelle une fois le panneau choisi. */
+.svc-panel-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: grayscale(1) brightness(0.5) contrast(1.05);
+  transform: scale(1.14);
+  transition: filter 800ms var(--ease-out), transform 900ms var(--ease-out);
 }
-.svc-panel.is-active .svc-panel-art svg {
-  opacity: 0.15;
-  transform: scale(1) translateY(-8%);
+.svc-panel.is-active .svc-panel-art img {
+  filter: grayscale(0) brightness(0.76) contrast(1.02);
+  transform: scale(1);
 }
+/* Voile constant : sans lui, une photo claire avalerait le texte posé dessus */
+.svc-panel-art::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 8, 8, 0.58);
+  transition: background-color 800ms var(--ease-out);
+}
+.svc-panel.is-active .svc-panel-art::after { background: rgba(8, 8, 8, 0.22); }
 
 /* Le bouton couvre le panneau : on clique n'importe où sur la bande */
 .svc-panel-hit {
@@ -1523,13 +1582,12 @@ button:focus-visible, a:focus-visible {
 @media (hover: hover) and (pointer: fine) {
   .svc-panel:not(.is-active):hover { background: linear-gradient(180deg, #1b1b1b 0%, #0f0f0f 100%); }
   .svc-panel:not(.is-active):hover .svc-panel-label { color: var(--ink); }
-  .svc-panel:not(.is-active):hover .svc-panel-art svg { opacity: 0.12; }
+  .svc-panel:not(.is-active):hover .svc-panel-art img { filter: grayscale(0.55) brightness(0.66) contrast(1.05); }
 }
 
 @media (max-width: 1180px) {
   .svc-strip { height: 420px; }
   .svc-panel { min-width: 56px; }
-  .svc-panel-art svg { width: 180px; height: 180px; }
 }
 
 /* Sous 900px la bande bascule à la verticale : les panneaux s'empilent et
@@ -1568,9 +1626,14 @@ button:focus-visible, a:focus-visible {
   .svc-panel::after {
     background: linear-gradient(90deg, rgba(0, 151, 55, 0.16), transparent 55%);
   }
-  .svc-panel-art { place-items: start end; padding: var(--sp-md); }
-  .svc-panel-art svg { width: 120px; height: 120px; opacity: 0.04; transform: none; }
-  .svc-panel.is-active .svc-panel-art svg { opacity: 0.12; transform: none; }
+  .svc-panel-art img { transform: scale(1.06); }
+  .svc-panel.is-active .svc-panel-art img { transform: scale(1); }
+  .svc-panel-art::after { background: rgba(8, 8, 8, 0.72); }
+  .svc-panel.is-active .svc-panel-art::after { background: rgba(8, 8, 8, 0.68); }
+  .svc-panel::after {
+    background: linear-gradient(90deg, rgba(0, 151, 55, 0.18), transparent 60%),
+                linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.55));
+  }
 
   .svc-panel-head {
     position: static;
@@ -1611,7 +1674,7 @@ button:focus-visible, a:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   .svc-panel,
   .svc-strip.revealed .svc-panel,
-  .svc-panel-art svg,
+  .svc-panel-art img,
   .svc-panel-body,
   .svc-panel::after,
   .svc-panel::before {
@@ -1968,13 +2031,15 @@ button:focus-visible, a:focus-visible {
       <p class="body-md" style="color: var(--body);">Une gamme complète pour votre véhicule. Choisissez un service pour en voir le détail.</p>
     </div>
 
-    <div class="svc-strip reveal" id="svcStrip">
+    <div class="svc-stage">
+      <div class="svc-progress" id="svcProgress" aria-hidden="true"></div>
+      <div class="svc-strip reveal" id="svcStrip">
       <div class="svc-panel is-active" data-svc-panel style="--i: 0">
         <button class="svc-panel-hit" id="svc-tab-1" aria-expanded="true" aria-controls="svc-body-1">
           <span class="svc-sr">Voir le détail : Vidange d'huile</span>
         </button>
         <div class="svc-panel-art" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><path d="M12 2l2 4h-4l2-4zM5 22h14l-2-12H7L5 22zM9 10h6M10 14h4M11 18h2"/></svg>
+          <img src="images/services/vidange.webp" alt="" loading="lazy" decoding="async">
         </div>
         <div class="svc-panel-head">
           <span class="svc-panel-icon" aria-hidden="true">
@@ -1999,7 +2064,7 @@ button:focus-visible, a:focus-visible {
           <span class="svc-sr">Voir le détail : Freinage</span>
         </button>
         <div class="svc-panel-art" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/></svg>
+          <img src="images/services/freinage.webp" alt="" loading="lazy" decoding="async">
         </div>
         <div class="svc-panel-head">
           <span class="svc-panel-icon" aria-hidden="true">
@@ -2024,7 +2089,7 @@ button:focus-visible, a:focus-visible {
           <span class="svc-sr">Voir le détail : Diagnostic</span>
         </button>
         <div class="svc-panel-art" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14"/><path d="M2 20h20M8 10l2 2 4-4"/></svg>
+          <img src="images/services/diagnostic.webp" alt="" loading="lazy" decoding="async">
         </div>
         <div class="svc-panel-head">
           <span class="svc-panel-icon" aria-hidden="true">
@@ -2049,7 +2114,7 @@ button:focus-visible, a:focus-visible {
           <span class="svc-sr">Voir le détail : Climatisation</span>
         </button>
         <div class="svc-panel-art" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20M5 5l14 14M19 5L5 19"/></svg>
+          <img src="images/services/climatisation.webp" alt="" loading="lazy" decoding="async">
         </div>
         <div class="svc-panel-head">
           <span class="svc-panel-icon" aria-hidden="true">
@@ -2074,7 +2139,7 @@ button:focus-visible, a:focus-visible {
           <span class="svc-sr">Voir le détail : Boîte automatique</span>
         </button>
         <div class="svc-panel-art" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/></svg>
+          <img src="images/services/boite-auto.webp" alt="" loading="lazy" decoding="async">
         </div>
         <div class="svc-panel-head">
           <span class="svc-panel-icon" aria-hidden="true">
@@ -2099,7 +2164,7 @@ button:focus-visible, a:focus-visible {
           <span class="svc-sr">Voir le détail : Vente de pneus</span>
         </button>
         <div class="svc-panel-art" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>
+          <img src="images/services/pneus.webp" alt="" loading="lazy" decoding="async">
         </div>
         <div class="svc-panel-head">
           <span class="svc-panel-icon" aria-hidden="true">
@@ -2124,7 +2189,7 @@ button:focus-visible, a:focus-visible {
           <span class="svc-sr">Voir le détail : Embrayage</span>
         </button>
         <div class="svc-panel-art" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="12" r="3"/><path d="M9 12h6"/></svg>
+          <img src="images/services/embrayage.webp" alt="" loading="lazy" decoding="async">
         </div>
         <div class="svc-panel-head">
           <span class="svc-panel-icon" aria-hidden="true">
@@ -2149,7 +2214,7 @@ button:focus-visible, a:focus-visible {
           <span class="svc-sr">Voir le détail : Filtres</span>
         </button>
         <div class="svc-panel-art" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><path d="M3 4h18l-7 8v8l-4-2v-6L3 4z"/></svg>
+          <img src="images/services/filtres.webp" alt="" loading="lazy" decoding="async">
         </div>
         <div class="svc-panel-head">
           <span class="svc-panel-icon" aria-hidden="true">
@@ -2169,6 +2234,18 @@ button:focus-visible, a:focus-visible {
           </ul>
         </div>
       </div>
+      </div>
+    </div>
+
+    <div class="svc-controls">
+      <p class="svc-hint">Un service défile toutes les 5 secondes.</p>
+      <button type="button" class="svc-auto" id="svcAuto"
+              aria-label="Suspendre le défilement automatique des services"
+              aria-controls="svcStrip">
+        <svg class="ico-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+        <svg class="ico-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7V5z"/></svg>
+        <span id="svcAutoText">Suspendre</span>
+      </button>
     </div>
   </div>
 </section>
@@ -2216,21 +2293,18 @@ button:focus-visible, a:focus-visible {
       </div>
 
       <div class="about-visual reveal">
-        <div class="cert-plate">
+        <!-- La plaque typographique n'était là qu'en l'absence de photo. Le
+             produit dans son atelier prouve la phrase mieux qu'un cartouche. -->
+        <figure class="proof-shot">
           <div class="brand-stripe"></div>
-          <div class="cert-plate-mark">
-            <img src="images/logo-png-castrol.png" alt="Castrol Auto Service" loading="lazy" width="400" height="200">
-          </div>
-          <p class="cert-plate-claim">Centre agréé<span class="accent">Castrol Service</span></p>
-          <dl class="cert-plate-meta">
-            <dt>Adresse</dt>
-            <dd>Résidence Khayzourane, Avenue Tarik Ibn Ziad — Témara</dd>
-          </dl>
-          <div class="cert-plate-status">
-            <span class="dot"></span>
+          <img src="images/produit-castrol.webp"
+               alt="Bidon d'huile Castrol Transmax Dual et filtre à huile neuf, posés sur le comptoir du garage"
+               loading="lazy" decoding="async" width="1100" height="1410">
+          <figcaption>
+            <span class="proof-dot" aria-hidden="true"></span>
             <span class="label-uppercase">Produits authentiques &amp; traçables</span>
-          </div>
-        </div>
+          </figcaption>
+        </figure>
       </div>
     </div>
   </div>
@@ -2707,19 +2781,84 @@ button:focus-visible, a:focus-visible {
 // Un seul service ouvert à la fois — l'ouverture reste pilotée par CSS pour
 // rester interruptible. Les flèches parcourent la bande au clavier.
 const svcPanels = Array.from(document.querySelectorAll('[data-svc-panel]'));
+const svcStrip = document.getElementById('svcStrip');
+const svcProgress = document.getElementById('svcProgress');
+const svcAutoBtn = document.getElementById('svcAuto');
+const svcAutoText = document.getElementById('svcAutoText');
+
+const SVC_DELAY = 5000;
+let svcIndex = 0;
+let svcTimer = null;
+let svcHalted = false;   // arrêt demandé par le visiteur
+let svcSeen = false;     // la bande est-elle à l'écran
+let svcHover = false;    // survol ou focus en cours
+
+// Sur un système réglé en mouvement réduit, rien ne défile tout seul.
+const svcMotionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function svcCycling() {
+  return svcMotionOK && !svcHalted && svcSeen && !svcHover;
+}
+
+// Une animation CSS ne se rejoue pas si la classe est déjà là : on la retire,
+// on force un reflow, on la remet.
+function svcResetGauge() {
+  if (!svcProgress) return;
+  svcProgress.classList.remove('running');
+  void svcProgress.offsetWidth;
+  if (svcCycling()) svcProgress.classList.add('running');
+}
+
+function svcSchedule() {
+  clearTimeout(svcTimer);
+  if (!svcCycling()) return;
+  svcTimer = setTimeout(() => {
+    openService((svcIndex + 1) % svcPanels.length);
+    svcSchedule();
+  }, SVC_DELAY);
+}
 
 function openService(index) {
+  svcIndex = index;
   svcPanels.forEach((panel, i) => {
     const on = i === index;
     panel.classList.toggle('is-active', on);
     panel.querySelector('.svc-panel-hit').setAttribute('aria-expanded', String(on));
   });
+  svcResetGauge();
+}
+
+// Choisir un service, c'est vouloir le lire : le défilement s'arrête et ne
+// reprend que si on le redemande.
+function svcHalt() {
+  svcHalted = true;
+  clearTimeout(svcTimer);
+  svcProgress && svcProgress.classList.remove('running');
+  if (svcAutoBtn) {
+    svcAutoBtn.classList.add('is-paused');
+    svcAutoBtn.setAttribute('aria-label', 'Reprendre le défilement automatique des services');
+    svcAutoText.textContent = 'Reprendre';
+  }
+}
+
+function svcResume() {
+  svcHalted = false;
+  if (svcAutoBtn) {
+    svcAutoBtn.classList.remove('is-paused');
+    svcAutoBtn.setAttribute('aria-label', 'Suspendre le défilement automatique des services');
+    svcAutoText.textContent = 'Suspendre';
+  }
+  svcResetGauge();
+  svcSchedule();
 }
 
 svcPanels.forEach((panel, i) => {
   const hit = panel.querySelector('.svc-panel-hit');
 
-  hit.addEventListener('click', () => openService(i));
+  hit.addEventListener('click', () => {
+    openService(i);
+    svcHalt();
+  });
 
   hit.addEventListener('keydown', (e) => {
     const step = (e.key === 'ArrowRight' || e.key === 'ArrowDown') ? 1
@@ -2729,9 +2868,40 @@ svcPanels.forEach((panel, i) => {
     e.preventDefault();
     const next = (i + step + svcPanels.length) % svcPanels.length;
     openService(next);
+    svcHalt();
     svcPanels[next].querySelector('.svc-panel-hit').focus();
   });
 });
+
+if (svcAutoBtn) {
+  svcAutoBtn.addEventListener('click', () => (svcHalted ? svcResume() : svcHalt()));
+}
+
+if (svcStrip && svcMotionOK) {
+  // Le survol suspend sans arrêter : on lit, puis ça repart.
+  const hold = (on) => {
+    svcHover = on;
+    if (on) {
+      clearTimeout(svcTimer);
+      svcProgress.classList.remove('running');
+    } else {
+      svcResetGauge();
+      svcSchedule();
+    }
+  };
+  svcStrip.addEventListener('mouseenter', () => hold(true));
+  svcStrip.addEventListener('mouseleave', () => hold(false));
+  svcStrip.addEventListener('focusin',    () => hold(true));
+  svcStrip.addEventListener('focusout',   () => hold(false));
+
+  // Rien ne tourne tant que la bande n'est pas à l'écran : le visiteur ne
+  // doit pas retrouver un carrousel déjà à mi-course en arrivant dessus.
+  new IntersectionObserver(([entry]) => {
+    svcSeen = entry.isIntersecting;
+    if (svcSeen) { svcResetGauge(); svcSchedule(); }
+    else { clearTimeout(svcTimer); svcProgress.classList.remove('running'); }
+  }, { threshold: 0.25 }).observe(svcStrip);
+}
 
 // === FAQ Toggle ===
 // Kowalski: CSS transitions (not keyframes) for interruptible UI

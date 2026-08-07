@@ -26,11 +26,15 @@ castrol-redesign/
 ├── 404.html        ← page d'erreur, autonome
 ├── robots.txt
 ├── sitemap.xml
-└── images/         ← 6 fichiers seulement, 3 Mo au total
+└── images/
     ├── hero-video.mp4 / hero-poster.webp|jpg
     ├── service-video.mp4 / service-poster.webp|jpg
+    ├── produit-castrol.webp    ← section « Le seul centre certifié »
     ├── logo-png-castrol.png
-    └── icon-officiel-castrol-service-temara.webp
+    ├── icon-officiel-castrol-service-temara.webp
+    └── services/               ← une photo par service, nommée par le service
+        vidange · freinage · diagnostic · climatisation
+        boite-auto · pneus · embrayage · filtres
 ```
 
 Les WebP servent de posters vidéo (plus légers), les JPG restent pour l'aperçu
@@ -42,6 +46,38 @@ conservés **hors du dossier de déploiement**, dans
 Ne rien remettre ici sans raison : ce dossier doit rester léger.
 
 ---
+
+## Les photos des services
+
+Chaque panneau du sélecteur porte sa photo, dans `images/services/`. Le nom du
+fichier dit le service : pour en remplacer une, écraser le fichier du même nom,
+il n'y a rien à changer dans le HTML.
+
+Les originaux (jusqu'à 4,7 Mo pièce) sont conservés dans
+`~/Desktop/castrol-redesign-assets-source/originaux-services/`. Les versions
+servies sont réencodées en WebP à 1400 px maximum — 9 photos pour 504 Ko au
+total. Pour en réintégrer une nouvelle :
+
+```bash
+ffmpeg -i source.jpg -vf "scale='min(1400,iw)':-2:flags=lanczos" \
+       -c:v libwebp -quality 76 images/services/<service>.webp
+```
+
+Fermée, la photo est désaturée et assombrie pour que le nom du service reste
+lisible par-dessus ; ouverte, elle reprend ses couleurs. Le dégradé sous le
+texte est calé sur les photos les plus claires (freinage, diagnostic) : en
+changer une pour un cliché très lumineux demande de revérifier la lisibilité.
+
+## Le défilement automatique
+
+Le sélecteur avance d'un service toutes les 5 secondes. Le délai est la
+constante `SVC_DELAY` dans le script, à changer aussi dans l'animation CSS
+`svcFill` qui dessine la jauge.
+
+Il s'interrompt dans quatre cas : au survol et au focus (reprise en sortant),
+au clic sur un panneau ou sur le bouton « Suspendre » (reprise seulement sur
+demande), hors du champ de vision, et il ne démarre pas du tout si le système
+est réglé en mouvement réduit — la jauge et le bouton disparaissent alors.
 
 ## Le formulaire de rendez-vous
 
@@ -64,9 +100,14 @@ Le numéro est dans la constante `GARAGE_WHATSAPP` — un seul endroit à change
       À corriger à **4 endroits** : la bande de stats, la ligne « Horaires » de
       « Nous trouver », la FAQ, et le bloc `openingHoursSpecification` (déjà
       rédigé en commentaire dans le `<head>`, il n'y a qu'à le décommenter).
-- [ ] **Photos réelles** du garage, de l'équipe ou de la vitrine. Elles
-      remplaceront la plaque de certification typographique de la section
-      « À propos », qui est un pis-aller.
+- [ ] **Deux photos de service en meilleure définition** : `freinage` (764 px
+      de large) et `filtres` (518 px) sont les seules sources sous 1000 px.
+      Elles s'affichent correctement mais manquent de netteté sur grand écran.
+      Toutes les autres sont en 1200–1400 px.
+- [ ] **Photos du garage lui-même** (atelier, équipe, vitrine), si l'on veut
+      remplacer les photos d'illustration des services par des prises de vue
+      du lieu. La photo produit de la section « À propos », elle, a bien été
+      faite sur place.
 - [ ] **URL exacte de la fiche Google Business** (bouton « Partager » → lien
       court). À substituer partout où figure aujourd'hui une URL de *recherche*
       Google Maps : `hasMap`, `sameAs`, la carte, le bouton « Itinéraire », le
