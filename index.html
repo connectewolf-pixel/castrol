@@ -1230,7 +1230,9 @@ button:focus-visible, a:focus-visible {
 .svc-progress {
   position: relative;
   height: 2px;
-  background: var(--hairline-strong);
+  /* Pas de rail : un trait gris permanent en travers de la page pour ne
+     montrer qu'une progression. Seule la part écoulée se peint. */
+  background: transparent;
   overflow: hidden;
 }
 .svc-progress::after {
@@ -1637,9 +1639,16 @@ button:focus-visible, a:focus-visible {
    ============================================ */
 .reviews {
   padding: var(--sp-section) 0;
-  /* Le fond légèrement plus clair suffit à isoler la section ; le trait
-     gris qui la cernait doublait ce signal en barrant la page. */
-  background: var(--surface-soft);
+  /* La section se détache par un fond à peine plus clair, amené et repris
+     en dégradé : posé en aplat, il dessinait une arête nette en haut et en
+     bas — deux lignes de plus en travers de la page. */
+  background: linear-gradient(
+    180deg,
+    var(--canvas) 0%,
+    var(--surface-soft) 14%,
+    var(--surface-soft) 86%,
+    var(--canvas) 100%
+  );
 }
 .reviews-inner {
   display: grid;
