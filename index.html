@@ -716,6 +716,8 @@ button:focus-visible, a:focus-visible {
   align-items: stretch;
 }
 .about-text h2 { margin-bottom: var(--sp-lg); }
+/* Tout l'argument de la section tient dans ce mot : il porte la couleur. */
+.about-text h2 .accent { color: var(--castrol-green-light); }
 .about-text p { margin-bottom: var(--sp-md); max-width: 480px; }
 .about-features {
   display: grid;
@@ -769,12 +771,31 @@ button:focus-visible, a:focus-visible {
 .proof-shot img {
   display: block;
   width: 100%;
-  /* La photo est en portrait franc ; recadrée en 4/5 elle garde le bidon et
-     le filtre sans écraser la colonne de texte en vis-à-vis. */
   aspect-ratio: 4 / 5;
   height: auto;
   object-fit: cover;
   object-position: 55% center;
+}
+
+/* À deux colonnes, la photo suit la hauteur du texte au lieu d'imposer la
+   sienne : son format portrait laissait sinon un vide sous la dernière
+   garantie, à gauche. Elle est sortie du flux pour ne plus peser dans le
+   calcul de la rangée — c'est la colonne de texte qui donne la hauteur.
+   Le plancher évite qu'un texte court ne l'écrase. */
+@media (min-width: 769px) {
+  .about-visual { min-height: 460px; }
+  .proof-shot {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .proof-shot img {
+    aspect-ratio: auto;
+    flex: 1;
+    min-height: 0;
+    height: auto;
+  }
 }
 .proof-shot figcaption {
   position: absolute;
@@ -800,41 +821,6 @@ button:focus-visible, a:focus-visible {
 
 @media (max-width: 768px) {
   .about-grid { grid-template-columns: 1fr; gap: var(--sp-xl); }
-}
-
-/* ============================================
-   STATS STRIP
-   ============================================ */
-.stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
-  background: var(--hairline);
-}
-.stat-cell {
-  background: var(--surface-soft);
-  padding: var(--sp-xl) var(--sp-lg);
-  transition: background-color 300ms var(--ease-out);
-}
-@media (hover: hover) and (pointer: fine) {
-  .stat-cell:hover { background: var(--surface-card); }
-}
-.stat-value {
-  font-size: clamp(32px, 4vw, 48px);
-  font-weight: 800;
-  line-height: 1;
-  margin-bottom: var(--sp-xs);
-  letter-spacing: -0.03em;
-}
-.stat-label {
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--body);
-}
-@media (max-width: 768px) {
-  .stats { grid-template-columns: repeat(2, 1fr); }
 }
 
 /* ============================================
@@ -2355,8 +2341,11 @@ button:focus-visible, a:focus-visible {
   <div class="container">
     <div class="about-grid">
       <div class="about-text reveal">
-        <h2 class="display-lg">Le seul centre <br>Castrol certifié <br>au Maroc</h2>
-        <p class="body-md" style="color: var(--body-strong);">Situé à Résidence Khayzourane, Avenue Tarik Ibn Ziad à Témara, Castrol Service est le seul centre certifié au Maroc. Nous garantissons des produits authentiques et traçables, une équipe formée selon les standards internationaux, et un service professionnel et transparent.</p>
+        <h2 class="display-lg">Le <span class="accent">seul</span> centre <br>Castrol certifié <br>au Maroc</h2>
+        <!-- Le paragraphe annonçait mot pour mot le titre au-dessus, puis les
+             trois garanties listées juste en dessous. Il pose maintenant le
+             lieu et introduit ces garanties au lieu de les répéter. -->
+        <p class="body-md" style="color: var(--body-strong);">Le garage est installé à Résidence Khayzourane, avenue Tarik Ibn Ziad, et reçoit les automobilistes de Témara comme de Rabat. Ce que cet agrément engage, concrètement :</p>
 
         <div class="about-features reveal-stagger">
           <div class="about-feature">
@@ -2404,28 +2393,6 @@ button:focus-visible, a:focus-visible {
         </figure>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ============================================
-     STATS STRIP
-     ============================================ -->
-<section class="stats reveal-stagger">
-  <div class="stat-cell">
-    <div class="stat-value">100%</div>
-    <div class="stat-label">Huiles originales</div>
-  </div>
-  <div class="stat-cell">
-    <div class="stat-value">8</div>
-    <div class="stat-label">Services spécialisés</div>
-  </div>
-  <div class="stat-cell">
-    <div class="stat-value">N°1</div>
-    <div class="stat-label">Centre certifié Maroc</div>
-  </div>
-  <div class="stat-cell">
-    <div class="stat-value">6j/7</div>
-    <div class="stat-label">Ouvert toute la semaine</div>
   </div>
 </section>
 
