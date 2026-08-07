@@ -298,18 +298,65 @@ button:focus-visible, a:focus-visible {
 /* ============================================
    BRAND STRIPE — Castrol tricolor
    ============================================ */
+/* Filet de marque, en tête d'un bloc — pas entre deux sections : pour les
+   jonctions, voir `.seam` plus bas.
+   Les trois blocs à bords francs se lisaient comme un drapeau collé sur la
+   page, et le tiers blanc tranchait sur le noir plus fort que tout le reste.
+   Ici la même identité, mais le vert cède au rouge sur une courte zone de
+   fondu, et la fin s'éteint au lieu de s'arrêter net. */
 .brand-stripe {
-  height: 3px;
+  height: 2px;
   width: 100%;
   background: linear-gradient(
     to right,
     var(--castrol-green) 0%,
-    var(--castrol-green) 33.33%,
-    var(--castrol-red) 33.33%,
-    var(--castrol-red) 66.66%,
-    var(--castrol-white) 66.66%,
-    var(--castrol-white) 100%
+    var(--castrol-green) 34%,
+    var(--castrol-red) 46%,
+    var(--castrol-red) 72%,
+    rgba(226, 0, 26, 0) 100%
   );
+}
+
+/* ============================================
+   COUTURES DE SECTION
+   Une bande tricolore pleine largeur coupait la page en deux à chaque
+   jonction. La couture fait l'inverse : une lueur qui fond une section dans
+   la suivante, et un filet qui se tire au passage — même courbe et même
+   durée que l'ouverture d'un panneau de service, pour que la page ait un
+   seul rythme.
+   ============================================ */
+.seam {
+  position: relative;
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0, 151, 55, 0.9) 22%,
+    rgba(226, 0, 26, 0.9) 64%,
+    transparent 100%
+  );
+  transform: scaleX(0);
+  transform-origin: 50% 50%;
+  transition: transform 700ms var(--ease-drawer);
+}
+.seam.visible { transform: scaleX(1); }
+
+/* Sans cette lueur, la couture resterait une ligne — simplement plus fine.
+   C'est elle qui fait la transition ; le filet ne fait que la souligner. */
+.seam::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -70px;
+  height: 140px;
+  background: radial-gradient(56% 100% at 50% 50%, rgba(0, 151, 55, 0.085), transparent 72%);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .seam { transform: none; transition: none; }
 }
 
 /* ============================================
@@ -2303,7 +2350,7 @@ button:focus-visible, a:focus-visible {
 <!-- ============================================
      ABOUT SPLIT
      ============================================ -->
-<div class="brand-stripe"></div>
+<div class="seam"></div>
 <section class="section" id="about">
   <div class="container">
     <div class="about-grid">
@@ -2749,7 +2796,7 @@ button:focus-visible, a:focus-visible {
      le garage veut recevoir les demandes par mail ou dans un outil, il suffit
      de remplacer le handler `submit` (voir le script en bas de page).
      ============================================ -->
-<div class="brand-stripe"></div>
+<div class="seam"></div>
 <section class="section booking" id="contact">
   <div class="container">
     <div class="booking-grid">
@@ -3140,7 +3187,7 @@ const revealObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
-document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => revealObserver.observe(el));
+document.querySelectorAll('.reveal, .reveal-stagger, .seam').forEach(el => revealObserver.observe(el));
 
 // === Nav scroll state (IntersectionObserver, no window.scroll) ===
 const nav = document.getElementById('nav');
