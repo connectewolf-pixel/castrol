@@ -121,6 +121,32 @@ Le numéro est dans la constante `GARAGE_WHATSAPP` — un seul endroit à change
 
 ---
 
+## L'assistant — aperçu, pas encore branché
+
+Le bouton en bas à **gauche** ouvre un panneau qui annonce l'assistant du garage.
+**Rien ne répond derrière** : c'est une pièce de démonstration pour la campagne
+d'acquisition, montrée telle quelle au prospect.
+
+Elle est volontairement honnête — aucune fausse conversation, aucun faux « en
+ligne ». Le statut dit « Bientôt disponible » en ambre (le vert dirait qu'il
+répond), le panneau montre les questions qu'il saura traiter, et renvoie vers les
+deux canaux qui répondent vraiment : WhatsApp et le téléphone.
+
+**Le placement.** L'assistant tient le coin bas-gauche, WhatsApp garde le
+bas-droit. Deux zones de pouce distinctes plutôt qu'une pile de bulles : sur un
+écran de 320px, deux ronds empilés à droite occupaient 130px de haut et
+recouvraient le contenu. Le lanceur est un rond de 56px au mobile, une pastille
+avec le libellé « Assistant » à partir de 700px. Le panneau s'ouvre en **feuille
+par le bas** au mobile (voile, verrou de défilement, poignée) et en **carte
+ancrée au lanceur** au-dessus de 700px.
+
+**Pour le brancher plus tard** : remplacer le contenu de `.assist-body` par le fil
+de discussion. L'ossature — lanceur, feuille, voile, focus, Échap, verrou de
+défilement — ne bouge pas. Le statut ambre et le pied de panneau (« En attendant,
+l'équipe du garage vous répond directement ») sont à retirer ce jour-là.
+
+---
+
 ## ⚠️ À obtenir du propriétaire avant mise en ligne
 
 - [ ] **Horaires exacts** — la page affiche « Ouvert 6 jours sur 7 » en attendant.
