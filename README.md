@@ -130,7 +130,7 @@ d'acquisition, montrée telle quelle au prospect.
 Elle est volontairement honnête — aucune fausse conversation, aucun faux « en
 ligne ». Le statut dit « Bientôt disponible » en ambre (le vert dirait qu'il
 répond), le panneau montre les questions qu'il saura traiter, et renvoie vers les
-deux canaux qui répondent vraiment : WhatsApp et le téléphone.
+deux canaux qui répondent vraiment : WhatsApp et le téléphone, en pied de panneau.
 
 **Le placement.** L'assistant tient le coin bas-gauche, WhatsApp garde le
 bas-droit. Deux zones de pouce distinctes plutôt qu'une pile de bulles : sur un
@@ -142,9 +142,9 @@ ancrée au lanceur** au-dessus de 700px.
 
 **Pour le brancher plus tard** : remplacer le contenu de `.assist-body` par le fil
 de discussion. L'ossature — lanceur, feuille, voile, focus, Échap, verrou de
-défilement — ne bouge pas. Le statut ambre « Bientôt disponible » est à retirer ce
-jour-là ; le pied garde ses deux boutons, qui restent utiles même une fois
-l'assistant en service.
+défilement — ne bouge pas. Le statut ambre est à retirer ce jour-là, et le pied de
+panneau (WhatsApp / Appeler) à garder ou non selon qu'on veut encore offrir la
+sortie humaine.
 
 ---
 
