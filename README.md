@@ -5,6 +5,13 @@ build : on ouvre `index.html` et ça marche.
 
 Démo prospect de la campagne d'acquisition Réponse Online.
 
+> **Maquette, pas un site officiel.** Cette page est une proposition de refonte
+> réalisée par [Réponse Online](https://reponseonline.com) à titre de démonstration.
+> Elle n'est ni le site officiel de Castrol Service Témara, ni affiliée à Castrol
+> ou à bp. Les marques citées appartiennent à leurs propriétaires respectifs.
+> Le dépôt est publié comme pièce de portfolio — il n'est pas destiné à être servi
+> en ligne à l'adresse du commerce.
+
 ---
 
 ## Lancer en local

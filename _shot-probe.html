@@ -3709,5 +3709,23 @@ if (assistFab && assistPanel) {
 }
 </script>
 
+<script>
+window.addEventListener('load',()=>{
+  document.getElementById('assistFab').click();
+  setTimeout(()=>{
+    const p = document.getElementById('assistPanel').getBoundingClientRect();
+    const b = document.querySelector('.assist-body').getBoundingClientRect();
+    const out = document.createElement('pre');
+    out.id='probe';
+    out.textContent = JSON.stringify({
+      innerWidth: window.innerWidth, dpr: devicePixelRatio,
+      docWidth: document.documentElement.clientWidth,
+      panel: [p.left, p.width], body: [b.left, b.width],
+      matchesDesktop: matchMedia('(min-width: 700px)').matches
+    });
+    document.body.appendChild(out);
+  }, 600);
+});
+</script>
 </body>
 </html>
