@@ -1424,18 +1424,13 @@ button:focus-visible, a:focus-visible {
   background: var(--castrol-green-light);
 }
 
+/* Le pied ne porte plus que les deux actions : padding égal sur les quatre
+   côtés, sinon la bande gardait la respiration d'un texte qui n'y est plus. */
 .assist-foot {
-  padding: var(--sp-md) var(--sp-lg) var(--sp-lg);
+  padding: var(--sp-lg);
   border-top: 1px solid var(--hairline-strong);
   background: var(--surface-soft);
   flex: none;
-}
-.assist-foot-note {
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 1.45;
-  color: var(--muted);
-  margin-bottom: var(--sp-sm);
 }
 .assist-actions { display: flex; gap: var(--sp-xs); }
 .assist-actions .btn {
@@ -3293,7 +3288,6 @@ button:focus-visible, a:focus-visible {
   </div>
 
   <div class="assist-foot">
-    <p class="assist-foot-note">En attendant, l'équipe du garage vous répond directement.</p>
     <div class="assist-actions">
       <a class="btn btn-primary" href="https://wa.me/212663850560" target="_blank" rel="noopener">WhatsApp</a>
       <a class="btn btn-outline" href="tel:+212663850560">Appeler</a>

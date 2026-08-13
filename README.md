@@ -142,8 +142,9 @@ ancrée au lanceur** au-dessus de 700px.
 
 **Pour le brancher plus tard** : remplacer le contenu de `.assist-body` par le fil
 de discussion. L'ossature — lanceur, feuille, voile, focus, Échap, verrou de
-défilement — ne bouge pas. Le statut ambre et le pied de panneau (« En attendant,
-l'équipe du garage vous répond directement ») sont à retirer ce jour-là.
+défilement — ne bouge pas. Le statut ambre « Bientôt disponible » est à retirer ce
+jour-là ; le pied garde ses deux boutons, qui restent utiles même une fois
+l'assistant en service.
 
 ---
 
