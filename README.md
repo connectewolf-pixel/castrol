@@ -108,6 +108,62 @@ au clic ou à la flèche sur un panneau (le visiteur a choisi son service, la
 bande ne repart plus), hors du champ de vision, et il ne démarre pas du tout
 si le système est réglé en mouvement réduit — la jauge disparaît alors.
 
+## Les filets de marque
+
+Le vert et le rouge se partageaient une barre de 2 px en deux moitiés franches
+— en tête des blocs (`.brand-stripe`) et sur la tranche du panneau de service
+ouvert. Ça se lisait comme un drapeau collé sur la page, et aucune des deux
+teintes n'y disait quoi que ce soit.
+
+Un seul vert désormais, du clair au profond puis l'extinction : la lumière suit
+le geste au lieu de le couper en deux. **Le rouge ne sert plus qu'à informer**
+— le champ de formulaire en erreur. C'est la règle à tenir si un accent
+revient : une couleur sur cette page doit dire quelque chose.
+
+## Le menu
+
+Le panneau ne glisse plus d'un bloc. Trois épaisseurs entrent l'une après
+l'autre par la droite — un éclat vert, une couche carbone, puis le noir qui se
+referme dessus (575 ms, décalage de 120 ms). Les liens montent ensuite de sous
+leur ligne, inclinés de 7°, et se redressent en arrivant. À la fermeture, tout
+repart dans l'ordre inverse : le noir d'abord, le vert en dernier.
+
+Le déclencheur porte l'état : le mot bascule de « Menu » à « Fermer » derrière
+une ligne masquée, et le signe `+` pivote de 315° pour devenir la croix. Le mot
+reste affiché jusqu'à 320 px — seul, le `+` se lit comme « ajouter ».
+
+Chaque entrée appelle une figure de fond (cercles, goutte, barres, diagonales,
+trame) : une seule à la fois, au survol. **Sans curseur — donc sur téléphone —
+aucune ne peut être appelée** : le menu en garde une posée en bas, à mi-voix,
+plutôt que de laisser un vide sous les liens.
+
+Tout est en CSS ; le JS ne fait que poser l'état, déplacer le focus vers la
+croix à l'ouverture et le rendre au bouton à la fermeture. En mouvement réduit,
+le rideau ne joue plus et les figures ne s'affichent pas.
+
+Le menu reste réservé au **format ≤ 1024 px**. Au-dessus, la barre garde ses
+liens, son numéro et son bouton de rendez-vous visibles : les cacher derrière un
+geste coûterait des appels.
+
+## La carte
+
+La carte Google ne se charge plus au chargement de la page : **elle arrive au
+clic**. Une visite qui ne va pas jusqu'à « Nous trouver » ne déclenche aucune
+requête vers Google, aucun cookie tiers. Une fois créée, l'iframe reste — la
+rouvrir ne recharge rien.
+
+Au repos, le repère est dessiné sur place : papier millimétré, deux axes, trois
+cercles de distance qui se tracent à l'arrivée dans le champ, et le point. Sous
+le curseur, la carte s'incline (6° au maximum) et le point dérive légèrement ;
+le mouvement se traîne derrière la souris au lieu de lui coller.
+
+**Ce plan ne relève rien** : c'est un repère, pas une carte. Il le dit — « plan
+indicatif — ouvrir la carte » — et la vraie carte est à un geste. Aucune rue
+n'est nommée, aucun tracé ne prétend correspondre au terrain.
+
+L'URL de la carte vit dans l'attribut `data-src` du bouton `#mapCard`, plus dans
+un `<iframe>` du HTML.
+
 ## Le formulaire de rendez-vous
 
 Il n'envoie rien à un serveur. Il assemble un message et ouvre WhatsApp avec le
@@ -166,13 +222,16 @@ l'assistant en service.
       faite sur place.
 - [ ] **URL exacte de la fiche Google Business** (bouton « Partager » → lien
       court). À substituer partout où figure aujourd'hui une URL de *recherche*
-      Google Maps : `hasMap`, `sameAs`, la carte, le bouton « Itinéraire », le
-      bouton « Lire les avis ». Sans ça, la carte peut pointer légèrement à côté.
+      Google Maps : `hasMap`, `sameAs`, le `data-src` du bouton de la carte, le
+      bouton « Itinéraire », le bouton « Lire les avis ». Sans ça, la carte peut
+      pointer légèrement à côté.
 - [ ] **Coordonnées GPS** (latitude/longitude) pour le champ `geo` du JSON-LD.
       Volontairement absent : de fausses coordonnées enverraient les clients
       au mauvais endroit.
-- [ ] **Comptes Instagram / TikTok**, s'ils existent. Les icônes ont été retirées
-      parce qu'elles pointaient dans le vide.
+- [ ] **Comptes Instagram / TikTok**, s'ils existent. Le pied de page n'a plus
+      de rangée d'icônes du tout : celles d'Instagram et TikTok pointaient dans
+      le vide, et celle de WhatsApp doublait le bouton flottant posé juste
+      au-dessus d'elle. Les rétablir demande de recréer la rangée.
 - [ ] **Le texte français d'origine des avis.** Ceux affichés viennent de la
       version anglaise que produit Google et ont été rendus en français. La
       plupart ont pourtant été écrits en français : le bouton « Voir l'original »

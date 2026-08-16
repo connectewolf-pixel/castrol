@@ -162,6 +162,9 @@
   --castrol-green: #009737;
   --castrol-green-dark: #007a2c;
   --castrol-green-light: #00b04a;
+  /* Le rouge de la marque n'est plus un accent : il n'entre dans la page que
+     là où il informe — un champ en erreur. Pour souligner, marquer une
+     tranche ou séparer, c'est le vert, seul. */
   --castrol-red: #e2001a;
   --castrol-red-bright: #ff0005;
   --castrol-white: #ffffff;
@@ -300,20 +303,20 @@ button:focus-visible, a:focus-visible {
    ============================================ */
 /* Filet de marque, en tête d'un bloc — pas entre deux sections : pour les
    jonctions, voir `.seam` plus bas.
-   Les trois blocs à bords francs se lisaient comme un drapeau collé sur la
-   page, et le tiers blanc tranchait sur le noir plus fort que tout le reste.
-   Ici la même identité, mais le vert cède au rouge sur une courte zone de
-   fondu, et la fin s'éteint au lieu de s'arrêter net. */
+   Une seule teinte, du vert clair au vert profond, puis l'extinction. Le
+   partage vert/rouge en deux moitiés franches se lisait comme un drapeau
+   collé sur la page : deux teintes qui se disputent la même barre de 2px, et
+   aucune des deux n'est là pour dire quoi que ce soit. Le rouge ne sert plus
+   que là où il informe — le champ de formulaire en erreur. */
 .brand-stripe {
   height: 2px;
   width: 100%;
   background: linear-gradient(
     to right,
-    var(--castrol-green) 0%,
-    var(--castrol-green) 34%,
-    var(--castrol-red) 46%,
-    var(--castrol-red) 72%,
-    rgba(226, 0, 26, 0) 100%
+    var(--castrol-green-light) 0%,
+    var(--castrol-green) 26%,
+    rgba(0, 151, 55, 0.42) 62%,
+    rgba(0, 151, 55, 0) 100%
   );
 }
 
@@ -411,24 +414,6 @@ button:focus-visible, a:focus-visible {
     border-color: var(--ink);
     background: rgba(255,255,255,0.04);
   }
-}
-
-.btn-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  border-radius: var(--r-full);
-  background: var(--surface-card);
-  color: var(--ink);
-  transition: background-color 200ms var(--ease-out),
-              transform 160ms var(--ease-out);
-  flex-shrink: 0;
-}
-.btn-icon:active { transform: scale(0.95); }
-@media (hover: hover) and (pointer: fine) {
-  .btn-icon:hover { background: var(--surface-elevated); }
 }
 
 /* ============================================
@@ -538,24 +523,49 @@ button:focus-visible, a:focus-visible {
 @media (hover: hover) and (pointer: fine) {
   .nav-phone:hover { color: var(--castrol-green-light); }
 }
+/* Le déclencheur du menu porte son état : le mot bascule de « Menu » à
+   « Fermer » derrière une ligne masquée, et la croix se dessine en pivotant
+   depuis le plus. Le mot reste affiché même à 320px — seul, le signe « + »
+   se lit comme « ajouter », pas comme « menu », et la barre a la place. */
 .nav-burger {
   display: none;
-  width: 48px;
-  height: 48px;
   align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 5px;
-  transition: transform 160ms var(--ease-out);
+  gap: var(--sp-xs);
+  min-height: 44px;
+  padding: 0 var(--sp-xxs);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 200ms var(--ease-out), transform 160ms var(--ease-out);
 }
-.nav-burger:active { transform: scale(0.92); }
-.nav-burger span {
+.nav-burger:active { transform: scale(0.94); }
+@media (hover: hover) and (pointer: fine) {
+  .nav-burger:hover { color: var(--castrol-green-light); }
+}
+.nav-burger-label {
   display: block;
-  width: 22px;
-  height: 2px;
-  background: var(--ink);
-  transition: transform 250ms var(--ease-out), opacity 200ms var(--ease-out);
+  overflow: hidden;
+  height: 1em;
+  line-height: 1;
+  text-align: left;
 }
+.nav-burger-label > span {
+  display: block;
+  transition: transform 480ms var(--ease-drawer);
+}
+.nav-burger.is-open .nav-burger-label > span { transform: translateY(-100%); }
+.nav-burger-icon { display: block; width: 16px; height: 16px; }
+.nav-burger-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: transform 560ms var(--ease-drawer);
+}
+.nav-burger.is-open .nav-burger-icon svg { transform: rotate(315deg); }
 
 @media (max-width: 1024px) {
   .nav-links { display: none; }
@@ -888,27 +898,230 @@ button:focus-visible, a:focus-visible {
 .find-actions { display: flex; gap: var(--sp-sm); flex-wrap: wrap; margin-top: var(--sp-xl); }
 
 /* Map panel */
+/* ============================================
+   CARTE — un repère dessiné, la carte réelle au clic
+   L'iframe Google pesait sur chaque chargement de page, pour un contenu que
+   personne ne consulte avant d'avoir décidé de venir. Au repos, le repère est
+   dessiné ici : papier millimétré, deux axes, des cercles de distance et le
+   point. Rien n'y prétend relever le terrain — le libellé dit « plan
+   indicatif », et la carte réelle arrive au clic, sans requête tierce avant.
+   La carte s'incline légèrement sous le curseur : le mouvement se traîne
+   derrière la souris (transition longue) au lieu de lui coller.
+   ============================================ */
 .find-map {
   position: relative;
-  min-height: 420px;
-
+  min-height: 460px;
   background: var(--surface-soft);
+  perspective: 1100px;
 }
-.find-map iframe {
+.map-card {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  text-align: left;
+  background: radial-gradient(120% 92% at 50% 46%, #0f1310 0%, #0b0b0b 58%, #070707 100%);
+  /* --px et --py valent -0,5 à 0,5 : l'inclinaison plafonne donc à 6°. */
+  transform: rotateX(calc(var(--py, 0) * -12deg)) rotateY(calc(var(--px, 0) * 12deg));
+  transition: transform 420ms var(--ease-out),
+              opacity 380ms var(--ease-out),
+              visibility 0s;
+}
+.map-card::after {
+  content: '';
+  position: absolute;
+  inset: 14px;
+  border: 1px solid rgba(0, 151, 55, 0.22);
+  pointer-events: none;
+}
+.find-map.is-live .map-card {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 320ms var(--ease-out), visibility 0s linear 320ms;
+}
+
+.map-plan { position: absolute; inset: 0; }
+.map-draw { position: absolute; inset: 0; width: 100%; height: 100%; }
+.map-grid path { stroke: rgba(255, 255, 255, 0.05); stroke-width: 1; }
+.map-blocks rect {
+  fill: rgba(255, 255, 255, 0.035);
+  stroke: rgba(0, 151, 55, 0.16);
+  stroke-width: 1;
+  opacity: 0;
+  transform: scale(0.88);
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  transition: opacity 500ms var(--ease-out) calc(var(--d) * 70ms),
+              transform 620ms var(--ease-out) calc(var(--d) * 70ms);
+}
+.find-map.visible .map-blocks rect { opacity: 1; transform: none; }
+/* pathLength="1" : la longueur du tracé devient 1, le trait se dessine sans
+   qu'on ait à mesurer chaque chemin en JS. */
+/* Les deux axes situent, ils ne doivent pas devenir le sujet : plus ils
+   étaient contrastés, plus la carte se lisait comme une lunette de visée et
+   moins le point se voyait. */
+.map-axes path {
+  stroke: rgba(0, 151, 55, 0.4);
+  stroke-width: 1.2;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 900ms var(--ease-out) calc(var(--d) * 55ms);
+}
+.map-rings circle {
+  stroke: rgba(0, 151, 55, 0.3);
+  stroke-width: 1;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1100ms var(--ease-out) calc(var(--d) * 55ms);
+}
+.find-map.visible .map-axes path,
+.find-map.visible .map-rings circle { stroke-dashoffset: 0; }
+
+.map-pin {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 34px;
+  height: 34px;
+  /* la pointe du repère tombe sur le centre, pas son milieu */
+  margin: -34px 0 0 -17px;
+  transform: translate(calc(var(--px, 0) * 24px), calc(var(--py, 0) * 18px));
+  transition: transform 420ms var(--ease-out);
+}
+.map-pin svg {
+  width: 100%;
+  height: 100%;
+  fill: rgba(0, 151, 55, 0.2);
+  stroke: var(--castrol-green-light);
+  stroke-width: 1.4;
+}
+.map-pin::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -3px;
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  border-radius: var(--r-full);
+  background: var(--castrol-green-light);
+  animation: pulse 2.5s var(--ease-in-out) infinite;
+}
+
+.map-chip {
+  position: absolute;
+  top: var(--sp-lg);
+  right: var(--sp-lg);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-xs);
+  padding: 7px 11px;
+  background: rgba(10, 10, 10, 0.72);
+  border: 1px solid rgba(0, 151, 55, 0.35);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--body-strong);
+}
+.map-chip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--r-full);
+  background: var(--castrol-green-light);
+}
+
+.map-legend {
+  position: absolute;
+  left: var(--sp-lg);
+  right: var(--sp-lg);
+  bottom: var(--sp-lg);
+  display: grid;
+  gap: 6px;
+}
+.map-place {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.map-open {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-xs);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  color: #8a9a90;
+  transition: color 220ms var(--ease-out), gap 220ms var(--ease-out);
+}
+.map-open svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+@media (hover: hover) and (pointer: fine) {
+  .map-card:hover .map-open { color: var(--castrol-green-light); gap: 14px; }
+}
+
+.map-live {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 420ms var(--ease-out);
+}
+.find-map.is-live .map-live { opacity: 1; }
+.map-live iframe {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   border: 0;
-  /* The default Google tiles are white — settle them into the dark canvas */
+  /* Les tuiles Google sont blanches — les asseoir dans le noir de la page */
   filter: grayscale(1) invert(0.92) contrast(0.86) brightness(0.92);
+}
+.map-reduce {
+  position: absolute;
+  top: var(--sp-md);
+  right: var(--sp-md);
+  z-index: 2;
+  min-height: 44px;
+  padding: 12px 16px;
+  background: rgba(10, 10, 10, 0.88);
+  border: 1px solid var(--castrol-green-dark);
+  color: var(--body-strong);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  transition: border-color 200ms var(--ease-out), color 200ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .map-reduce:hover { border-color: var(--castrol-green); color: var(--ink); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .map-card, .map-pin { transition: opacity 320ms var(--ease-out), visibility 0s; }
+  .map-blocks rect { opacity: 1; transform: none; transition: none; }
+  .map-axes path, .map-rings circle { stroke-dashoffset: 0; transition: none; }
+  .map-pin::after { animation: none; }
 }
 
 @media (max-width: 900px) {
   .find-grid { grid-template-columns: 1fr; }
   .find-info { padding: var(--sp-xl) var(--sp-md); }
-  .find-map { min-height: 300px; }
+  .find-map { min-height: 360px; }
   .find-actions .btn { flex: 1 1 100%; }
+}
+@media (max-width: 480px) {
+  .map-chip { top: var(--sp-md); right: var(--sp-md); }
+  .map-legend { left: var(--sp-md); right: var(--sp-md); bottom: var(--sp-md); }
+  .map-place { font-size: 17px; }
 }
 
 /* ============================================
@@ -1033,15 +1246,14 @@ button:focus-visible, a:focus-visible {
 .footer {
   background: var(--canvas);
   /* 104px de bas = 24 (marge) + 56 (bouton) + 24 (respiration) : les deux
-     flottants — assistant à gauche, WhatsApp à droite — se posaient sinon
-     sur la ligne de copyright et sur l'icône sociale. */
+     flottants — assistant à gauche, WhatsApp à droite — se poseraient sinon
+     sur la dernière ligne des colonnes. */
   padding: var(--sp-xxl) 0 104px;
 }
 .footer-grid {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
   gap: var(--sp-xl);
-  margin-bottom: var(--sp-xxl);
 }
 .footer-brand { max-width: 320px; }
 .footer-brand img { height: 36px; margin-bottom: var(--sp-md); }
@@ -1065,18 +1277,6 @@ button:focus-visible, a:focus-visible {
 @media (hover: hover) and (pointer: fine) {
   .footer-col a:hover { color: var(--ink); transform: translateX(4px); }
 }
-
-/* L'icône reste seule sur cette ligne, tenue à droite : à gauche, elle se
-   retrouvait juste au-dessus du lanceur de l'assistant — deux ronds sombres
-   empilés qui se lisaient comme un doublon. À droite, elle rejoint la colonne
-   WhatsApp à laquelle elle appartient. */
-.footer-bottom {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding-top: var(--sp-lg);
-}
-.footer-social { display: flex; gap: var(--sp-sm); }
 
 @media (max-width: 768px) {
   .footer-grid { grid-template-columns: 1fr 1fr; }
@@ -1440,41 +1640,173 @@ button:focus-visible, a:focus-visible {
 /* ============================================
    MOBILE MENU — Kowalski drawer easing
    ============================================ */
+/* ============================================
+   MENU — rideau cinétique
+   Le panneau ne glisse pas d'un bloc : trois épaisseurs entrent l'une après
+   l'autre par la droite — un éclat vert, une couche carbone, puis le noir qui
+   se referme dessus. Les liens montent ensuite de sous leur ligne, un peu
+   inclinés, et se redressent en arrivant. À la fermeture, tout repart dans
+   l'ordre inverse : le noir d'abord, le vert en dernier.
+   C'est le seul endroit de la page où quelque chose arrive en tournant.
+   ============================================ */
 .mobile-menu-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.5);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  background: rgba(0,0,0,0.62);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   z-index: 199;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 300ms var(--ease-out);
+  transition: opacity 420ms var(--ease-out);
 }
 .mobile-menu-backdrop.open { opacity: 1; pointer-events: auto; }
+
 .mobile-menu {
   position: fixed;
   top: 0; right: 0; bottom: 0;
   width: 100%;
-  max-width: 400px;
-  background: var(--canvas);
+  max-width: 460px;
   z-index: 200;
   display: flex;
-  flex-direction: column;
-  padding: 80px var(--sp-xl) var(--sp-xl);
-  transform: translateX(100%);
-  transition: transform 400ms var(--ease-drawer);
+  overflow: hidden;
+  /* Fermé, le panneau est hors jeu : les épaisseurs sont sorties du cadre,
+     mais sans ça il continuerait d'intercepter les clics. La visibilité
+     n'attend qu'à la fermeture, le temps que le rideau ressorte. */
+  visibility: hidden;
+  transition: visibility 0s linear 820ms;
 }
-.mobile-menu.open { transform: translateX(0); }
-.mobile-menu a {
+.mobile-menu.open { visibility: visible; transition-delay: 0s; }
+
+.menu-curtain { position: absolute; inset: 0; }
+.menu-layer {
+  position: absolute;
+  inset: 0;
+  transform: translateX(101%);
+  transition: transform 575ms var(--ease-drawer);
+}
+.menu-layer--1 { background: var(--castrol-green); transition-delay: 240ms; }
+.menu-layer--2 { background: var(--surface-elevated); transition-delay: 120ms; }
+.menu-layer--3 { background: var(--canvas); transition-delay: 0ms; }
+.mobile-menu.open .menu-layer { transform: none; }
+.mobile-menu.open .menu-layer--1 { transition-delay: 0ms; }
+.mobile-menu.open .menu-layer--2 { transition-delay: 120ms; }
+.mobile-menu.open .menu-layer--3 { transition-delay: 240ms; }
+
+.menu-ambient {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.menu-shape {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 320ms var(--ease-out);
+}
+.menu-shape.is-lit { opacity: 1; }
+.menu-shape .shape-el {
+  opacity: 0;
+  transform: scale(0.62) rotate(-8deg);
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  transition: opacity 520ms var(--ease-out) calc(var(--d) * 70ms),
+              transform 620ms var(--ease-out) calc(var(--d) * 70ms);
+}
+.menu-shape.is-lit .shape-el { opacity: 1; transform: none; }
+
+/* Sans curseur, aucune figure ne peut être appelée : plutôt qu'un vide sous
+   les liens, le menu en garde une posée, en bas, à mi-voix. */
+@media (hover: none) {
+  .menu-shape[data-shape="2"] {
+    inset: auto 0 5% 0;
+    height: 44%;
+    opacity: 0.5;
+  }
+  .mobile-menu.open .menu-shape[data-shape="2"] .shape-el {
+    opacity: 1;
+    transform: none;
+    transition-delay: calc(560ms + var(--d) * 70ms);
+  }
+}
+
+.menu-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 88px var(--sp-xl) var(--sp-xl);
+}
+.menu-inner .brand-stripe {
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 620ms var(--ease-out);
+}
+.mobile-menu.open .menu-inner .brand-stripe { transform: none; transition-delay: 300ms; }
+
+.menu-list {
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--sp-xl);
+}
+.mobile-menu-link {
+  display: block;
+  overflow: hidden;
+  padding: 8px 0;
+}
+.mobile-menu-link > span {
+  display: block;
+  font-size: clamp(30px, 8.5vw, 40px);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  transform: translateY(140%) rotate(7deg);
+  transform-origin: 0 50%;
+  transition: transform 700ms var(--ease-out), color 200ms var(--ease-out);
+}
+.mobile-menu.open .mobile-menu-link > span {
+  transform: none;
+  transition-delay: calc(360ms + var(--i) * 55ms);
+}
+@media (hover: hover) and (pointer: fine) {
+  .mobile-menu-link:hover > span { color: var(--castrol-green-light); }
+}
+.mobile-menu-link:focus-visible {
+  outline: 2px solid var(--castrol-green-light);
+  outline-offset: 4px;
+}
+
+.menu-foot {
+  margin-top: auto;
+  padding-top: var(--sp-xl);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-md);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out);
+}
+.mobile-menu.open .menu-foot {
+  opacity: 1;
+  transform: none;
+  transition-delay: 660ms;
+}
+.menu-phone {
   font-size: 20px;
   font-weight: 700;
-  padding: var(--sp-md) 0;
+  letter-spacing: 0.5px;
   transition: color 200ms var(--ease-out);
 }
 @media (hover: hover) and (pointer: fine) {
-  .mobile-menu a:hover { color: var(--castrol-green-light); }
+  .menu-phone:hover { color: var(--castrol-green-light); }
 }
+.menu-foot .btn { width: 100%; justify-content: center; }
+
 .mobile-menu-close {
   position: absolute;
   top: 20px;
@@ -1484,8 +1816,10 @@ button:focus-visible, a:focus-visible {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 160ms var(--ease-out);
+  opacity: 0;
+  transition: opacity 300ms var(--ease-out), transform 160ms var(--ease-out);
 }
+.mobile-menu.open .mobile-menu-close { opacity: 1; transition-delay: 420ms; }
 .mobile-menu-close:active { transform: scale(0.90); }
 .mobile-menu-close span {
   position: relative;
@@ -1500,6 +1834,18 @@ button:focus-visible, a:focus-visible {
   inset: 0;
   background: var(--ink);
   transform: rotate(90deg);
+}
+
+/* En mouvement réduit, le rideau ne joue plus : le panneau est là ou il n'y
+   est pas, et les liens n'ont jamais quitté leur ligne. */
+@media (prefers-reduced-motion: reduce) {
+  .menu-layer,
+  .mobile-menu-link > span,
+  .menu-inner .brand-stripe,
+  .menu-foot,
+  .mobile-menu-close { transition-duration: 1ms; transition-delay: 0s; }
+  .mobile-menu { transition: none; }
+  .menu-ambient { display: none; }
 }
 
 @media (max-width: 1024px) {
@@ -1598,15 +1944,23 @@ button:focus-visible, a:focus-visible {
 }
 .svc-panel.is-active::after { opacity: 1; }
 
-/* Filet de marque sur la tranche du panneau ouvert */
+/* Filet de marque sur la tranche du panneau ouvert. Il se tire du haut vers
+   le bas : le vert est clair là où le trait commence, profond au milieu,
+   éteint là où il finit — la lumière suit le geste au lieu de le couper en
+   deux moitiés de couleurs différentes. */
 .svc-panel::before {
   content: '';
   position: absolute;
   left: 0;
   top: 0;
   bottom: 0;
-  width: 3px;
-  background: linear-gradient(180deg, var(--castrol-green) 0 55%, var(--castrol-red) 55% 100%);
+  width: 2px;
+  background: linear-gradient(
+    180deg,
+    var(--castrol-green-light) 0%,
+    var(--castrol-green) 44%,
+    rgba(0, 151, 55, 0) 100%
+  );
   transform: scaleY(0);
   transform-origin: 50% 0;
   transition: transform 600ms var(--ease-out);
@@ -1829,9 +2183,14 @@ button:focus-visible, a:focus-visible {
   .svc-panel.is-active { flex-grow: 0; grid-template-rows: 76px 1fr; }
   .svc-panel::before {
     width: 100%;
-    height: 3px;
+    height: 2px;
     bottom: auto;
-    background: linear-gradient(90deg, var(--castrol-green) 0 55%, var(--castrol-red) 55% 100%);
+    background: linear-gradient(
+      90deg,
+      var(--castrol-green-light) 0%,
+      var(--castrol-green) 44%,
+      rgba(0, 151, 55, 0) 100%
+    );
     transform: scaleX(0);
     transform-origin: 0 50%;
   }
@@ -2309,27 +2668,89 @@ button:focus-visible, a:focus-visible {
       </a>
       <a href="#contact" class="btn btn-primary">Rendez-vous</a>
     </div>
-    <button class="nav-burger" id="navBurger" aria-label="Ouvrir le menu" aria-expanded="false">
-      <span></span><span></span><span></span>
+    <button class="nav-burger" id="navBurger" aria-label="Ouvrir le menu"
+            aria-expanded="false" aria-controls="mobileMenu">
+      <span class="nav-burger-label" aria-hidden="true">
+        <span>Menu</span>
+        <span>Fermer</span>
+      </span>
+      <span class="nav-burger-icon" aria-hidden="true">
+        <svg viewBox="0 0 16 16" fill="none">
+          <path d="M7.33333 16L7.33333 0L8.66667 0L8.66667 16L7.33333 16Z" fill="currentColor"/>
+          <path d="M16 8.66667L0 8.66667L0 7.33333L16 7.33333L16 8.66667Z" fill="currentColor"/>
+          <path d="M6 7.33333L7.33333 7.33333L7.33333 6C7.33333 6.73637 6.73638 7.33333 6 7.33333Z" fill="currentColor"/>
+          <path d="M10 7.33333L8.66667 7.33333L8.66667 6C8.66667 6.73638 9.26362 7.33333 10 7.33333Z" fill="currentColor"/>
+          <path d="M6 8.66667L7.33333 8.66667L7.33333 10C7.33333 9.26362 6.73638 8.66667 6 8.66667Z" fill="currentColor"/>
+          <path d="M10 8.66667L8.66667 8.66667L8.66667 10C8.66667 9.26362 9.26362 8.66667 10 8.66667Z" fill="currentColor"/>
+        </svg>
+      </span>
     </button>
   </div>
 </nav>
 
-<!-- Mobile Menu Backdrop -->
+<!-- Voile du menu -->
 <div class="mobile-menu-backdrop" id="mobileBackdrop"></div>
 
-<!-- Mobile Menu -->
+<!-- Menu — rideau à trois épaisseurs, une seule ouverture -->
 <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Menu de navigation">
-  <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Fermer le menu">
-    <span></span>
-  </button>
-  <div class="brand-stripe" style="margin-bottom: 32px;"></div>
-  <a href="#services" class="mobile-menu-link">Services</a>
-  <a href="#about" class="mobile-menu-link">À propos</a>
-  <a href="#avis" class="mobile-menu-link">Avis</a>
-  <a href="#infos" class="mobile-menu-link">Nous trouver</a>
-  <a href="#faq" class="mobile-menu-link">FAQ</a>
-  <a href="#contact" class="btn btn-primary mobile-menu-link" style="margin-top: 24px;">Rendez-vous</a>
+  <div class="menu-curtain" aria-hidden="true">
+    <span class="menu-layer menu-layer--1"></span>
+    <span class="menu-layer menu-layer--2"></span>
+    <span class="menu-layer menu-layer--3"></span>
+  </div>
+
+  <!-- Une figure par entrée : elle se lève derrière le mot survolé, jamais
+       deux à la fois. Décor pur, retiré au clavier comme en mouvement réduit. -->
+  <div class="menu-ambient" aria-hidden="true">
+    <svg class="menu-shape" data-shape="1" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" fill="none">
+      <circle class="shape-el" style="--d:0" cx="300" cy="120" r="96" stroke="rgba(0,151,55,0.30)" stroke-width="1"/>
+      <circle class="shape-el" style="--d:1" cx="300" cy="120" r="62" stroke="rgba(0,151,55,0.22)" stroke-width="1"/>
+      <circle class="shape-el" style="--d:2" cx="300" cy="120" r="26" fill="rgba(0,151,55,0.14)"/>
+      <path   class="shape-el" style="--d:3" d="M120 300h200" stroke="rgba(0,151,55,0.26)" stroke-width="1"/>
+    </svg>
+    <svg class="menu-shape" data-shape="2" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" fill="none">
+      <path class="shape-el" style="--d:0" d="M210 60c60 66 90 112 90 148a90 90 0 1 1-180 0c0-36 30-82 90-148Z" fill="rgba(0,151,55,0.10)"/>
+      <path class="shape-el" style="--d:1" d="M210 120c38 44 58 74 58 98a58 58 0 1 1-116 0c0-24 20-54 58-98Z" stroke="rgba(0,151,55,0.28)" stroke-width="1"/>
+      <path class="shape-el" style="--d:2" d="M60 340h280" stroke="rgba(0,151,55,0.20)" stroke-width="1"/>
+    </svg>
+    <svg class="menu-shape" data-shape="3" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" fill="none">
+      <path class="shape-el" style="--d:0" d="M40 250h60v110H40z" fill="rgba(0,151,55,0.12)"/>
+      <path class="shape-el" style="--d:1" d="M130 190h60v170h-60z" fill="rgba(0,151,55,0.16)"/>
+      <path class="shape-el" style="--d:2" d="M220 130h60v230h-60z" fill="rgba(0,151,55,0.20)"/>
+      <path class="shape-el" style="--d:3" d="M310 70h60v290h-60z" fill="rgba(0,151,55,0.26)"/>
+    </svg>
+    <svg class="menu-shape" data-shape="4" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" fill="none">
+      <path class="shape-el" style="--d:0" d="M-20 300L180 60" stroke="rgba(0,151,55,0.24)" stroke-width="28"/>
+      <path class="shape-el" style="--d:1" d="M120 380L320 140" stroke="rgba(0,151,55,0.16)" stroke-width="20"/>
+      <path class="shape-el" style="--d:2" d="M260 400L420 208" stroke="rgba(0,151,55,0.10)" stroke-width="14"/>
+    </svg>
+    <svg class="menu-shape" data-shape="5" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" fill="none">
+      <path class="shape-el" style="--d:0" d="M80 120h240M80 200h240M80 280h240" stroke="rgba(0,151,55,0.18)" stroke-width="1"/>
+      <path class="shape-el" style="--d:1" d="M140 60v280M260 60v280" stroke="rgba(0,151,55,0.18)" stroke-width="1"/>
+      <circle class="shape-el" style="--d:2" cx="260" cy="200" r="46" stroke="rgba(0,151,55,0.34)" stroke-width="1"/>
+      <circle class="shape-el" style="--d:3" cx="260" cy="200" r="7" fill="rgba(0,176,74,0.55)"/>
+    </svg>
+  </div>
+
+  <div class="menu-inner">
+    <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Fermer le menu">
+      <span></span>
+    </button>
+    <div class="brand-stripe"></div>
+
+    <nav class="menu-list" aria-label="Sections du site">
+      <a href="#services" class="mobile-menu-link" data-shape="1" style="--i:0"><span>Services</span></a>
+      <a href="#about"    class="mobile-menu-link" data-shape="2" style="--i:1"><span>À propos</span></a>
+      <a href="#avis"     class="mobile-menu-link" data-shape="3" style="--i:2"><span>Avis</span></a>
+      <a href="#infos"    class="mobile-menu-link" data-shape="4" style="--i:3"><span>Nous trouver</span></a>
+      <a href="#faq"      class="mobile-menu-link" data-shape="5" style="--i:4"><span>FAQ</span></a>
+    </nav>
+
+    <div class="menu-foot">
+      <a href="tel:0663850560" class="menu-phone">06 63 85 05 60</a>
+      <a href="#contact" class="btn btn-primary">Rendez-vous</a>
+    </div>
+  </div>
 </div>
 
 <!-- ============================================
@@ -2682,12 +3103,60 @@ button:focus-visible, a:focus-visible {
         <a class="btn btn-outline" href="tel:0663850560">Appeler le garage</a>
       </div>
     </div>
-    <div class="find-map">
-      <iframe
-        src="https://www.google.com/maps?q=Castrol+Service+T%C3%A9mara%2C+Avenue+Tarik+Ibn+Ziad%2C+T%C3%A9mara&output=embed"
-        title="Carte — Castrol Service Témara, Avenue Tarik Ibn Ziad"
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <!-- La carte Google ne se charge qu'au clic : au repos, le repère est
+         dessiné ici, sans requête tierce ni cookie. Le plan est un repère,
+         pas un relevé — il le dit, et la vraie carte est à un geste. -->
+    <div class="find-map reveal" id="findMap">
+      <button type="button" class="map-card" id="mapCard"
+              aria-expanded="false" aria-controls="mapLive"
+              aria-label="Ouvrir la carte de Castrol Service Témara"
+              data-src="https://www.google.com/maps?q=Castrol+Service+T%C3%A9mara%2C+Avenue+Tarik+Ibn+Ziad%2C+T%C3%A9mara&output=embed">
+        <span class="map-plan" aria-hidden="true">
+          <svg class="map-draw" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" fill="none">
+            <g class="map-grid">
+              <path style="--d:0" d="M40 0v300M80 0v300M120 0v300M160 0v300M240 0v300M280 0v300M320 0v300M360 0v300"/>
+              <path style="--d:0" d="M0 40h400M0 80h400M0 120h400M0 180h400M0 220h400M0 260h400"/>
+            </g>
+            <g class="map-blocks">
+              <rect style="--d:3" x="52"  y="58"  width="46" height="34"/>
+              <rect style="--d:4" x="52"  y="190" width="46" height="52"/>
+              <rect style="--d:5" x="248" y="46"  width="62" height="44"/>
+              <rect style="--d:6" x="286" y="196" width="52" height="46"/>
+              <rect style="--d:7" x="130" y="212" width="58" height="30"/>
+            </g>
+            <g class="map-axes">
+              <path style="--d:1" pathLength="1" d="M0 150h400"/>
+              <path style="--d:2" pathLength="1" d="M200 0v300"/>
+            </g>
+            <g class="map-rings">
+              <circle style="--d:8"  pathLength="1" cx="200" cy="150" r="46"/>
+              <circle style="--d:9"  pathLength="1" cx="200" cy="150" r="82"/>
+              <circle style="--d:10" pathLength="1" cx="200" cy="150" r="124"/>
+            </g>
+          </svg>
+          <span class="map-pin">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M12 2.5c-3.6 0-6.5 2.9-6.5 6.5 0 4.9 6.5 12.5 6.5 12.5s6.5-7.6 6.5-12.5c0-3.6-2.9-6.5-6.5-6.5z"/>
+              <circle cx="12" cy="9" r="2.4"/>
+            </svg>
+          </span>
+        </span>
+
+        <span class="map-chip">
+          <span class="map-chip-dot" aria-hidden="true"></span>Témara
+        </span>
+
+        <span class="map-legend">
+          <span class="map-place">Avenue Tarik Ibn Ziad</span>
+          <span class="map-open">
+            Plan indicatif — ouvrir la carte
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </span>
+      </button>
+
+      <div class="map-live" id="mapLive" hidden></div>
+      <button type="button" class="map-reduce" id="mapReduce" hidden>Réduire le plan</button>
     </div>
   </div>
 </section>
@@ -3142,14 +3611,9 @@ button:focus-visible, a:focus-visible {
       </div>
     </div>
 
-    <div class="footer-bottom">
-      <!-- Instagram / TikTok icons removed: both pointed at href="#". Re-add with real URLs. -->
-      <div class="footer-social">
-        <a href="https://wa.me/212663850560" class="btn-icon" aria-label="Écrire sur WhatsApp" target="_blank" rel="noopener">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.77.46 3.43 1.27 4.88L2 22l5.25-1.27C8.66 21.54 10.28 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.07 14.12c-.21.59-1.23 1.13-1.69 1.16-.43.03-.98.21-3.14-.66-2.65-1.05-4.32-3.75-4.45-3.93-.13-.18-1.06-1.41-1.06-2.69s.67-1.91.91-2.17c.24-.26.52-.33.69-.33.17 0 .35.01.5.01.16 0 .38-.06.59.45.21.52.71 1.8.78 1.93.07.13.11.28.02.46-.09.18-.13.29-.26.45-.13.15-.27.35-.39.46-.13.13-.26.27-.11.52.15.26.66 1.09 1.41 1.77.97.87 1.79 1.13 2.04 1.26.26.13.41.11.56-.07.15-.18.65-.76.82-1.02.17-.26.35-.21.59-.13.24.09 1.51.71 1.77.85.26.13.43.19.49.29.07.11.07.59-.14 1.18z"/></svg>
-        </a>
-      </div>
-    </div>
+    <!-- Pas de rangée d'icônes sociales : le WhatsApp du pied doublait le
+         bouton flottant, posé juste au-dessus de lui. Le lien WhatsApp de la
+         colonne Contact reste, en toutes lettres. -->
   </div>
 </footer>
 
@@ -3238,7 +3702,6 @@ const svcProgress = document.getElementById('svcProgress');
 const SVC_DELAY = 5000;
 let svcIndex = 0;
 let svcTimer = null;
-let svcHalted = false;   // arrêt demandé par le visiteur
 let svcSeen = false;     // la bande est-elle à l'écran
 let svcHover = false;    // survol ou focus en cours
 
@@ -3246,7 +3709,7 @@ let svcHover = false;    // survol ou focus en cours
 const svcMotionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function svcCycling() {
-  return svcMotionOK && !svcHalted && svcSeen && !svcHover;
+  return svcMotionOK && svcSeen && !svcHover;
 }
 
 // Une animation CSS ne se rejoue pas si la classe est déjà là : on la retire,
@@ -3277,20 +3740,16 @@ function openService(index) {
   svcResetGauge();
 }
 
-// Choisir un service, c'est vouloir le lire : le défilement s'arrête là et ne
-// repart plus tout seul.
-function svcHalt() {
-  svcHalted = true;
-  clearTimeout(svcTimer);
-  svcProgress && svcProgress.classList.remove('running');
-}
-
+// Choisir un service ne coupe pas la bande : le compte des 5 secondes repart
+// simplement depuis celui qu'on vient d'ouvrir. Pour retenir un panneau le
+// temps de le lire, le survol et le focus suffisent — et il n'y a plus de
+// bouton pour rallumer ce qu'un clic aurait éteint.
 svcPanels.forEach((panel, i) => {
   const hit = panel.querySelector('.svc-panel-hit');
 
   hit.addEventListener('click', () => {
     openService(i);
-    svcHalt();
+    svcSchedule();
   });
 
   hit.addEventListener('keydown', (e) => {
@@ -3301,7 +3760,7 @@ svcPanels.forEach((panel, i) => {
     e.preventDefault();
     const next = (i + step + svcPanels.length) % svcPanels.length;
     openService(next);
-    svcHalt();
+    svcSchedule();
     svcPanels[next].querySelector('.svc-panel-hit').focus();
   });
 });
@@ -3436,39 +3895,129 @@ window.addEventListener('scroll', () => {
   }
 }, { passive: true });
 
-// === Mobile Menu ===
+// === Menu ===
+// Le rideau, la montée des liens et le retour au calme sont écrits en CSS :
+// ici on ne fait que poser l'état et le rendre lisible aux technologies
+// d'assistance. Le libellé du bouton bascule avec lui.
 const navBurger = document.getElementById('navBurger');
 const mobileMenu = document.getElementById('mobileMenu');
 const mobileBackdrop = document.getElementById('mobileBackdrop');
 const mobileMenuClose = document.getElementById('mobileMenuClose');
+const menuShapes = Array.from(document.querySelectorAll('.menu-shape'));
 
 function openMobileMenu() {
   mobileMenu.classList.add('open');
   mobileBackdrop.classList.add('open');
+  navBurger.classList.add('is-open');
   navBurger.setAttribute('aria-expanded', 'true');
+  navBurger.setAttribute('aria-label', 'Fermer le menu');
   document.body.style.overflow = 'hidden';
+  mobileMenuClose.focus({ preventScroll: true });
 }
 
-function closeMobileMenu() {
+// Un clic sur un lien emmène le focus à la section visée : lui rendre le
+// bouton au passage annulerait le déplacement.
+function closeMobileMenu(returnFocus = true) {
   mobileMenu.classList.remove('open');
   mobileBackdrop.classList.remove('open');
+  navBurger.classList.remove('is-open');
   navBurger.setAttribute('aria-expanded', 'false');
+  navBurger.setAttribute('aria-label', 'Ouvrir le menu');
   document.body.style.overflow = '';
+  menuShapes.forEach(shape => shape.classList.remove('is-lit'));
+  if (returnFocus) navBurger.focus({ preventScroll: true });
 }
 
-navBurger.addEventListener('click', openMobileMenu);
-mobileMenuClose.addEventListener('click', closeMobileMenu);
-mobileBackdrop.addEventListener('click', closeMobileMenu);
-// Close on link click
-document.querySelectorAll('.mobile-menu-link').forEach(link => {
-  link.addEventListener('click', closeMobileMenu);
+navBurger.addEventListener('click', () => {
+  mobileMenu.classList.contains('open') ? closeMobileMenu() : openMobileMenu();
 });
-// Close on Escape
+mobileMenuClose.addEventListener('click', () => closeMobileMenu());
+mobileBackdrop.addEventListener('click', () => closeMobileMenu());
+mobileMenu.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => closeMobileMenu(false));
+});
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
     closeMobileMenu();
   }
 });
+
+// La figure de fond suit le mot survolé — une seule à la fois, et seulement
+// là où il y a un vrai curseur.
+if (window.matchMedia('(hover: hover) and (pointer: fine)').matches &&
+    !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  mobileMenu.querySelectorAll('.mobile-menu-link[data-shape]').forEach(link => {
+    link.addEventListener('mouseenter', () => {
+      menuShapes.forEach(shape => {
+        shape.classList.toggle('is-lit', shape.dataset.shape === link.dataset.shape);
+      });
+    });
+  });
+  mobileMenu.addEventListener('mouseleave', () => {
+    menuShapes.forEach(shape => shape.classList.remove('is-lit'));
+  });
+}
+
+// === Carte — le plan dessiné, puis la carte réelle ===
+// L'iframe Google n'existe pas tant que personne ne la demande : une visite
+// qui ne va pas jusqu'à la carte ne coûte aucune requête tierce. Une fois
+// créée, elle reste — rouvrir ne recharge rien.
+const findMap = document.getElementById('findMap');
+const mapCard = document.getElementById('mapCard');
+const mapLive = document.getElementById('mapLive');
+const mapReduce = document.getElementById('mapReduce');
+
+if (findMap && mapCard) {
+  const openMap = () => {
+    if (!mapLive.firstElementChild) {
+      const frame = document.createElement('iframe');
+      frame.src = mapCard.dataset.src;
+      frame.title = 'Carte — Castrol Service Témara, Avenue Tarik Ibn Ziad';
+      frame.loading = 'lazy';
+      frame.referrerPolicy = 'no-referrer-when-downgrade';
+      mapLive.appendChild(frame);
+    }
+    mapLive.hidden = false;
+    mapReduce.hidden = false;
+    // Laisser le navigateur enregistrer l'affichage avant de lancer le fondu
+    requestAnimationFrame(() => findMap.classList.add('is-live'));
+    mapCard.setAttribute('aria-expanded', 'true');
+    mapReduce.focus({ preventScroll: true });
+  };
+
+  const closeMap = () => {
+    findMap.classList.remove('is-live');
+    mapCard.setAttribute('aria-expanded', 'false');
+    mapReduce.hidden = true;
+    mapCard.focus({ preventScroll: true });
+    // L'iframe reste chargée, simplement retirée du champ une fois le fondu fini
+    setTimeout(() => {
+      if (!findMap.classList.contains('is-live')) mapLive.hidden = true;
+    }, 460);
+  };
+
+  mapCard.addEventListener('click', openMap);
+  mapReduce.addEventListener('click', closeMap);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && findMap.classList.contains('is-live')) closeMap();
+  });
+
+  // L'inclinaison n'a de sens qu'avec un curseur, et jamais en mouvement réduit.
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const tilt = (px, py) => {
+      mapCard.style.setProperty('--px', px.toFixed(3));
+      mapCard.style.setProperty('--py', py.toFixed(3));
+    };
+    findMap.addEventListener('pointermove', (e) => {
+      if (findMap.classList.contains('is-live')) return;
+      // Géométrie relue à chaque passage : la page défile pendant qu'on survole
+      const r = findMap.getBoundingClientRect();
+      tilt((e.clientX - r.left) / r.width - 0.5, (e.clientY - r.top) / r.height - 0.5);
+    });
+    findMap.addEventListener('pointerleave', () => tilt(0, 0));
+  }
+}
 
 // === Formulaire de rendez-vous → WhatsApp ===
 // Aucun backend : on assemble un message et on ouvre WhatsApp. Le client relit
