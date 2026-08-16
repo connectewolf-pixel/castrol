@@ -1066,25 +1066,20 @@ button:focus-visible, a:focus-visible {
   .footer-col a:hover { color: var(--ink); transform: translateX(4px); }
 }
 
+/* L'icône reste seule sur cette ligne, tenue à droite : à gauche, elle se
+   retrouvait juste au-dessus du lanceur de l'assistant — deux ronds sombres
+   empilés qui se lisaient comme un doublon. À droite, elle rejoint la colonne
+   WhatsApp à laquelle elle appartient. */
 .footer-bottom {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   padding-top: var(--sp-lg);
-  flex-wrap: wrap;
-  gap: var(--sp-md);
 }
-.footer-bottom p { font-size: 12px; color: var(--muted); letter-spacing: 0.5px; }
 .footer-social { display: flex; gap: var(--sp-sm); }
 
 @media (max-width: 768px) {
   .footer-grid { grid-template-columns: 1fr 1fr; }
-  .footer-bottom { justify-content: flex-start; }
-  /* Le copyright passe seul sur sa ligne : sans ce margin, l'icône sociale
-     retombait à gauche, juste au-dessus du lanceur de l'assistant — deux
-     ronds sombres empilés qui se lisaient comme un doublon. À droite, elle
-     rejoint la colonne WhatsApp à laquelle elle appartient. */
-  .footer-social { margin-left: auto; }
 }
 @media (max-width: 480px) {
   .footer-grid { grid-template-columns: 1fr; }
@@ -1562,55 +1557,9 @@ button:focus-visible, a:focus-visible {
 }
 @keyframes svcFill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
-.svc-controls {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--sp-md);
-  margin-top: var(--sp-md);
-}
-.svc-hint {
-  font-size: 12px;
-  font-weight: 300;
-  color: var(--muted);
-}
-.svc-auto {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--sp-xs);
-  min-height: 44px;
-  padding: 10px var(--sp-md);
-  background: transparent;
-  border: 1px solid var(--castrol-green-dark);
-  color: var(--body-strong);
-  font-family: var(--font);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: border-color 200ms var(--ease-out), color 200ms var(--ease-out);
-}
-.svc-auto svg { width: 14px; height: 14px; fill: currentColor; flex: none; }
-.svc-auto .ico-play { display: none; }
-.svc-auto.is-paused .ico-pause { display: none; }
-.svc-auto.is-paused .ico-play { display: block; }
-@media (hover: hover) and (pointer: fine) {
-  .svc-auto:hover { border-color: var(--castrol-green); color: var(--ink); }
-}
-.svc-auto:focus-visible {
-  outline: 2px solid var(--castrol-green-light);
-  outline-offset: 2px;
-}
-
-/* Sans défilement automatique, la jauge et son bouton n'ont plus d'objet */
+/* Sans défilement automatique, la jauge n'a plus d'objet */
 @media (prefers-reduced-motion: reduce) {
-  .svc-progress, .svc-controls { display: none; }
-}
-@media (max-width: 560px) {
-  .svc-controls { flex-direction: column; align-items: stretch; }
-  .svc-auto { justify-content: center; }
-  .svc-hint { text-align: center; }
+  .svc-progress { display: none; }
 }
 
 .svc-panel {
@@ -2097,11 +2046,6 @@ button:focus-visible, a:focus-visible {
 }
 
 .rev-controls {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: var(--sp-md);
   margin-top: var(--sp-lg);
 }
 .rev-note {
@@ -2137,7 +2081,6 @@ button:focus-visible, a:focus-visible {
     -webkit-mask-image: none;
             mask-image: none;
   }
-  .rev-controls { display: none; }
 }
 
 /* Gabarit d'avis — styles prêts, le markup est encore en commentaire */
@@ -2629,17 +2572,6 @@ button:focus-visible, a:focus-visible {
       </div>
       </div>
     </div>
-
-    <div class="svc-controls">
-      <p class="svc-hint">Un service défile toutes les 5 secondes.</p>
-      <button type="button" class="svc-auto" id="svcAuto"
-              aria-label="Suspendre le défilement automatique des services"
-              aria-controls="svcStrip">
-        <svg class="ico-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
-        <svg class="ico-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7V5z"/></svg>
-        <span id="svcAutoText">Suspendre</span>
-      </button>
-    </div>
   </div>
 </section>
 
@@ -2954,15 +2886,9 @@ button:focus-visible, a:focus-visible {
 
     <div class="rev-controls">
       <p class="rev-note">
-        Avis publiés sur Google, traduits en français —
-        <a href="https://www.google.com/maps/search/?api=1&query=Castrol+Service+T%C3%A9mara%2C+Avenue+Tarik+Ibn+Ziad%2C+T%C3%A9mara" target="_blank" rel="noopener">lire les originaux</a>.
+        Avis publiés sur Google.
+        <a href="https://www.google.com/maps/search/?api=1&query=Castrol+Service+T%C3%A9mara%2C+Avenue+Tarik+Ibn+Ziad%2C+T%C3%A9mara" target="_blank" rel="noopener">Lire les originaux</a>.
       </p>
-      <button type="button" class="svc-auto" id="revAuto"
-              aria-label="Suspendre le défilement des avis" aria-controls="revWall">
-        <svg class="ico-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
-        <svg class="ico-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7V5z"/></svg>
-        <span id="revAutoText">Suspendre</span>
-      </button>
     </div>
 
   </div>
@@ -3159,11 +3085,6 @@ button:focus-visible, a:focus-visible {
             Envoyer sur WhatsApp
           </button>
 
-          <p class="form-note">
-            Vous relisez le message avant de l'envoyer. Aucune donnée n'est
-            enregistrée sur ce site.
-          </p>
-
           <noscript>
             <p class="form-note" style="color: var(--warning);">
               Ce formulaire a besoin de JavaScript. Appelez directement le
@@ -3186,7 +3107,7 @@ button:focus-visible, a:focus-visible {
     <div class="footer-grid">
       <div class="footer-brand">
         <img src="images/logo-png-castrol.png" alt="Castrol Service Témara">
-        <p>Garage automobile, vidange et entretien complet. Le seul centre Castrol Service certifié au Maroc, situé à Témara.</p>
+        <p>Garage automobile à Témara. Vidange et entretien complet, dans le seul centre Castrol Service certifié au Maroc.</p>
       </div>
       <div class="footer-col">
         <h5>Services</h5>
@@ -3222,7 +3143,6 @@ button:focus-visible, a:focus-visible {
     </div>
 
     <div class="footer-bottom">
-      <p>© 2026 Castrol Service Témara. Tous droits réservés.</p>
       <!-- Instagram / TikTok icons removed: both pointed at href="#". Re-add with real URLs. -->
       <div class="footer-social">
         <a href="https://wa.me/212663850560" class="btn-icon" aria-label="Écrire sur WhatsApp" target="_blank" rel="noopener">
@@ -3314,8 +3234,6 @@ button:focus-visible, a:focus-visible {
 const svcPanels = Array.from(document.querySelectorAll('[data-svc-panel]'));
 const svcStrip = document.getElementById('svcStrip');
 const svcProgress = document.getElementById('svcProgress');
-const svcAutoBtn = document.getElementById('svcAuto');
-const svcAutoText = document.getElementById('svcAutoText');
 
 const SVC_DELAY = 5000;
 let svcIndex = 0;
@@ -3359,28 +3277,12 @@ function openService(index) {
   svcResetGauge();
 }
 
-// Choisir un service, c'est vouloir le lire : le défilement s'arrête et ne
-// reprend que si on le redemande.
+// Choisir un service, c'est vouloir le lire : le défilement s'arrête là et ne
+// repart plus tout seul.
 function svcHalt() {
   svcHalted = true;
   clearTimeout(svcTimer);
   svcProgress && svcProgress.classList.remove('running');
-  if (svcAutoBtn) {
-    svcAutoBtn.classList.add('is-paused');
-    svcAutoBtn.setAttribute('aria-label', 'Reprendre le défilement automatique des services');
-    svcAutoText.textContent = 'Reprendre';
-  }
-}
-
-function svcResume() {
-  svcHalted = false;
-  if (svcAutoBtn) {
-    svcAutoBtn.classList.remove('is-paused');
-    svcAutoBtn.setAttribute('aria-label', 'Suspendre le défilement automatique des services');
-    svcAutoText.textContent = 'Suspendre';
-  }
-  svcResetGauge();
-  svcSchedule();
 }
 
 svcPanels.forEach((panel, i) => {
@@ -3403,10 +3305,6 @@ svcPanels.forEach((panel, i) => {
     svcPanels[next].querySelector('.svc-panel-hit').focus();
   });
 });
-
-if (svcAutoBtn) {
-  svcAutoBtn.addEventListener('click', () => (svcHalted ? svcResume() : svcHalt()));
-}
 
 if (svcStrip && svcMotionOK) {
   // Le survol suspend sans arrêter : on lit, puis ça repart.
@@ -3438,10 +3336,7 @@ if (svcStrip && svcMotionOK) {
 const revWall = document.getElementById('revWall');
 
 if (revWall) {
-  const revBtn = document.getElementById('revAuto');
-  const revText = document.getElementById('revAutoText');
   const revMotionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let revHalted = false;
 
   if (revMotionOK) {
     // Chaque colonne est doublée : arrivée à -50%, la piste retrouve son
@@ -3460,7 +3355,7 @@ if (revWall) {
   let revSeen = true;
 
   const revApply = () => {
-    revWall.classList.toggle('is-paused', revHalted || revHover || !revSeen);
+    revWall.classList.toggle('is-paused', revHover || !revSeen);
   };
 
   // Survol et focus suspendent le temps de lire un avis
@@ -3468,17 +3363,6 @@ if (revWall) {
   revWall.addEventListener('mouseleave', () => { revHover = false; revApply(); });
   revWall.addEventListener('focusin',    () => { revHover = true;  revApply(); });
   revWall.addEventListener('focusout',   () => { revHover = false; revApply(); });
-
-  if (revBtn) {
-    revBtn.addEventListener('click', () => {
-      revHalted = !revHalted;
-      revBtn.classList.toggle('is-paused', revHalted);
-      revBtn.setAttribute('aria-label',
-        revHalted ? 'Reprendre le défilement des avis' : 'Suspendre le défilement des avis');
-      revText.textContent = revHalted ? 'Reprendre' : 'Suspendre';
-      revApply();
-    });
-  }
 
   // Rien ne tourne hors du champ de vision : une animation continue qui
   // travaille dans le vide coûte des images par seconde pour personne.

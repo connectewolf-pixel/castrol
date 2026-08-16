@@ -86,9 +86,10 @@ mêmes avis. Le `padding-bottom` des pistes vaut exactement leur `gap` — sans
 lui, la boucle sauterait d'un demi-interstice à chaque tour.
 
 Trois colonnes au-delà de 1080 px, deux à partir de 700 px, une seule en
-dessous. Le défilement s'interrompt au survol, au focus, hors du champ de
-vision et sur le bouton « Suspendre » ; en mouvement réduit, le mur devient
-une liste fixe que l'on parcourt normalement.
+dessous. Le défilement s'interrompt au survol, au focus et hors du champ de
+vision ; en mouvement réduit, le mur devient une liste fixe que l'on parcourt
+normalement. Il n'y a pas de bouton de pause : le survol et le focus suffisent
+à retenir un avis le temps de le lire.
 
 **Ce qui n'est pas affiché, volontairement** : aucune étoile par avis (la note
 individuelle n'est pas connue, seule la moyenne l'est) et aucun portrait
@@ -99,12 +100,13 @@ mettre des visages d'une banque d'images serait un faux).
 
 Le sélecteur avance d'un service toutes les 5 secondes. Le délai est la
 constante `SVC_DELAY` dans le script, à changer aussi dans l'animation CSS
-`svcFill` qui dessine la jauge.
+`svcFill` qui dessine la jauge — le seul indice visible que la bande tourne
+toute seule, puisqu'il n'y a ni libellé ni bouton de pause.
 
 Il s'interrompt dans quatre cas : au survol et au focus (reprise en sortant),
-au clic sur un panneau ou sur le bouton « Suspendre » (reprise seulement sur
-demande), hors du champ de vision, et il ne démarre pas du tout si le système
-est réglé en mouvement réduit — la jauge et le bouton disparaissent alors.
+au clic ou à la flèche sur un panneau (le visiteur a choisi son service, la
+bande ne repart plus), hors du champ de vision, et il ne démarre pas du tout
+si le système est réglé en mouvement réduit — la jauge disparaît alors.
 
 ## Le formulaire de rendez-vous
 
